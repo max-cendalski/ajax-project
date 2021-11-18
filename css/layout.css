@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.container {
+  width: 960px
+}
+
+.row {
+  display: flex;
+}
+
+.column-full {
+  width: 100%
+}
+
+.column-half {
+  width: 50%
+}
+
+.column-third {
+  width: 75%;
+}
+
+.column-quarter {
+  width: 25%;
+}
