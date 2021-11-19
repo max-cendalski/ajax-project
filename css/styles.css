@@ -50,12 +50,6 @@ select {
   cursor: pointer;
 }
 
-.flex-space-between {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
 .fas {
   color: white;
   padding-top: 15px;
@@ -103,4 +97,5 @@ h3 {
 
 .li-element {
   height: 170px;
+  width: 100%;
 }

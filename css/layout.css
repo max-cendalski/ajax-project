@@ -44,7 +44,7 @@ body {
 
 @media screen and (min-width: 768px) {
   .container {
-    max-width: 900px;
+    max-width: 960px;
   }
 
   li {
@@ -67,5 +67,9 @@ body {
   .column-half img {
     height: 290px;
     width: 100%;
+  }
+
+  .column-width90 {
+    width: 45%;
   }
 }
