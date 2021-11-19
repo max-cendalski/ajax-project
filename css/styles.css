@@ -64,16 +64,19 @@ select {
 }
 
 ul {
+  margin-top: 30px;
   list-style-type: none;
   padding: 0;
 }
 
-img {
+.image-container {
+  display: flex;
+  height: 170px;
+}
+
+.image-container img {
+  border-radius: 7px;
   width: 100%;
-  height: 100%;
-  padding: 0;
-  border: none;
-  border-radius: 5px;
 }
 
 h3 {
