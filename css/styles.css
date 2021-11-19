@@ -1,5 +1,64 @@
 .header {
-  height: 30px;
-  background-color: rgb(41,117,21)
+  height: 50px;
+  background-color: rgb(41, 117, 21);
   color: white;
+}
+
+form {
+  width: 100%;
+}
+
+.header h1 {
+  padding-top: 5px;
+  margin-left: 20px;
+}
+
+input {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+input::placeholder {
+  float: right;
+  padding-top: 5px;
+  font-size: 1.3rem;
+}
+
+.margin-top20 {
+  margin-top: 20px;
+}
+
+.add-option-button {
+  background-color: rgb(41, 117, 21);
+  color: white;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  width: 80%;
+  margin-left: 20%;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+select {
+  width: 60%;
+  border-radius: 5px;
+  margin-top: 20px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.flex-space-between {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fas {
+  color: white;
+  padding-top: 15px;
+  padding-left: 5%;
+  cursor: pointer;
 }
