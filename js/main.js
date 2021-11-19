@@ -6,6 +6,7 @@ var sugar = '';
 var protein = '';
 var carbs = '';
 var recipeImage = '';
+var amountOfServings = 0;
 
 function renderEntry(entry) {
   var liElement = document.createElement('li');
@@ -28,9 +29,13 @@ function renderEntry(entry) {
   columnWidth60.setAttribute('class', 'column-width60');
   mainRow.appendChild(columnWidth60);
 
+  var headerContainer = document.createElement('div');
+  headerContainer.setAttribute('class', 'header-container');
+  columnWidth60.appendChild(headerContainer);
+
   var headerElement = document.createElement('h3');
   headerElement.textContent = recipeName;
-  columnWidth60.appendChild(headerElement);
+  headerContainer.appendChild(headerElement);
 
   var innerRow = document.createElement('div');
   innerRow.setAttribute('class', 'row');
@@ -90,11 +95,13 @@ function handleFormSubmit(event) {
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       recipeName = foodXhr.response.hits[i].recipe.label;
       recipeImage = foodXhr.response.hits[i].recipe.image;
-      calories = Math.floor(foodXhr.response.hits[i].recipe.calories);
-      sugar = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.SUGAR.quantity);
-      protein = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.PROCNT.quantity);
-      carbs = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.CHOCDF.quantity);
+      amountOfServings = foodXhr.response.hits[i].recipe.yield;
+      calories = Math.floor(foodXhr.response.hits[i].recipe.calories / amountOfServings);
+      sugar = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.SUGAR.quantity / amountOfServings);
+      protein = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.PROCNT.quantity / amountOfServings);
+      carbs = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.CHOCDF.quantity / amountOfServings);
       var result = renderEntry(foodXhr.response.hits[i]);
+
       $list.appendChild(result);
     }
   });
