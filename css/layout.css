@@ -1,4 +1,8 @@
 
+body {
+  font-family: sans-serif;
+}
+
 .container {
   max-width: 575px;
 }
@@ -31,6 +35,15 @@
 
 .column-width20 {
   width: 20%;
+}
+
+.border-radius10 {
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.border-none {
+  border: none;
 }
 
 @media screen and (min-width: 768px) {
