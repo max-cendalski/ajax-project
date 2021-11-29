@@ -38,15 +38,20 @@
           </div>
           <div class="column-width90">
             <div class="row">
-              <select>
-                <option>Calories</option>
-                <option>Sugar</option>
-                <option>Protein</option>
-                <option>Carbs</option>
+              <select id="nutrientsChoice">
+                <option value ="calories">Calories</option>
+                <option value="sugar">Sugar</option>
+                <option value="protein">Protein</option>
+                <option value="carbs">Carbs</option>
               </select>
               <div class="column-width40 margin-top20">
-                <button class="add-option-button">Add Option</button>
+                <button id="btn" class="add-option-button">Add Option</button>
               </div>
+            </div>
+            <div class="min-max-container">
+              <input class="min-value width20 margin-right20" type="number" placeholder="MIN">
+              <input class="max-value width20 margin-right20" type="number" placeholder="MAX">
+              <label>Calories</label>
             </div>
           </div>
         </form>

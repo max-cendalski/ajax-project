@@ -1,5 +1,6 @@
 var $form = document.querySelector('#form');
 var $list = document.querySelector('#list');
+
 var recipeName = '';
 var calories = '';
 var sugar = '';
@@ -109,3 +110,16 @@ function handleFormSubmit(event) {
 }
 
 $form.addEventListener('submit', handleFormSubmit);
+
+var $nutrients = document.querySelector('#nutrientsChoice');
+$nutrients.addEventListener('click', handleSelect);
+
+function handleSelect(event) {
+  event.preventDefault();
+
+  console.log($nutrients.value);
+  if ($nutrients.value === 'protein') {
+    console.log('whe');
+  }
+
+}

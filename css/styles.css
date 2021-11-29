@@ -99,3 +99,29 @@ h3 {
   height: 170px;
   width: 100%;
 }
+
+.min-max-container {
+  margin-top: 20px;
+}
+
+.margin-right20 {
+  margin-right: 20px;
+}
+
+.width20 {
+  width: 20%;
+}
+
+.min-value::placeholder {
+  padding-right: 20%;
+}
+
+.max-value::placeholder {
+  padding-right: 20%;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
