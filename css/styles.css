@@ -125,3 +125,7 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.calories-container {
+  margin-top: 10px;
+}

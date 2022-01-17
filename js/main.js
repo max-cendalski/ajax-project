@@ -1,6 +1,14 @@
 var $form = document.querySelector('#form');
 var $list = document.querySelector('#list');
+var $addOptionButton = document.querySelector('.add-option-button');
+var $nutritionChoice = document.querySelector('#nutrients-choice');
 
+var $minMaxContainer = document.querySelector('.min-max-container');
+var sugarCount = 0;
+var proteinCount = 0;
+var carbsCount = 0;
+
+var selectNutritionName = '';
 var recipeName = '';
 var calories = '';
 var sugar = '';
@@ -12,7 +20,6 @@ var amountOfServings = 0;
 function renderEntry(entry) {
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'column-width90 margin-top20 border-radius10');
-  // liElement.setAttribute('data-entry', entry.entry.id);
 
   var mainRow = document.createElement('div');
   mainRow.setAttribute('class', 'row li-element');
@@ -109,17 +116,48 @@ function handleFormSubmit(event) {
   foodXhr.send();
 }
 
-$form.addEventListener('submit', handleFormSubmit);
+function createMinMaxNutritionBox(value) {
+  var $optionContainer = document.createElement('div');
+  $optionContainer.setAttribute('class', 'calories-container');
+  var $minOption = document.createElement('input');
+  var $maxOption = document.createElement('input');
+  var $optionLabel = document.createElement('label');
+  $optionLabel.textContent = value.charAt(0).toUpperCase() + value.slice(1);
+  $minOption.setAttribute('class', 'min-value width20 margin-right20');
+  $minOption.setAttribute('placeholder', 'MIN');
+  $minOption.setAttribute('type', 'number');
+  $maxOption.setAttribute('class', 'max-value width20 margin-right20');
+  $maxOption.setAttribute('placeholder', 'MAX');
+  $maxOption.setAttribute('type', 'number');
 
-var $nutrients = document.querySelector('#nutrientsChoice');
-$nutrients.addEventListener('click', handleSelect);
+  $minMaxContainer.appendChild($optionContainer);
+  $optionContainer.appendChild($minOption);
+  $optionContainer.appendChild($maxOption);
+  $optionContainer.appendChild($optionLabel);
+}
 
-function handleSelect(event) {
+function handleAddOptionButton(event) {
   event.preventDefault();
 
-  console.log($nutrients.value);
-  if ($nutrients.value === 'protein') {
-    console.log('whe');
+  if (selectNutritionName === 'calories') return;
+  if (selectNutritionName === 'sugar' && sugarCount < 1) {
+    sugarCount++;
+    createMinMaxNutritionBox('sugar');
+  } else if (selectNutritionName === 'protein' && proteinCount < 1) {
+    proteinCount++;
+    createMinMaxNutritionBox('protein');
+  } else if (selectNutritionName === 'carbs' && carbsCount < 1) {
+    carbsCount++;
+    createMinMaxNutritionBox('carbs');
   }
 
 }
+function handleNutritionChoice(event) {
+  event.preventDefault();
+  selectNutritionName = event.target.value;
+
+}
+
+$nutritionChoice.addEventListener('click', handleNutritionChoice);
+$form.addEventListener('submit', handleFormSubmit);
+$addOptionButton.addEventListener('click', handleAddOptionButton);

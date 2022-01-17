@@ -32,28 +32,33 @@
           <div class="row">
             <div class="column-width90">
               <div class="row">
-              <input id="search-box" class="column-full margin-top20" type="text" name="search" placeholder="&#128270" required>
+              <input id="search-box" class="column-full margin-top20" type="text" name="search" placeholder="&#128270" required autofocus>
               </div>
             </div>
           </div>
           <div class="column-width90">
             <div class="row">
-              <select id="nutrientsChoice">
-                <option value ="calories">Calories</option>
-                <option value="sugar">Sugar</option>
-                <option value="protein">Protein</option>
-                <option value="carbs">Carbs</option>
+              <select id="nutrients-choice" name="testing">
+                <option id="calories" value ="calories" selected>Calories</option>
+                <option id="sugar" value="sugar">Sugar</option>
+                <option id="protein" value="protein">Protein</option>
+                <option id="carbs" value="carbs">Carbs</option>
               </select>
-              <div class="column-width40 margin-top20">
-                <button id="btn" class="add-option-button">Add Option</button>
+              <div class="add-buton column-width40 margin-top20">
+                <button id="btn" class="add-option-button" type="button">Add Option</button>
               </div>
             </div>
             <div class="min-max-container">
-              <input class="min-value width20 margin-right20" type="number" placeholder="MIN">
-              <input class="max-value width20 margin-right20" type="number" placeholder="MAX">
-              <label>Calories</label>
+              <div class="calories-container">
+                <input class="min-value width20 margin-right20" type="number" placeholder="MIN">
+                <input class="max-value width20 margin-right20" type="number" placeholder="MAX">
+                <label>Calories</label>
+              </div>
+
+
             </div>
           </div>
+          <button>Submit Form</button>
         </form>
       </div>
 
