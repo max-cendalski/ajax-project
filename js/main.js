@@ -42,7 +42,7 @@ function renderEntry(entry) {
   columnWidth60.appendChild(headerContainer);
 
   var headerElement = document.createElement('h3');
-  headerElement.textContent = recipeName;
+  headerElement.textContent = recipeName.slice(0, 40);
   headerContainer.appendChild(headerElement);
 
   var innerRow = document.createElement('div');
