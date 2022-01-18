@@ -2,8 +2,8 @@ var $form = document.querySelector('#form');
 var $list = document.querySelector('#list');
 var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
-
 var $minMaxContainer = document.querySelector('.min-max-container');
+
 var sugarCount = 0;
 var proteinCount = 0;
 var carbsCount = 0;
@@ -96,7 +96,19 @@ function handleFormSubmit(event) {
   event.preventDefault();
   var foodXhr = new XMLHttpRequest();
   var searchRecipe = event.target.search.value;
-  foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + '&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American');
+
+  if (!event.target.minCalories.value) {
+    var minCalories = 0;
+  } else {
+    minCalories = event.target.minCalories.value;
+  }
+  if (!event.target.maxCalories.value) {
+    var maxCalories = 999;
+  } else {
+    maxCalories = event.target.maxCalories.value;
+  }
+
+  foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BCHOCDF%5D=0-900`);
   foodXhr.responseType = 'json';
   foodXhr.addEventListener('load', function () {
 
@@ -138,26 +150,48 @@ function createMinMaxNutritionBox(value) {
 
 function handleAddOptionButton(event) {
   event.preventDefault();
-
   if (selectNutritionName === 'calories') return;
   if (selectNutritionName === 'sugar' && sugarCount < 1) {
     sugarCount++;
     createMinMaxNutritionBox('sugar');
-  } else if (selectNutritionName === 'protein' && proteinCount < 1) {
+  } if (selectNutritionName === 'protein' && proteinCount < 1) {
     proteinCount++;
     createMinMaxNutritionBox('protein');
-  } else if (selectNutritionName === 'carbs' && carbsCount < 1) {
+  } if (selectNutritionName === 'carbs' && carbsCount < 1) {
     carbsCount++;
     createMinMaxNutritionBox('carbs');
   }
-
 }
+
 function handleNutritionChoice(event) {
   event.preventDefault();
   selectNutritionName = event.target.value;
-
 }
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
+
+/* function handleFormSubmit(event) {
+  event.preventDefault();
+  var foodXhr = new XMLHttpRequest();
+  var searchRecipe = event.target.search.value;
+  foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + '&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American');
+  foodXhr.responseType = 'json';
+  foodXhr.addEventListener('load', function () {
+
+    for (var i = 0; i < foodXhr.response.hits.length; i++) {
+      recipeName = foodXhr.response.hits[i].recipe.label;
+      recipeImage = foodXhr.response.hits[i].recipe.image;
+      amountOfServings = foodXhr.response.hits[i].recipe.yield;
+      calories = Math.floor(foodXhr.response.hits[i].recipe.calories / amountOfServings);
+      sugar = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.SUGAR.quantity / amountOfServings);
+      protein = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.PROCNT.quantity / amountOfServings);
+      carbs = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.CHOCDF.quantity / amountOfServings);
+      var result = renderEntry(foodXhr.response.hits[i]);
+
+      $list.appendChild(result);
+    }
+  });
+  foodXhr.send();
+} */
