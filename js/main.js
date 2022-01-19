@@ -20,6 +20,7 @@ var amountOfServings = 0;
 function renderEntry(entry) {
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'column-width90 margin-top20 border-radius10');
+  $list.appendChild(liElement);
 
   var mainRow = document.createElement('div');
   mainRow.setAttribute('class', 'row li-element');
@@ -91,7 +92,7 @@ function renderEntry(entry) {
 
   return liElement;
 }
-var minCalories = 0;
+var minCalories = 1;
 var maxCalories = 999;
 
 function handleFormSubmit(event) {
@@ -104,35 +105,49 @@ function handleFormSubmit(event) {
   !event.target.maxCalories.value ? maxCalories = 999 : maxCalories = event.target.maxCalories.value;
 
   if (sugarCount === 0) {
-    var minSugar = 0;
+    var minSugar = 1;
     var maxSugar = 99;
   } else {
-    if (event.target.minSugar.value) {
+    if (!event.target.minSugar.value) {
+      minSugar = 1;
+    } else {
       minSugar = event.target.minSugar.value;
     }
-    if (event.target.maxSugar.value) {
+    if (!event.target.maxSugar.value) {
+      maxSugar = 99;
+    } else {
       maxSugar = event.target.maxSugar.value;
     }
   }
+
   if (proteinCount === 0) {
-    var minProtein = 0;
+    var minProtein = 1;
     var maxProtein = 99;
   } else {
-    if (event.target.minProtein.value) {
+    if (!event.target.minProtein.value) {
+      minProtein = 1;
+    } else {
       minProtein = event.target.minProtein.value;
     }
-    if (event.target.maxProtein.value) {
+    if (!event.target.maxProtein.value) {
+      maxProtein = 99;
+    } else {
       maxProtein = event.target.maxProtein.value;
     }
   }
-  if (sugarCount === 0) {
-    var minCarbs = 0;
+
+  if (carbsCount === 0) {
+    var minCarbs = 1;
     var maxCarbs = 99;
   } else {
-    if (event.target.minCarbs.value) {
+    if (!event.target.minCarbs.value) {
+      minCarbs = 1;
+    } else {
       minCarbs = event.target.minCarbs.value;
     }
-    if (event.target.maxCarbs.value) {
+    if (!event.target.maxCarbs.value) {
+      maxCarbs = 99;
+    } else {
       maxCarbs = event.target.maxCarbs.value;
     }
   }
@@ -144,6 +159,7 @@ function handleFormSubmit(event) {
     if (foodXhr.status !== 200) {
       alert('No Results!');
     }
+    $list.replaceChildren();
 
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       recipeName = foodXhr.response.hits[i].recipe.label;
