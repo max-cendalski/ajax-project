@@ -13,17 +13,31 @@ form {
   margin-left: 20px;
 }
 
+#search-box {
+  width: 90%;
+  border: 1px solid grey;
+  border-radius: 5px 0 0 5px;
+}
+
+#search-box::placeholder {
+  color: grey;
+}
+
+.submit-button {
+  width: 10%;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid grey;
+  cursor: pointer;
+}
+
 input {
   width: 100%;
   height: 40px;
-  border-radius: 5px;
-  border: 1px solid grey;
 }
 
 input::placeholder {
-  float: right;
-  padding-top: 5px;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 
 .margin-top20 {
@@ -118,14 +132,15 @@ input[type=number]::-webkit-outer-spin-button {
   width: 20%;
 }
 
-.min-value::placeholder {
-  padding-right: 20%;
-}
-
-.max-value::placeholder {
-  padding-right: 20%;
-}
-
 .calories-container {
   margin-top: 10px;
+}
+
+.border-radius-all {
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+.text-centered {
+  text-align: center;
 }

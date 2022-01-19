@@ -29,12 +29,9 @@
     <div class="container">
       <div class="row">
         <form id="form" class="column-full view" data-view="entry-form">
-          <div class="row">
-            <div class="column-width90">
-              <div class="row">
-              <input id="search-box" class="column-full margin-top20" type="text" name="search" placeholder="&#128270" required autofocus>
-              </div>
-            </div>
+            <div class=" row column-width90 margin-top20">
+              <input id="search-box" class="column-width90" type="text" name="search" placeholder="search" required autofocus>
+              <button class="submit-button ">&#128270</button>
           </div>
           <div class="column-width90">
             <div class="row">
@@ -50,17 +47,17 @@
             </div>
             <div class="min-max-container">
               <div class="calories-container">
-                <input class="min-value  width20 margin-right20" type="number" placeholder="MIN" name="minCalories"><input class="max-value width20 margin-right20 max-value-calories" type="number" max="999" placeholder="MAX" name="maxCalories"><label class="label">Calories</label>
+                <input class="min-value  width20 margin-right20 text-centered border-radius-all" type="number" placeholder="MIN" name="minCalories"><input class="max-value width20 margin-right20 text-centered border-radius-all" type="number" max="999" placeholder="MAX" name="maxCalories"><label class="label">Calories</label>
               </div>
             </div>
           </div>
-          <button>Submit Form</button>
+
         </form>
       </div>
 
       <div class="view" data-view="entries">
         <div class="row column-full">
-          <ul class="column-full" id="list">
+          <ul class="column-full row" id="list">
 
           </ul>
         </div>
