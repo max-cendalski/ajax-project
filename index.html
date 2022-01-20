@@ -17,7 +17,7 @@
         <div class="column-full header">
           <div class="row">
             <h1 class="column-width80">Recipe Planner</h1>
-            <i class="fas fa-star fa-lg"></i>
+            <i class="icon fas fa-star fa-lg"></i>
           <div>
           </div>
         </div>
@@ -29,32 +29,35 @@
     <div class="container">
       <div class="row">
         <form id="form" class="column-full view" data-view="entry-form">
-          <div class="row">
-            <div class="column-width90">
-              <div class="row">
-              <input id="search-box" class="column-full margin-top20" type="text" name="search" placeholder="&#128270" required>
-              </div>
-            </div>
+            <div class=" row column-width90 margin-top20">
+              <input id="search-box" class="column-width90" type="text" name="search" placeholder="search" required autofocus>
+              <button class="submit-button ">&#128270</button>
           </div>
           <div class="column-width90">
             <div class="row">
-              <select>
-                <option>Calories</option>
-                <option>Sugar</option>
-                <option>Protein</option>
-                <option>Carbs</option>
+              <select id="nutrients-choice" name="testing">
+                <option id="calories" value ="calories" selected>Calories</option>
+                <option id="sugar" value="sugar">Sugar</option>
+                <option id="protein" value="protein">Protein</option>
+                <option id="carbs" value="carbs">Carbs</option>
               </select>
-              <div class="column-width40 margin-top20">
-                <button class="add-option-button">Add Option</button>
+              <div class="add-buton column-width40 margin-top20">
+                <button id="btn" class="add-option-button" type="button">Add Option</button>
+              </div>
+            </div>
+            <div class="min-max-container">
+              <div class="calories-container">
+                <input class="min-value  width20 margin-right20 text-centered border-radius-all" type="number" placeholder="MIN" name="minCalories"><input class="max-value width20 margin-right20 text-centered border-radius-all" type="number" max="999" placeholder="MAX" name="maxCalories"><label class="label">Calories</label>
               </div>
             </div>
           </div>
+
         </form>
       </div>
 
       <div class="view" data-view="entries">
-        <div class="row column-full">
-          <ul class="column-full" id="list">
+        <div class="list-container row column-full">
+          <ul class="column-full row" id="list">
 
           </ul>
         </div>

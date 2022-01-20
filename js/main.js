@@ -1,5 +1,14 @@
 var $form = document.querySelector('#form');
 var $list = document.querySelector('#list');
+var $addOptionButton = document.querySelector('.add-option-button');
+var $nutritionChoice = document.querySelector('#nutrients-choice');
+var $minMaxContainer = document.querySelector('.min-max-container');
+
+var sugarCount = 0;
+var proteinCount = 0;
+var carbsCount = 0;
+
+var selectNutritionName = '';
 var recipeName = '';
 var calories = '';
 var sugar = '';
@@ -11,7 +20,7 @@ var amountOfServings = 0;
 function renderEntry(entry) {
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'column-width90 margin-top20 border-radius10');
-  // liElement.setAttribute('data-entry', entry.entry.id);
+  $list.appendChild(liElement);
 
   var mainRow = document.createElement('div');
   mainRow.setAttribute('class', 'row li-element');
@@ -34,7 +43,7 @@ function renderEntry(entry) {
   columnWidth60.appendChild(headerContainer);
 
   var headerElement = document.createElement('h3');
-  headerElement.textContent = recipeName;
+  headerElement.textContent = recipeName.slice(0, 35) + '...';
   headerContainer.appendChild(headerElement);
 
   var innerRow = document.createElement('div');
@@ -83,14 +92,74 @@ function renderEntry(entry) {
 
   return liElement;
 }
+var minCalories = 1;
+var maxCalories = 999;
 
 function handleFormSubmit(event) {
+
   event.preventDefault();
   var foodXhr = new XMLHttpRequest();
   var searchRecipe = event.target.search.value;
-  foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + '&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American');
+
+  !event.target.minCalories.value ? minCalories = 0 : minCalories = event.target.minCalories.value;
+  !event.target.maxCalories.value ? maxCalories = 999 : maxCalories = event.target.maxCalories.value;
+
+  if (sugarCount === 0) {
+    var minSugar = 1;
+    var maxSugar = 99;
+  } else {
+    if (!event.target.minSugar.value) {
+      minSugar = 1;
+    } else {
+      minSugar = event.target.minSugar.value;
+    }
+    if (!event.target.maxSugar.value) {
+      maxSugar = 99;
+    } else {
+      maxSugar = event.target.maxSugar.value;
+    }
+  }
+
+  if (proteinCount === 0) {
+    var minProtein = 1;
+    var maxProtein = 99;
+  } else {
+    if (!event.target.minProtein.value) {
+      minProtein = 1;
+    } else {
+      minProtein = event.target.minProtein.value;
+    }
+    if (!event.target.maxProtein.value) {
+      maxProtein = 99;
+    } else {
+      maxProtein = event.target.maxProtein.value;
+    }
+  }
+
+  if (carbsCount === 0) {
+    var minCarbs = 1;
+    var maxCarbs = 99;
+  } else {
+    if (!event.target.minCarbs.value) {
+      minCarbs = 1;
+    } else {
+      minCarbs = event.target.minCarbs.value;
+    }
+    if (!event.target.maxCarbs.value) {
+      maxCarbs = 99;
+    } else {
+      maxCarbs = event.target.maxCarbs.value;
+    }
+  }
+
+  foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}&nutrients%5BCHOCDF%5D=${minCarbs}-${maxCarbs}`);
   foodXhr.responseType = 'json';
+
   foodXhr.addEventListener('load', function () {
+    if (foodXhr.status !== 200) {
+      alert('No Results!');
+    }
+    $list.replaceChildren();
 
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       recipeName = foodXhr.response.hits[i].recipe.label;
@@ -101,11 +170,56 @@ function handleFormSubmit(event) {
       protein = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.PROCNT.quantity / amountOfServings);
       carbs = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.CHOCDF.quantity / amountOfServings);
       var result = renderEntry(foodXhr.response.hits[i]);
-
       $list.appendChild(result);
     }
   });
   foodXhr.send();
 }
 
+function createMinMaxNutritionBox(value) {
+  var $optionContainer = document.createElement('div');
+  $optionContainer.setAttribute('class', 'calories-container');
+  var $minOption = document.createElement('input');
+  var $maxOption = document.createElement('input');
+  var $optionLabel = document.createElement('label');
+  $optionLabel.textContent = value.charAt(0).toUpperCase() + value.slice(1);
+  $minOption.setAttribute('class', 'min-value width20 margin-right20 text-centered border-radius-all');
+  $minOption.setAttribute('placeholder', 'MIN');
+  var minValue = `min${value.charAt(0).toUpperCase() + value.slice(1)}`;
+  $minOption.setAttribute('name', minValue);
+  $minOption.setAttribute('type', 'number');
+  var maxValue = `max${value.charAt(0).toUpperCase() + value.slice(1)}`;
+  $maxOption.setAttribute('name', maxValue);
+  $maxOption.setAttribute('class', 'max-value width20 margin-right20 text-centered border-radius-all');
+  $maxOption.setAttribute('placeholder', 'MAX');
+  $maxOption.setAttribute('type', 'number');
+
+  $minMaxContainer.appendChild($optionContainer);
+  $optionContainer.appendChild($minOption);
+  $optionContainer.appendChild($maxOption);
+  $optionContainer.appendChild($optionLabel);
+}
+
+function handleAddOptionButton(event) {
+  event.preventDefault();
+  if (selectNutritionName === 'calories') return;
+  if (selectNutritionName === 'sugar' && sugarCount < 1) {
+    sugarCount++;
+    createMinMaxNutritionBox('sugar');
+  } if (selectNutritionName === 'protein' && proteinCount < 1) {
+    proteinCount++;
+    createMinMaxNutritionBox('protein');
+  } if (selectNutritionName === 'carbs' && carbsCount < 1) {
+    carbsCount++;
+    createMinMaxNutritionBox('carbs');
+  }
+}
+
+function handleNutritionChoice(event) {
+  event.preventDefault();
+  selectNutritionName = event.target.value;
+}
+
+$nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
+$addOptionButton.addEventListener('click', handleAddOptionButton);
