@@ -3,7 +3,7 @@ var $list = document.querySelector('#list');
 var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
 var $minMaxContainer = document.querySelector('.min-max-container');
-// var $image = document.querySelector('body');
+var $image = document.querySelector('body');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -168,8 +168,6 @@ function handleFormSubmit(event) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
       var recipeIdHashPosition = recipeIdString.indexOf('#');
       recipeId = recipeIdString.slice(recipeIdHashPosition + 1);
-      console.log('recipeId', recipeId);
-
       recipeName = foodXhr.response.hits[i].recipe.label;
       recipeImage = foodXhr.response.hits[i].recipe.image;
       amountOfServings = foodXhr.response.hits[i].recipe.yield;
@@ -230,10 +228,13 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
-  var foodXhr = new XMLHttpRequest();
+  console.log('whee');
+  var dataAttribute = event.target.closest('li').getAttribute('data-recipeId');
+  console.log(dataAttribute);
+  /*  var foodXhr = new XMLHttpRequest();
   if (event.target.tagName === 'IMG') {
     console.log('whee');
-    // foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2/%23recipe_b4c7c207a72f15862fc8f5e1b04187d0?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32');
+    foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2/%23recipe_b4c7c207a72f15862fc8f5e1b04187d0?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32');
     foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2/#23recipe_b4c7c207a72f15862fc8f5e1b04187d0?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32');
     foodXhr.responseType = 'json';
 
@@ -242,7 +243,7 @@ function handleImageClick(event) {
     }
     );
   }
-  foodXhr.send();
+  foodXhr.send(); */
 }
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
