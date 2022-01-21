@@ -3,6 +3,7 @@ var $list = document.querySelector('#list');
 var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
 var $minMaxContainer = document.querySelector('.min-max-container');
+// var $image = document.querySelector('body');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -16,10 +17,12 @@ var protein = '';
 var carbs = '';
 var recipeImage = '';
 var amountOfServings = 0;
+var recipeId = '';
 
 function renderEntry(entry) {
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'column-width90 margin-top20 border-radius10');
+  liElement.setAttribute('data-recipeId', recipeId);
   $list.appendChild(liElement);
 
   var mainRow = document.createElement('div');
@@ -162,6 +165,11 @@ function handleFormSubmit(event) {
     $list.replaceChildren();
 
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
+      var recipeIdString = foodXhr.response.hits[i].recipe.uri;
+      var recipeIdHashPosition = recipeIdString.indexOf('#');
+      recipeId = recipeIdString.slice(recipeIdHashPosition + 1);
+      console.log('recipeId', recipeId);
+
       recipeName = foodXhr.response.hits[i].recipe.label;
       recipeImage = foodXhr.response.hits[i].recipe.image;
       amountOfServings = foodXhr.response.hits[i].recipe.yield;
@@ -214,12 +222,30 @@ function handleAddOptionButton(event) {
     createMinMaxNutritionBox('carbs');
   }
 }
-
+// http://www.edamam.com/ontologies/edamam.owl#recipe_b4c7c207a72f15862fc8f5e1b04187d0
 function handleNutritionChoice(event) {
   event.preventDefault();
   selectNutritionName = event.target.value;
 }
 
+function handleImageClick(event) {
+  event.preventDefault();
+  var foodXhr = new XMLHttpRequest();
+  if (event.target.tagName === 'IMG') {
+    console.log('whee');
+    // foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2/%23recipe_b4c7c207a72f15862fc8f5e1b04187d0?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32');
+    foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2/#23recipe_b4c7c207a72f15862fc8f5e1b04187d0?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32');
+    foodXhr.responseType = 'json';
+
+    foodXhr.addEventListener('load', function () {
+      console.log(foodXhr.response);
+    }
+    );
+  }
+  foodXhr.send();
+}
+
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
+$list.addEventListener('click', handleImageClick);

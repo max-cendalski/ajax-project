@@ -85,6 +85,7 @@ ul {
 .image-container img {
   border-radius: 7px 0 0 7px;
   width: 100%;
+  cursor: pointer;
 }
 
 .header-container {
