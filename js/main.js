@@ -18,6 +18,7 @@ var carbs = '';
 var recipeImage = '';
 var amountOfServings = 0;
 var recipeId = '';
+var recipeNameShort = '';
 
 function renderEntry(entry) {
   var liElement = document.createElement('li');
@@ -46,7 +47,7 @@ function renderEntry(entry) {
   columnWidth60.appendChild(headerContainer);
 
   var headerElement = document.createElement('h3');
-  headerElement.textContent = recipeName.slice(0, 35) + '...';
+  headerElement.textContent = recipeName.slice(0, 40);
   headerContainer.appendChild(headerElement);
 
   var innerRow = document.createElement('div');
@@ -163,7 +164,7 @@ function handleFormSubmit(event) {
       alert('No Results!');
     }
     $list.replaceChildren();
-
+    console.log('first position from response object', foodXhr.response.hits[0]);
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
       var recipeIdHashPosition = recipeIdString.indexOf('#');
@@ -228,22 +229,20 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
-  var dataAttribute = event.target.closest('li').getAttribute('data-recipeId');
-  console.log(dataAttribute);
+  var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
+  console.log(dataIdAttribute);
   switchingViews('detailed-search-view');
-  /*  var foodXhr = new XMLHttpRequest();
+  var foodXhr = new XMLHttpRequest();
   if (event.target.tagName === 'IMG') {
     console.log('whee');
-    foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2/%23recipe_b4c7c207a72f15862fc8f5e1b04187d0?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32');
-    foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2/#23recipe_b4c7c207a72f15862fc8f5e1b04187d0?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32');
+    foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
-
     foodXhr.addEventListener('load', function () {
       console.log(foodXhr.response);
     }
     );
   }
-  foodXhr.send(); */
+  foodXhr.send();
 }
 /* function handleViews(event) {
   event.preventDefault();
@@ -267,3 +266,9 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
+
+/* var recipeIdString = foodXhr.response.hits[i].recipe.uri;
+      var recipeIdHashPosition = recipeIdString.indexOf('#');
+      recipeId = recipeIdString.slice(recipeIdHashPosition + 1);
+      recipeName = foodXhr.response.hits[i].recipe.label;
+      recipeImage = foodXhr.response.hits[i].recipe.image; */
