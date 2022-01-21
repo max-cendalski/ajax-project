@@ -28,7 +28,7 @@
   <main>
     <div class="container">
       <div class="row">
-        <form id="form" class="column-full view" data-view="entry-form">
+        <form id="form" class="view" data-view="search-form">
             <div class=" row column-width90 margin-top20">
               <input id="search-box" class="column-width90" type="text" name="search" placeholder="search" required autofocus>
               <button class="submit-button ">&#128270</button>
@@ -55,16 +55,17 @@
         </form>
       </div>
 
-      <div class="view" data-view="basic-results-view">
+      <div class="view" data-view="basic-search-view">
         <div class="list-container row column-full">
           <ul class="column-full row" id="list">
 
           </ul>
         </div>
       </div>
-      <div class="view" data-view="detailed-result-view"></div>
+      <div class="view hidden" data-view="detailed-search-view">
+      <h1>Whatever</h1>
       </div>
-
+</div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

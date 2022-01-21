@@ -228,9 +228,9 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
-  console.log('whee');
   var dataAttribute = event.target.closest('li').getAttribute('data-recipeId');
   console.log(dataAttribute);
+  switchingViews('detailed-search-view');
   /*  var foodXhr = new XMLHttpRequest();
   if (event.target.tagName === 'IMG') {
     console.log('whee');
@@ -244,6 +244,23 @@ function handleImageClick(event) {
     );
   }
   foodXhr.send(); */
+}
+/* function handleViews(event) {
+  event.preventDefault();
+  var eventAttribute = event.target.getAttribute('data-view');
+  console.log(eventAttribute);
+  switchingViews(eventAttribute);
+} */
+
+function switchingViews(viewName) {
+  var $viewList = document.querySelectorAll('.view');
+  for (var i = 0; i < $viewList.length; i++) {
+    if ($viewList[i].getAttribute('data-view') === viewName) {
+      $viewList[i].className = 'view';
+    } else {
+      $viewList[i].className = 'view hidden ';
+    }
+  }
 }
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
