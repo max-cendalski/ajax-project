@@ -233,6 +233,7 @@ function handleImageClick(event) {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
+      // console.log('foodxhr.response', foodXhr.response.recipe);
 
       var divElement = document.createElement('div');
       divElement.setAttribute('class', 'column-width90');
@@ -246,6 +247,11 @@ function handleImageClick(event) {
       imageElement.setAttribute('src', foodXhr.response.recipe.image);
       imageContainer.appendChild(imageElement);
 
+      var linkElement = document.createElement('a');
+      linkElement.setAttribute('class', 'instruction-link');
+      linkElement.setAttribute('href', foodXhr.response.recipe.url);
+      linkElement.textContent = 'Instruction';
+      $detailedRecipeContainer.appendChild(linkElement);
     }
     );
   }

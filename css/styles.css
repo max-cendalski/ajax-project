@@ -149,3 +149,9 @@ input[type=number]::-webkit-outer-spin-button {
 .hidden {
   display: none;
 }
+
+.instruction-link {
+  width: 80%;
+  height: 3rem;
+  background-color: rgb(41, 117, 21);
+}
