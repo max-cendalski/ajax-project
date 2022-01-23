@@ -3,7 +3,7 @@ var $list = document.querySelector('#list');
 var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
 var $minMaxContainer = document.querySelector('.min-max-container');
-var $image = document.querySelector('body');
+var $detailedRecipeContainer = document.querySelector('#detailed-recipe-container');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -18,7 +18,6 @@ var carbs = '';
 var recipeImage = '';
 var amountOfServings = 0;
 var recipeId = '';
-var recipeNameShort = '';
 
 function renderEntry(entry) {
   var liElement = document.createElement('li');
@@ -164,7 +163,6 @@ function handleFormSubmit(event) {
       alert('No Results!');
     }
     $list.replaceChildren();
-    console.log('first position from response object', foodXhr.response.hits[0]);
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
       var recipeIdHashPosition = recipeIdString.indexOf('#');
@@ -221,7 +219,6 @@ function handleAddOptionButton(event) {
     createMinMaxNutritionBox('carbs');
   }
 }
-// http://www.edamam.com/ontologies/edamam.owl#recipe_b4c7c207a72f15862fc8f5e1b04187d0
 function handleNutritionChoice(event) {
   event.preventDefault();
   selectNutritionName = event.target.value;
@@ -230,27 +227,36 @@ function handleNutritionChoice(event) {
 function handleImageClick(event) {
   event.preventDefault();
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
-  console.log(dataIdAttribute);
   switchingViews('detailed-search-view');
   var foodXhr = new XMLHttpRequest();
   if (event.target.tagName === 'IMG') {
-    console.log('whee');
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
-      console.log(foodXhr.response);
+
+      var divElement = document.createElement('div');
+      divElement.setAttribute('class', 'column-width90');
+      $detailedRecipeContainer.appendChild(divElement);
+
+      var imageContainer = document.createElement('div');
+      imageContainer.setAttribute('class', 'column-width40 image-container');
+      divElement.appendChild(imageContainer);
+
+      var imageElement = document.createElement('img');
+      imageElement.setAttribute('src', foodXhr.response.recipe.image);
+      imageContainer.appendChild(imageElement);
+
     }
     );
   }
   foodXhr.send();
-}
-/* function handleViews(event) {
-  event.preventDefault();
-  var eventAttribute = event.target.getAttribute('data-view');
-  console.log(eventAttribute);
-  switchingViews(eventAttribute);
-} */
 
+}
+
+/* var imageContainer = document.createElement('div');
+imageContainer.setAttribute('class', 'column-width40 image-container');
+mainRow.appendChild(imageContainer);
+ */
 function switchingViews(viewName) {
   var $viewList = document.querySelectorAll('.view');
   for (var i = 0; i < $viewList.length; i++) {
