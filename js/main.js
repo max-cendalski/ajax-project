@@ -252,6 +252,10 @@ function handleImageClick(event) {
       linkElement.setAttribute('href', foodXhr.response.recipe.url);
       linkElement.textContent = 'Instruction';
       $detailedRecipeContainer.appendChild(linkElement);
+
+      var detailedNutritionContainer = document.createElement('div');
+      detailedNutritionContainer.setAttribute('class', 'column-width90');
+      $detailedRecipeContainer.appendChild(detailedNutritionContainer);
     }
     );
   }
