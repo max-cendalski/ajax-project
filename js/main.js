@@ -235,6 +235,7 @@ function handleImageClick(event) {
     foodXhr.addEventListener('load', function () {
       console.log('foodxhr.response', foodXhr.response.recipe);
       var amountOfServings = foodXhr.response.recipe.yield;
+      var recipeName = foodXhr.response.recipe.label.slice(0, 30);
       var cholesterol = Math.floor(foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings;
       var calcium = Math.floor(foodXhr.response.recipe.totalDaily.CA) / amountOfServings;
       var iron = Math.floor(foodXhr.response.recipe.totalDaily.FE) / amountOfServings;
@@ -249,7 +250,7 @@ function handleImageClick(event) {
       console.log('cholesterol', cholesterol);
 
       var imageContainer = document.createElement('div');
-      imageContainer.setAttribute('class', 'column-width80 row margin-top10');
+      imageContainer.setAttribute('class', 'column-width90 row margin-top10');
       $detailedRecipeContainer.appendChild(imageContainer);
 
       var imageElement = document.createElement('img');
@@ -258,14 +259,39 @@ function handleImageClick(event) {
       imageContainer.appendChild(imageElement);
 
       var linkElement = document.createElement('a');
-      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5');
+      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5 column-width60');
       linkElement.setAttribute('href', foodXhr.response.recipe.url);
       linkElement.textContent = 'Instruction';
       $detailedRecipeContainer.appendChild(linkElement);
-
+      // detailed info
       var detailedNutritionContainer = document.createElement('div');
-      detailedNutritionContainer.setAttribute('class', 'column-width90');
+      detailedNutritionContainer.setAttribute('class', 'column-width90 border-radius10 margin-top10');
       $detailedRecipeContainer.appendChild(detailedNutritionContainer);
+
+      var recipeHeader = document.createElement('div');
+      recipeHeader.setAttribute('class', 'row');
+      detailedNutritionContainer.appendChild(recipeHeader);
+
+      var headerRecipeName = document.createElement('h2');
+      headerRecipeName.setAttribute('class', ' border-bottom-grey');
+      headerRecipeName.textContent = recipeName;
+      recipeHeader.appendChild(headerRecipeName);
+
+      var headerTextContainer = document.createElement('div');
+      headerTextContainer.setAttribute('class', 'row border-bottom-grey');
+      recipeHeader.appendChild(headerTextContainer);
+
+      var headerTextContainerLeft = document.createElement('p');
+      headerTextContainerLeft.textContent = 'Nutrition Information';
+      headerTextContainerLeft.setAttribute('class', 'column-width50');
+      headerTextContainer.appendChild(headerTextContainerLeft);
+
+      var headerTextContainerRight = document.createElement('p');
+      headerTextContainerRight.textContent = '% Daily Value';
+      headerTextContainerRight.setAttribute('class', 'column-width50');
+      headerTextContainer.appendChild(headerTextContainerRight);
+
+      console.log('recipe name', foodXhr.response.recipe.label);
     }
     );
   }
