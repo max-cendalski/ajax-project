@@ -235,6 +235,19 @@ function handleImageClick(event) {
     foodXhr.addEventListener('load', function () {
       // console.log('foodxhr.response', foodXhr.response.recipe);
 
+      var cholesterol = '';
+      var calcium = '';
+      var iron = '';
+      var potassium = '';
+      var magnesium = '';
+      var sodium = '';
+      var sodium = '';
+      var vitaminE = '';
+      var vitaminB6 = '';
+      var vitaminD = '';
+      var zinc = '';
+      var ingredients = [];
+
       var divElement = document.createElement('div');
       divElement.setAttribute('class', 'column-width90');
       $detailedRecipeContainer.appendChild(divElement);
