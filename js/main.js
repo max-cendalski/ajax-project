@@ -237,7 +237,6 @@ function handleImageClick(event) {
       var amountOfServings = foodXhr.response.recipe.yield;
       var cholesterol = Math.floor(foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings;
       var calcium = Math.floor(foodXhr.response.recipe.totalDaily.CA) / amountOfServings;
-
       var iron = Math.floor(foodXhr.response.recipe.totalDaily.FE) / amountOfServings;
       var potassium = Math.floor(foodXhr.response.recipe.totalDaily.K) / amountOfServings;
       var magnesium = Math.floor(foodXhr.response.recipe.totalDaily.MG) / amountOfServings;
@@ -249,20 +248,17 @@ function handleImageClick(event) {
       var ingredients = [];
       console.log('cholesterol', cholesterol);
 
-      var divElement = document.createElement('div');
-      divElement.setAttribute('class', 'column-width90');
-      $detailedRecipeContainer.appendChild(divElement);
-
       var imageContainer = document.createElement('div');
-      imageContainer.setAttribute('class', 'column-width40 image-container');
-      divElement.appendChild(imageContainer);
+      imageContainer.setAttribute('class', 'column-width80 row margin-top10');
+      $detailedRecipeContainer.appendChild(imageContainer);
 
       var imageElement = document.createElement('img');
+      imageElement.setAttribute('class', 'border-radius5');
       imageElement.setAttribute('src', foodXhr.response.recipe.image);
       imageContainer.appendChild(imageElement);
 
       var linkElement = document.createElement('a');
-      linkElement.setAttribute('class', 'instruction-link');
+      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5');
       linkElement.setAttribute('href', foodXhr.response.recipe.url);
       linkElement.textContent = 'Instruction';
       $detailedRecipeContainer.appendChild(linkElement);

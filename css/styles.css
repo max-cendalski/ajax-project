@@ -40,10 +40,6 @@ input::placeholder {
   font-size: 1rem;
 }
 
-.margin-top20 {
-  margin-top: 20px;
-}
-
 .add-option-button {
   background-color: rgb(41, 117, 21);
   color: white;
@@ -129,6 +125,14 @@ input[type=number]::-webkit-outer-spin-button {
   margin-right: 20px;
 }
 
+.margin-top20 {
+  margin-top: 20px;
+}
+
+.margin-top10 {
+  margin-top: 10px;
+}
+
 .width20 {
   width: 20%;
 }
@@ -140,6 +144,10 @@ input[type=number]::-webkit-outer-spin-button {
 .border-radius-all {
   border-radius: 5px;
   border: 1px solid grey;
+}
+
+.border-radius5 {
+  border-radius: 5px;
 }
 
 .text-centered {
@@ -154,4 +162,10 @@ input[type=number]::-webkit-outer-spin-button {
   width: 80%;
   height: 3rem;
   background-color: rgb(41, 117, 21);
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1.2rem;
+  padding-top: 0.9rem;
+  letter-spacing: 0.2rem;
 }
