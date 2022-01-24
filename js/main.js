@@ -46,7 +46,7 @@ function renderEntry(entry) {
   columnWidth60.appendChild(headerContainer);
 
   var headerElement = document.createElement('h3');
-  headerElement.textContent = recipeName.slice(0, 40);
+  headerElement.textContent = recipeName.slice(0, 30);
   headerContainer.appendChild(headerElement);
 
   var innerRow = document.createElement('div');
@@ -233,20 +233,21 @@ function handleImageClick(event) {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
-      // console.log('foodxhr.response', foodXhr.response.recipe);
+      console.log('foodxhr.response', foodXhr.response.recipe);
+      var amountOfServings = foodXhr.response.recipe.yield;
+      var cholesterol = Math.floor(foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings;
+      var calcium = Math.floor(foodXhr.response.recipe.totalDaily.CA) / amountOfServings;
 
-      var cholesterol = '';
-      var calcium = '';
-      var iron = '';
-      var potassium = '';
-      var magnesium = '';
-      var sodium = '';
-      var sodium = '';
-      var vitaminE = '';
-      var vitaminB6 = '';
-      var vitaminD = '';
-      var zinc = '';
+      var iron = Math.floor(foodXhr.response.recipe.totalDaily.FE) / amountOfServings;
+      var potassium = Math.floor(foodXhr.response.recipe.totalDaily.K) / amountOfServings;
+      var magnesium = Math.floor(foodXhr.response.recipe.totalDaily.MG) / amountOfServings;
+      var sodium = Math.floor(foodXhr.response.recipe.totalDaily.NA) / amountOfServings;
+      var vitaminE = Math.floor(foodXhr.response.recipe.totalDaily.TOCPHA) / amountOfServings;
+      var vitaminB6 = Math.floor(foodXhr.response.recipe.totalDaily.VITB6A) / amountOfServings;
+      var vitaminD = Math.floor(foodXhr.response.recipe.totalDaily.VITD) / amountOfServings;
+      var zinc = Math.floor(foodXhr.response.recipe.totalDaily.ZN) / amountOfServings;
       var ingredients = [];
+      console.log('cholesterol', cholesterol);
 
       var divElement = document.createElement('div');
       divElement.setAttribute('class', 'column-width90');
