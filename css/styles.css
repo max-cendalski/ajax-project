@@ -166,6 +166,14 @@ input[type=number]::-webkit-outer-spin-button {
   display: none;
 }
 
+.row-column {
+  flex-direction: column;
+}
+
+.padding-bottom10 {
+  padding-bottom: 10px;
+}
+
 .instruction-link {
   height: 3rem;
   background-color: rgb(41, 117, 21);
@@ -183,5 +191,5 @@ input[type=number]::-webkit-outer-spin-button {
 
 .nutrition-text-small {
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }

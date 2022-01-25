@@ -236,6 +236,10 @@ function handleImageClick(event) {
       console.log('foodxhr.response', foodXhr.response.recipe);
       var amountOfServings = foodXhr.response.recipe.yield;
       var recipeName = foodXhr.response.recipe.label.slice(0, 30);
+      calories = Math.floor(foodXhr.response.recipe.calories / amountOfServings);
+      sugar = Math.floor(foodXhr.response.recipe.totalNutrients.SUGAR.quantity / amountOfServings);
+      protein = Math.floor(foodXhr.response.recipe.totalNutrients.PROCNT.quantity / amountOfServings);
+      carbs = Math.floor(foodXhr.response.recipe.totalNutrients.CHOCDF.quantity / amountOfServings);
       var cholesterol = Math.floor(foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings;
       var calcium = Math.floor(foodXhr.response.recipe.totalDaily.CA) / amountOfServings;
       var iron = Math.floor(foodXhr.response.recipe.totalDaily.FE) / amountOfServings;
@@ -248,6 +252,7 @@ function handleImageClick(event) {
       var zinc = Math.floor(foodXhr.response.recipe.totalDaily.ZN) / amountOfServings;
       var ingredients = [];
       console.log('cholesterol', cholesterol);
+      console.log('calories from second xml call', calories);
 
       var imageContainer = document.createElement('div');
       imageContainer.setAttribute('class', 'column-width90 row margin-top10');
@@ -266,7 +271,7 @@ function handleImageClick(event) {
 
       // detailed info
       var detailedNutritionContainer = document.createElement('div');
-      detailedNutritionContainer.setAttribute('class', ' row column-width90 border-radius10 margin-top10');
+      detailedNutritionContainer.setAttribute('class', ' row row-column column-width90 border-radius10 margin-top10');
       $detailedRecipeContainer.appendChild(detailedNutritionContainer);
 
       var recipeHeader = document.createElement('div');
@@ -274,7 +279,7 @@ function handleImageClick(event) {
       detailedNutritionContainer.appendChild(recipeHeader);
 
       var headerRecipeName = document.createElement('h2');
-      headerRecipeName.setAttribute('class', 'column-width90 border-bottom-grey');
+      headerRecipeName.setAttribute('class', 'column-width90 padding-bottom10');
       headerRecipeName.textContent = recipeName;
       recipeHeader.appendChild(headerRecipeName);
 
@@ -284,15 +289,66 @@ function handleImageClick(event) {
 
       var headerTextContainerLeft = document.createElement('p');
       headerTextContainerLeft.textContent = 'Nutrition Information';
-      headerTextContainerLeft.setAttribute('class', 'column-width45 nutrition-text-small');
+      headerTextContainerLeft.setAttribute('class', 'column-width50 nutrition-text-small');
       headerTextContainer.appendChild(headerTextContainerLeft);
 
       var headerTextContainerRight = document.createElement('p');
       headerTextContainerRight.textContent = '% Daily Value';
-      headerTextContainerRight.setAttribute('class', 'column-width45 nutrition-text-small');
+      headerTextContainerRight.setAttribute('class', 'column-width50 nutrition-text-small');
       headerTextContainer.appendChild(headerTextContainerRight);
+      // basic nutrition details
 
-      console.log('recipe name', foodXhr.response.recipe.label);
+      var basicAndDetailsContainer = document.createElement('div');
+      basicAndDetailsContainer.setAttribute('class', 'column-full row');
+
+      var nutritionLeftContainer = document.createElement('div');
+      nutritionLeftContainer.setAttribute('class', 'row row-colum column-width40');
+      detailedNutritionContainer.appendChild(basicAndDetailsContainer);
+
+      var nutritionBasicNames = document.createElement('div');
+      nutritionBasicNames.setAttribute('class', 'column-width50');
+      nutritionLeftContainer.appendChild(nutritionBasicNames);
+      basicAndDetailsContainer.appendChild(nutritionLeftContainer);
+
+      var paragraphElCalories = document.createElement('p');
+      paragraphElCalories.textContent = 'Calories:';
+      nutritionBasicNames.appendChild(paragraphElCalories);
+
+      var paragraphElSugar = document.createElement('p');
+      paragraphElSugar.textContent = 'Sugar:';
+      nutritionBasicNames.appendChild(paragraphElSugar);
+
+      var paragraphElProtein = document.createElement('p');
+      paragraphElProtein.textContent = 'Protein:';
+      nutritionBasicNames.appendChild(paragraphElProtein);
+
+      var paragraphElCarbs = document.createElement('p');
+      paragraphElCarbs.textContent = 'Carbs:';
+      nutritionBasicNames.appendChild(paragraphElCarbs);
+      // values
+      var nutritionBasicLeftValues = document.createElement('div');
+      nutritionBasicLeftValues.setAttribute('class', 'column-width50');
+      nutritionLeftContainer.appendChild(nutritionBasicLeftValues);
+
+      var paragraphElCaloriesAPI = document.createElement('p');
+      paragraphElCaloriesAPI.textContent = calories + ' kcal';
+      nutritionBasicLeftValues.appendChild(paragraphElCaloriesAPI);
+
+      var paragraphElSugarAPI = document.createElement('p');
+      paragraphElSugarAPI.textContent = sugar + ' g';
+      nutritionBasicLeftValues.appendChild(paragraphElSugarAPI);
+
+      var paragraphElProteinAPI = document.createElement('p');
+      paragraphElProteinAPI.textContent = protein + ' g';
+      nutritionBasicLeftValues.appendChild(paragraphElProteinAPI);
+
+      var paragraphElCarbsAPI = document.createElement('p');
+      paragraphElCarbsAPI.textContent = carbs + ' g';
+      nutritionBasicLeftValues.appendChild(paragraphElCarbsAPI);
+
+      var nutritionRightContainer = document.createElement('div');
+      nutritionRightContainer.setAttribute('class', 'column-width40');
+      basicAndDetailsContainer.appendChild(nutritionRightContainer);
     }
     );
   }
