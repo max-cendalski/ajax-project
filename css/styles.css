@@ -204,6 +204,8 @@ input[type=number]::-webkit-outer-spin-button {
 .nutrition-text-small {
   font-weight: 700;
   font-size: 0.7rem;
+  padding-left: 20px;
+  padding-bottom: 3px;
 }
 
 .value-text-thin {

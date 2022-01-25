@@ -275,16 +275,16 @@ function handleImageClick(event) {
       $detailedRecipeContainer.appendChild(detailedNutritionContainer);
 
       var recipeHeader = document.createElement('div');
-      recipeHeader.setAttribute('class', 'column-full');
+      recipeHeader.setAttribute('class', 'column-width95');
       detailedNutritionContainer.appendChild(recipeHeader);
 
       var headerRecipeName = document.createElement('h2');
-      headerRecipeName.setAttribute('class', 'column-width90 padding-bottom10');
+      headerRecipeName.setAttribute('class', 'padding-bottom10');
       headerRecipeName.textContent = recipeName;
       recipeHeader.appendChild(headerRecipeName);
 
       var headerTextContainer = document.createElement('div');
-      headerTextContainer.setAttribute('class', 'column-width90 row border-bottom-grey');
+      headerTextContainer.setAttribute('class', 'column-width95 row border-bottom-grey');
       recipeHeader.appendChild(headerTextContainer);
 
       var headerTextContainerLeft = document.createElement('p');
@@ -299,7 +299,7 @@ function handleImageClick(event) {
       // basic nutrition details
 
       var basicAndDetailsContainer = document.createElement('div');
-      basicAndDetailsContainer.setAttribute('class', 'row column-width90');
+      basicAndDetailsContainer.setAttribute('class', 'row column-width95');
 
       var nutritionLeftContainer = document.createElement('div');
       nutritionLeftContainer.setAttribute('class', 'row row-colum column-width50');
