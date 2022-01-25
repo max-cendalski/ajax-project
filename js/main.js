@@ -54,7 +54,7 @@ function renderEntry(entry) {
   columnWidth60.appendChild(innerRow);
 
   var innerColumnWidth40 = document.createElement('div');
-  innerColumnWidth40.setAttribute('class', 'column-width40');
+  innerColumnWidth40.setAttribute('class', 'column-width50 padding-left5');
   innerRow.appendChild(innerColumnWidth40);
 
   var paragraphElCalories = document.createElement('p');
