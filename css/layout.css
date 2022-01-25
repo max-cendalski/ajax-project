@@ -37,6 +37,10 @@ body {
   width: 60%;
 }
 
+.column-width50 {
+  width: 50%;
+}
+
 .column-width40 {
   width: 40%;
 }

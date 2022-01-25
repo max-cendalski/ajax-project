@@ -264,7 +264,7 @@ function handleImageClick(event) {
       imageContainer.appendChild(imageElement);
 
       var linkElement = document.createElement('a');
-      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5 column-width50');
+      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5');
       linkElement.setAttribute('href', foodXhr.response.recipe.url);
       linkElement.textContent = 'Instruction';
       $detailedRecipeContainer.appendChild(linkElement);

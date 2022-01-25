@@ -96,10 +96,6 @@ h3 {
   overflow: hidden;
 }
 
-.column-width50 {
-  width: 50%;
-}
-
 .column-width40 p {
   padding-top: 10px;
   width: 40%;
@@ -107,6 +103,10 @@ h3 {
 
 .column-width45 {
   width: 45%;
+}
+
+.column-width50 {
+  width: 50%;
 }
 
 .column-width60 {
@@ -190,6 +190,7 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 1.2rem;
   padding-top: 0.9rem;
   letter-spacing: 0.2rem;
+  width: 13rem;
 }
 
 .border-bottom-grey {
