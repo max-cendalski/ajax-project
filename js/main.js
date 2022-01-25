@@ -26,7 +26,7 @@ function renderEntry(entry) {
   $list.appendChild(liElement);
 
   var mainRow = document.createElement('div');
-  mainRow.setAttribute('class', 'row li-element');
+  mainRow.setAttribute('class', 'row li-element flex-wrap');
   liElement.appendChild(mainRow);
 
   var imageContainer = document.createElement('div');
@@ -263,32 +263,33 @@ function handleImageClick(event) {
       linkElement.setAttribute('href', foodXhr.response.recipe.url);
       linkElement.textContent = 'Instruction';
       $detailedRecipeContainer.appendChild(linkElement);
+
       // detailed info
       var detailedNutritionContainer = document.createElement('div');
-      detailedNutritionContainer.setAttribute('class', 'column-width90 border-radius10 margin-top10');
+      detailedNutritionContainer.setAttribute('class', ' row column-width90 border-radius10 margin-top10');
       $detailedRecipeContainer.appendChild(detailedNutritionContainer);
 
       var recipeHeader = document.createElement('div');
-      recipeHeader.setAttribute('class', 'row');
+      recipeHeader.setAttribute('class', 'column-full');
       detailedNutritionContainer.appendChild(recipeHeader);
 
       var headerRecipeName = document.createElement('h2');
-      headerRecipeName.setAttribute('class', ' border-bottom-grey');
+      headerRecipeName.setAttribute('class', 'column-width90 border-bottom-grey');
       headerRecipeName.textContent = recipeName;
       recipeHeader.appendChild(headerRecipeName);
 
       var headerTextContainer = document.createElement('div');
-      headerTextContainer.setAttribute('class', 'row border-bottom-grey');
+      headerTextContainer.setAttribute('class', 'column-width90 row border-bottom-grey');
       recipeHeader.appendChild(headerTextContainer);
 
       var headerTextContainerLeft = document.createElement('p');
       headerTextContainerLeft.textContent = 'Nutrition Information';
-      headerTextContainerLeft.setAttribute('class', 'column-width50');
+      headerTextContainerLeft.setAttribute('class', 'column-width45 nutrition-text-small');
       headerTextContainer.appendChild(headerTextContainerLeft);
 
       var headerTextContainerRight = document.createElement('p');
       headerTextContainerRight.textContent = '% Daily Value';
-      headerTextContainerRight.setAttribute('class', 'column-width50');
+      headerTextContainerRight.setAttribute('class', 'column-width45 nutrition-text-small');
       headerTextContainer.appendChild(headerTextContainerRight);
 
       console.log('recipe name', foodXhr.response.recipe.label);
