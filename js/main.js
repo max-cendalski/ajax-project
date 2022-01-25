@@ -255,23 +255,23 @@ function handleImageClick(event) {
       console.log('calories from second xml call', calories);
 
       var imageContainer = document.createElement('div');
-      imageContainer.setAttribute('class', 'column-width90 row margin-top10');
+      imageContainer.setAttribute('class', 'row column-width90 margin-top10');
       $detailedRecipeContainer.appendChild(imageContainer);
 
       var imageElement = document.createElement('img');
-      imageElement.setAttribute('class', 'border-radius5');
+      imageElement.setAttribute('class', 'detailed-view-image border-radius5');
       imageElement.setAttribute('src', foodXhr.response.recipe.image);
       imageContainer.appendChild(imageElement);
 
       var linkElement = document.createElement('a');
-      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5 column-width60');
+      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5 column-width50');
       linkElement.setAttribute('href', foodXhr.response.recipe.url);
       linkElement.textContent = 'Instruction';
       $detailedRecipeContainer.appendChild(linkElement);
 
       // detailed info
       var detailedNutritionContainer = document.createElement('div');
-      detailedNutritionContainer.setAttribute('class', ' row row-column column-width90 border-radius10 margin-top10');
+      detailedNutritionContainer.setAttribute('class', 'row row-column column-width90 border-radius-all margin-top10');
       $detailedRecipeContainer.appendChild(detailedNutritionContainer);
 
       var recipeHeader = document.createElement('div');
@@ -299,10 +299,10 @@ function handleImageClick(event) {
       // basic nutrition details
 
       var basicAndDetailsContainer = document.createElement('div');
-      basicAndDetailsContainer.setAttribute('class', 'column-full row');
+      basicAndDetailsContainer.setAttribute('class', 'row column-width90');
 
       var nutritionLeftContainer = document.createElement('div');
-      nutritionLeftContainer.setAttribute('class', 'row row-colum column-width40');
+      nutritionLeftContainer.setAttribute('class', 'row row-colum column-width50');
       detailedNutritionContainer.appendChild(basicAndDetailsContainer);
 
       var nutritionBasicNames = document.createElement('div');
@@ -311,18 +311,22 @@ function handleImageClick(event) {
       basicAndDetailsContainer.appendChild(nutritionLeftContainer);
 
       var paragraphElCalories = document.createElement('p');
+      paragraphElCalories.setAttribute('class', 'value-text-thick');
       paragraphElCalories.textContent = 'Calories:';
       nutritionBasicNames.appendChild(paragraphElCalories);
 
       var paragraphElSugar = document.createElement('p');
+      paragraphElSugar.setAttribute('class', 'value-text-thick');
       paragraphElSugar.textContent = 'Sugar:';
       nutritionBasicNames.appendChild(paragraphElSugar);
 
       var paragraphElProtein = document.createElement('p');
+      paragraphElProtein.setAttribute('class', 'value-text-thick');
       paragraphElProtein.textContent = 'Protein:';
       nutritionBasicNames.appendChild(paragraphElProtein);
 
       var paragraphElCarbs = document.createElement('p');
+      paragraphElCarbs.setAttribute('class', 'value-text-thick');
       paragraphElCarbs.textContent = 'Carbs:';
       nutritionBasicNames.appendChild(paragraphElCarbs);
       // values
@@ -331,23 +335,23 @@ function handleImageClick(event) {
       nutritionLeftContainer.appendChild(nutritionBasicLeftValues);
 
       var paragraphElCaloriesAPI = document.createElement('p');
-      paragraphElCaloriesAPI.textContent = calories + ' kcal';
+      paragraphElCaloriesAPI.textContent = calories + 'kcal';
       nutritionBasicLeftValues.appendChild(paragraphElCaloriesAPI);
 
       var paragraphElSugarAPI = document.createElement('p');
-      paragraphElSugarAPI.textContent = sugar + ' g';
+      paragraphElSugarAPI.textContent = sugar + 'g';
       nutritionBasicLeftValues.appendChild(paragraphElSugarAPI);
 
       var paragraphElProteinAPI = document.createElement('p');
-      paragraphElProteinAPI.textContent = protein + ' g';
+      paragraphElProteinAPI.textContent = protein + 'g';
       nutritionBasicLeftValues.appendChild(paragraphElProteinAPI);
 
       var paragraphElCarbsAPI = document.createElement('p');
-      paragraphElCarbsAPI.textContent = carbs + ' g';
+      paragraphElCarbsAPI.textContent = carbs + 'g';
       nutritionBasicLeftValues.appendChild(paragraphElCarbsAPI);
 
       var nutritionRightContainer = document.createElement('div');
-      nutritionRightContainer.setAttribute('class', 'column-width40');
+      nutritionRightContainer.setAttribute('class', 'column-width50');
       basicAndDetailsContainer.appendChild(nutritionRightContainer);
     }
     );
