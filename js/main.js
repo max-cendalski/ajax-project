@@ -241,18 +241,30 @@ function handleImageClick(event) {
       protein = Math.floor(foodXhr.response.recipe.totalNutrients.PROCNT.quantity / amountOfServings);
       carbs = Math.floor(foodXhr.response.recipe.totalNutrients.CHOCDF.quantity / amountOfServings);
       var cholesterol = Math.floor(foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings;
-      var calcium = Math.floor(foodXhr.response.recipe.totalDaily.CA) / amountOfServings;
-      var iron = Math.floor(foodXhr.response.recipe.totalDaily.FE) / amountOfServings;
-      var potassium = Math.floor(foodXhr.response.recipe.totalDaily.K) / amountOfServings;
-      var magnesium = Math.floor(foodXhr.response.recipe.totalDaily.MG) / amountOfServings;
-      var sodium = Math.floor(foodXhr.response.recipe.totalDaily.NA) / amountOfServings;
-      var vitaminE = Math.floor(foodXhr.response.recipe.totalDaily.TOCPHA) / amountOfServings;
-      var vitaminB6 = Math.floor(foodXhr.response.recipe.totalDaily.VITB6A) / amountOfServings;
-      var vitaminD = Math.floor(foodXhr.response.recipe.totalDaily.VITD) / amountOfServings;
-      var zinc = Math.floor(foodXhr.response.recipe.totalDaily.ZN) / amountOfServings;
+      var calcium = Math.floor(foodXhr.response.recipe.totalDaily.CA.quantity) / amountOfServings;
+      var iron = Math.floor(foodXhr.response.recipe.totalDaily.FE.quantity) / amountOfServings;
+      var potassium = Math.floor(foodXhr.response.recipe.totalDaily.K.quantity) / amountOfServings;
+      var magnesium = Math.floor(foodXhr.response.recipe.totalDaily.MG.quantity) / amountOfServings;
+      var sodium = Math.floor(foodXhr.response.recipe.totalDaily.NA.quantity) / amountOfServings;
+      var vitaminE = Math.floor(foodXhr.response.recipe.totalDaily.TOCPHA.quantity) / amountOfServings;
+      var vitaminB6 = Math.floor(foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings;
+      var vitaminD = Math.floor(foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings;
+      var zinc = Math.floor(foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings;
       var ingredients = [];
       console.log('cholesterol', cholesterol);
-      console.log('calories from second xml call', calories);
+      console.log('calcium', calcium);
+      console.log('iron', iron);
+      console.log('potassium', potassium);
+
+      console.log('magnesium', magnesium);
+
+      console.log('sodium', sodium);
+
+      console.log('vitE', vitaminE);
+
+      console.log('vitB6', vitaminB6);
+      console.log('vitD', vitaminD);
+      console.log('zinc', zinc);
 
       var imageContainer = document.createElement('div');
       imageContainer.setAttribute('class', 'row column-width90 margin-top10');
@@ -296,13 +308,13 @@ function handleImageClick(event) {
       headerTextContainerRight.textContent = '% Daily Value';
       headerTextContainerRight.setAttribute('class', 'column-width50 nutrition-text-small');
       headerTextContainer.appendChild(headerTextContainerRight);
-      // basic nutrition details
+      // BASIC NUTRITION DETAILS
 
       var basicAndDetailsContainer = document.createElement('div');
       basicAndDetailsContainer.setAttribute('class', 'row column-width95');
 
       var nutritionLeftContainer = document.createElement('div');
-      nutritionLeftContainer.setAttribute('class', 'row row-colum column-width50');
+      nutritionLeftContainer.setAttribute('class', 'row column-width50');
       detailedNutritionContainer.appendChild(basicAndDetailsContainer);
 
       var nutritionBasicNames = document.createElement('div');
@@ -329,7 +341,7 @@ function handleImageClick(event) {
       paragraphElCarbs.setAttribute('class', 'value-text-thick');
       paragraphElCarbs.textContent = 'Carbs:';
       nutritionBasicNames.appendChild(paragraphElCarbs);
-      // basic values left
+      // BASIC VALUES LEFT
       var nutritionBasicLeftValues = document.createElement('div');
       nutritionBasicLeftValues.setAttribute('class', 'column-width50');
       nutritionLeftContainer.appendChild(nutritionBasicLeftValues);
@@ -351,15 +363,14 @@ function handleImageClick(event) {
       nutritionBasicLeftValues.appendChild(paragraphElCarbsAPI);
 
       var nutritionRightContainer = document.createElement('div');
-      nutritionRightContainer.setAttribute('class', 'column-width50');
+      nutritionRightContainer.setAttribute('class', 'row column-width50');
       basicAndDetailsContainer.appendChild(nutritionRightContainer);
 
-      // mineral values
+      // MINERAL VALUES
       var mineralNames = document.createElement('div');
       mineralNames.setAttribute('class', 'column-width50');
       nutritionRightContainer.appendChild(mineralNames);
-      basicAndDetailsContainer.appendChild(nutritionRightContainer);
-
+      // MINERAL NAMES
       var paragraphElCholesterol = document.createElement('p');
       paragraphElCholesterol.setAttribute('class', 'value-text-thick value-text-small');
       paragraphElCholesterol.textContent = 'Cholesterol:';
@@ -409,7 +420,64 @@ function handleImageClick(event) {
       paragraphElZinc.setAttribute('class', 'value-text-thick value-text-small');
       paragraphElZinc.textContent = 'Zinc:';
       mineralNames.appendChild(paragraphElZinc);
+      // MINERAL DAILY VALUES
 
+      var mineralDailyValues = document.createElement('div');
+      mineralDailyValues.setAttribute('class', 'column-width50');
+
+      // basicAndDetailsContainer.appendChild(nutritionRightContainer);
+
+      var paragraphElCholesterolDailyValue = document.createElement('p');
+      paragraphElCholesterolDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCholesterolDailyValue.textContent = cholesterol + '%';
+      mineralDailyValues.appendChild(paragraphElCholesterolDailyValue);
+
+      var paragraphElCalciumDailyValue = document.createElement('p');
+      paragraphElCalciumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCalciumDailyValue.textContent = calcium + '%';
+      mineralDailyValues.appendChild(paragraphElCalciumDailyValue);
+
+      var paragraphElIronDailyValue = document.createElement('p');
+      paragraphElIronDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElIronDailyValue.textContent = iron + '%';
+      mineralDailyValues.appendChild(paragraphElIronDailyValue);
+
+      var paragraphElPotassiumDailyValue = document.createElement('p');
+      paragraphElPotassiumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElPotassiumDailyValue.textContent = potassium + '%';
+      mineralDailyValues.appendChild(paragraphElPotassiumDailyValue);
+
+      var paragraphElMagnesiumDailyValue = document.createElement('p');
+      paragraphElMagnesiumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElMagnesiumDailyValue.textContent = magnesium + '%';
+      mineralDailyValues.appendChild(paragraphElMagnesiumDailyValue);
+
+      var paragraphElSodiumDailyValue = document.createElement('p');
+      paragraphElSodiumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElSodiumDailyValue.textContent = sodium + '%';
+      mineralDailyValues.appendChild(paragraphElSodiumDailyValue);
+
+      var paragraphElVitaminEDailyValue = document.createElement('p');
+      paragraphElVitaminEDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminEDailyValue.textContent = vitaminE + '%';
+      mineralDailyValues.appendChild(paragraphElVitaminEDailyValue);
+
+      var paragraphElVitaminB6DailyValue = document.createElement('p');
+      paragraphElVitaminB6DailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminB6DailyValue.textContent = vitaminB6 + '%';
+      mineralDailyValues.appendChild(paragraphElVitaminB6DailyValue);
+
+      var paragraphElVitaminDDailyValue = document.createElement('p');
+      paragraphElVitaminDDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminDDailyValue.textContent = vitaminD + '%';
+      mineralDailyValues.appendChild(paragraphElVitaminDDailyValue);
+
+      var paragraphElZincDailyValue = document.createElement('p');
+      paragraphElZincDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElZincDailyValue.textContent = zinc + '%';
+      mineralDailyValues.appendChild(paragraphElZincDailyValue);
+
+      nutritionRightContainer.appendChild(mineralDailyValues);
     }
     );
   }
@@ -432,3 +500,14 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
+/*
+ var cholesterol = Math.floor(foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings;
+      var calcium = Math.floor(foodXhr.response.recipe.totalDaily.CA.quantity) / amountOfServings;
+      var iron = Math.floor(foodXhr.response.recipe.totalDaily.FE.quantity) / amountOfServings;
+      var potassium = Math.floor(foodXhr.response.recipe.totalDaily.K.quantity) / amountOfServings;
+      var magnesium = Math.floor(foodXhr.response.recipe.totalDaily.MG.quantity) / amountOfServings;
+      var sodium = Math.floor(foodXhr.response.recipe.totalDaily.NA.quantity) / amountOfServings;
+      var vitaminE = Math.floor(foodXhr.response.recipe.totalDaily.TOCPHA.quantity) / amountOfServings;
+      var vitaminB6 = Math.floor(foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings;
+      var vitaminD = Math.floor(foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings;
+      var zinc = Math.floor(foodXhr.response.recipe.to */
