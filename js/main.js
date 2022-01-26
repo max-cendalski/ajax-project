@@ -329,7 +329,7 @@ function handleImageClick(event) {
       paragraphElCarbs.setAttribute('class', 'value-text-thick');
       paragraphElCarbs.textContent = 'Carbs:';
       nutritionBasicNames.appendChild(paragraphElCarbs);
-      // values
+      // basic values left
       var nutritionBasicLeftValues = document.createElement('div');
       nutritionBasicLeftValues.setAttribute('class', 'column-width50');
       nutritionLeftContainer.appendChild(nutritionBasicLeftValues);
@@ -353,6 +353,63 @@ function handleImageClick(event) {
       var nutritionRightContainer = document.createElement('div');
       nutritionRightContainer.setAttribute('class', 'column-width50');
       basicAndDetailsContainer.appendChild(nutritionRightContainer);
+
+      // mineral values
+      var mineralNames = document.createElement('div');
+      mineralNames.setAttribute('class', 'column-width50');
+      nutritionRightContainer.appendChild(mineralNames);
+      basicAndDetailsContainer.appendChild(nutritionRightContainer);
+
+      var paragraphElCholesterol = document.createElement('p');
+      paragraphElCholesterol.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCholesterol.textContent = 'Cholesterol:';
+      mineralNames.appendChild(paragraphElCholesterol);
+
+      var paragraphElCalcium = document.createElement('p');
+      paragraphElCalcium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCalcium.textContent = 'Calcium:';
+      mineralNames.appendChild(paragraphElCalcium);
+
+      var paragraphElIron = document.createElement('p');
+      paragraphElIron.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElIron.textContent = 'Iron:';
+      mineralNames.appendChild(paragraphElIron);
+
+      var paragraphElPotassium = document.createElement('p');
+      paragraphElPotassium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElPotassium.textContent = 'Potassium:';
+      mineralNames.appendChild(paragraphElPotassium);
+
+      var paragraphElMagnesium = document.createElement('p');
+      paragraphElMagnesium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElMagnesium.textContent = 'Magnesium:';
+      mineralNames.appendChild(paragraphElMagnesium);
+
+      var paragraphElSodium = document.createElement('p');
+      paragraphElSodium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElSodium.textContent = 'Sodium:';
+      mineralNames.appendChild(paragraphElSodium);
+
+      var paragraphElVitaminE = document.createElement('p');
+      paragraphElVitaminE.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminE.textContent = 'Vitamin E:';
+      mineralNames.appendChild(paragraphElVitaminE);
+
+      var paragraphElVitaminB6 = document.createElement('p');
+      paragraphElVitaminB6.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminB6.textContent = 'Vitamin B6:';
+      mineralNames.appendChild(paragraphElVitaminB6);
+
+      var paragraphElVitaminD = document.createElement('p');
+      paragraphElVitaminD.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminD.textContent = 'Vitamin D:';
+      mineralNames.appendChild(paragraphElVitaminD);
+
+      var paragraphElZinc = document.createElement('p');
+      paragraphElZinc.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElZinc.textContent = 'Zinc:';
+      mineralNames.appendChild(paragraphElZinc);
+
     }
     );
   }
@@ -360,10 +417,6 @@ function handleImageClick(event) {
 
 }
 
-/* var imageContainer = document.createElement('div');
-imageContainer.setAttribute('class', 'column-width40 image-container');
-mainRow.appendChild(imageContainer);
- */
 function switchingViews(viewName) {
   var $viewList = document.querySelectorAll('.view');
   for (var i = 0; i < $viewList.length; i++) {
@@ -379,9 +432,3 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
-
-/* var recipeIdString = foodXhr.response.hits[i].recipe.uri;
-      var recipeIdHashPosition = recipeIdString.indexOf('#');
-      recipeId = recipeIdString.slice(recipeIdHashPosition + 1);
-      recipeName = foodXhr.response.hits[i].recipe.label;
-      recipeImage = foodXhr.response.hits[i].recipe.image; */
