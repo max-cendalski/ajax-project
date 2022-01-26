@@ -62,10 +62,10 @@ body {
     margin-top: 0;
   }
 
-  .column-full,
+  /*  .column-full,
   .column-half {
     padding: 0 0.75rem;
-  }
+  } */
 
   .column-half {
     width: 50%;
