@@ -250,14 +250,8 @@ function handleImageClick(event) {
       var vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
       var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
-      var ingredients = [];
-      var ingredientsList = foodXhr.response.recipe.ingredients;
-      console.log('ingredientsList', ingredientsList);
-      for (var i = 0; i < ingredientsList.length; i++) {
-        ingredients.push(ingredientsList[i].text);
-      }
-
-      console.log('ingredients', ingredients);
+      var firstArr = [calories, sugar, protein];
+      console.log('firstArr at 1 ', firstArr[1]);
 
       var imageContainer = document.createElement('div');
       imageContainer.setAttribute('class', 'row column-width90 margin-top10');
@@ -485,6 +479,23 @@ function handleImageClick(event) {
       ingredientsSectionText.textContent = 'Ingredients';
       ingredientsSection.appendChild(ingredientsSectionText);
 
+      var ingredientsListContainer = document.createElement('div');
+      ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
+      detailedNutritionContainer.appendChild(ingredientsListContainer);
+
+      var ingredients = [];
+      var ingredientsList = foodXhr.response.recipe.ingredients;
+      console.log('ingredientsList', ingredientsList);
+      for (var i = 0; i < ingredientsList.length; i++) {
+        ingredients.push(ingredientsList[i].text);
+      }
+
+      ingredientsList.forEach((item, index) => {
+        var text = document.createElement('p');
+        text.setAttribute('class', 'ingredients padding-top5 padding-left10');
+        text.textContent = `${index + 1}) ${item.text}`;
+        ingredientsListContainer.appendChild(text);
+      });
     }
     );
   }
