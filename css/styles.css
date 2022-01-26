@@ -189,6 +189,23 @@ input[type=number]::-webkit-outer-spin-button {
   padding-left: 10px;
 }
 
+.padding-top5 {
+  padding-top: 5px;
+}
+
+.padding-bottom5 {
+  padding-bottom: 5px;
+}
+
+.padding-top10 {
+  padding-top: 10px;
+}
+
+.padding-top-bottom5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .instruction-link {
   height: 3rem;
   background-color: rgb(41, 117, 21);

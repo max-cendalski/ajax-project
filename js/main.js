@@ -251,6 +251,13 @@ function handleImageClick(event) {
       var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
       var ingredients = [];
+      var ingredientsList = foodXhr.response.recipe.ingredients;
+      console.log('ingredientsList', ingredientsList);
+      for (var i = 0; i < ingredientsList.length; i++) {
+        ingredients.push(ingredientsList[i].text);
+      }
+
+      console.log('ingredients', ingredients);
 
       var imageContainer = document.createElement('div');
       imageContainer.setAttribute('class', 'row column-width90 margin-top10');
@@ -309,22 +316,22 @@ function handleImageClick(event) {
       basicAndDetailsContainer.appendChild(nutritionLeftContainer);
 
       var paragraphElCalories = document.createElement('p');
-      paragraphElCalories.setAttribute('class', 'value-text-thick');
+      paragraphElCalories.setAttribute('class', 'value-text-thick padding-top10');
       paragraphElCalories.textContent = 'Calories:';
       nutritionBasicNames.appendChild(paragraphElCalories);
 
       var paragraphElSugar = document.createElement('p');
-      paragraphElSugar.setAttribute('class', 'value-text-thick');
+      paragraphElSugar.setAttribute('class', 'value-text-thick padding-top10');
       paragraphElSugar.textContent = 'Sugar:';
       nutritionBasicNames.appendChild(paragraphElSugar);
 
       var paragraphElProtein = document.createElement('p');
-      paragraphElProtein.setAttribute('class', 'value-text-thick');
+      paragraphElProtein.setAttribute('class', 'value-text-thick padding-top10');
       paragraphElProtein.textContent = 'Protein:';
       nutritionBasicNames.appendChild(paragraphElProtein);
 
       var paragraphElCarbs = document.createElement('p');
-      paragraphElCarbs.setAttribute('class', 'value-text-thick');
+      paragraphElCarbs.setAttribute('class', 'value-text-thick padding-top10');
       paragraphElCarbs.textContent = 'Carbs:';
       nutritionBasicNames.appendChild(paragraphElCarbs);
       // BASIC VALUES LEFT
@@ -334,18 +341,22 @@ function handleImageClick(event) {
 
       var paragraphElCaloriesAPI = document.createElement('p');
       paragraphElCaloriesAPI.textContent = calories + 'kcal';
+      paragraphElCaloriesAPI.setAttribute('class', 'padding-top10');
       nutritionBasicLeftValues.appendChild(paragraphElCaloriesAPI);
 
       var paragraphElSugarAPI = document.createElement('p');
       paragraphElSugarAPI.textContent = sugar + 'g';
+      paragraphElSugarAPI.setAttribute('class', 'padding-top10');
       nutritionBasicLeftValues.appendChild(paragraphElSugarAPI);
 
       var paragraphElProteinAPI = document.createElement('p');
       paragraphElProteinAPI.textContent = protein + 'g';
+      paragraphElProteinAPI.setAttribute('class', 'padding-top10');
       nutritionBasicLeftValues.appendChild(paragraphElProteinAPI);
 
       var paragraphElCarbsAPI = document.createElement('p');
       paragraphElCarbsAPI.textContent = carbs + 'g';
+      paragraphElCarbsAPI.setAttribute('class', 'padding-top10');
       nutritionBasicLeftValues.appendChild(paragraphElCarbsAPI);
 
       var nutritionRightContainer = document.createElement('div');
@@ -358,52 +369,52 @@ function handleImageClick(event) {
       nutritionRightContainer.appendChild(mineralNames);
       // MINERAL NAMES
       var paragraphElCholesterol = document.createElement('p');
-      paragraphElCholesterol.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCholesterol.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElCholesterol.textContent = 'Cholesterol:';
       mineralNames.appendChild(paragraphElCholesterol);
 
       var paragraphElCalcium = document.createElement('p');
-      paragraphElCalcium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCalcium.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElCalcium.textContent = 'Calcium:';
       mineralNames.appendChild(paragraphElCalcium);
 
       var paragraphElIron = document.createElement('p');
-      paragraphElIron.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElIron.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElIron.textContent = 'Iron:';
       mineralNames.appendChild(paragraphElIron);
 
       var paragraphElPotassium = document.createElement('p');
-      paragraphElPotassium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElPotassium.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElPotassium.textContent = 'Potassium:';
       mineralNames.appendChild(paragraphElPotassium);
 
       var paragraphElMagnesium = document.createElement('p');
-      paragraphElMagnesium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElMagnesium.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElMagnesium.textContent = 'Magnesium:';
       mineralNames.appendChild(paragraphElMagnesium);
 
       var paragraphElSodium = document.createElement('p');
-      paragraphElSodium.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElSodium.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElSodium.textContent = 'Sodium:';
       mineralNames.appendChild(paragraphElSodium);
 
       var paragraphElVitaminE = document.createElement('p');
-      paragraphElVitaminE.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminE.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElVitaminE.textContent = 'Vitamin E:';
       mineralNames.appendChild(paragraphElVitaminE);
 
       var paragraphElVitaminB6 = document.createElement('p');
-      paragraphElVitaminB6.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminB6.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElVitaminB6.textContent = 'Vitamin B6:';
       mineralNames.appendChild(paragraphElVitaminB6);
 
       var paragraphElVitaminD = document.createElement('p');
-      paragraphElVitaminD.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminD.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElVitaminD.textContent = 'Vitamin D:';
       mineralNames.appendChild(paragraphElVitaminD);
 
       var paragraphElZinc = document.createElement('p');
-      paragraphElZinc.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElZinc.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElZinc.textContent = 'Zinc:';
       mineralNames.appendChild(paragraphElZinc);
       // MINERAL DAILY VALUES
@@ -414,52 +425,52 @@ function handleImageClick(event) {
       // basicAndDetailsContainer.appendChild(nutritionRightContainer);
 
       var paragraphElCholesterolDailyValue = document.createElement('p');
-      paragraphElCholesterolDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCholesterolDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElCholesterolDailyValue.textContent = cholesterol + '%';
       mineralDailyValues.appendChild(paragraphElCholesterolDailyValue);
 
       var paragraphElCalciumDailyValue = document.createElement('p');
-      paragraphElCalciumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElCalciumDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElCalciumDailyValue.textContent = calcium + '%';
       mineralDailyValues.appendChild(paragraphElCalciumDailyValue);
 
       var paragraphElIronDailyValue = document.createElement('p');
-      paragraphElIronDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElIronDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElIronDailyValue.textContent = iron + '%';
       mineralDailyValues.appendChild(paragraphElIronDailyValue);
 
       var paragraphElPotassiumDailyValue = document.createElement('p');
-      paragraphElPotassiumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElPotassiumDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElPotassiumDailyValue.textContent = potassium + '%';
       mineralDailyValues.appendChild(paragraphElPotassiumDailyValue);
 
       var paragraphElMagnesiumDailyValue = document.createElement('p');
-      paragraphElMagnesiumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElMagnesiumDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElMagnesiumDailyValue.textContent = magnesium + '%';
       mineralDailyValues.appendChild(paragraphElMagnesiumDailyValue);
 
       var paragraphElSodiumDailyValue = document.createElement('p');
-      paragraphElSodiumDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElSodiumDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElSodiumDailyValue.textContent = sodium + '%';
       mineralDailyValues.appendChild(paragraphElSodiumDailyValue);
 
       var paragraphElVitaminEDailyValue = document.createElement('p');
-      paragraphElVitaminEDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminEDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElVitaminEDailyValue.textContent = vitaminE + '%';
       mineralDailyValues.appendChild(paragraphElVitaminEDailyValue);
 
       var paragraphElVitaminB6DailyValue = document.createElement('p');
-      paragraphElVitaminB6DailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminB6DailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElVitaminB6DailyValue.textContent = vitaminB6 + '%';
       mineralDailyValues.appendChild(paragraphElVitaminB6DailyValue);
 
       var paragraphElVitaminDDailyValue = document.createElement('p');
-      paragraphElVitaminDDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElVitaminDDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5');
       paragraphElVitaminDDailyValue.textContent = vitaminD + '%';
       mineralDailyValues.appendChild(paragraphElVitaminDDailyValue);
 
       var paragraphElZincDailyValue = document.createElement('p');
-      paragraphElZincDailyValue.setAttribute('class', 'value-text-thick value-text-small');
+      paragraphElZincDailyValue.setAttribute('class', 'value-text-thick value-text-small padding-top5 padding-bottom5');
       paragraphElZincDailyValue.textContent = zinc + '%';
       mineralDailyValues.appendChild(paragraphElZincDailyValue);
 
@@ -470,6 +481,7 @@ function handleImageClick(event) {
       detailedNutritionContainer.appendChild(ingredientsSection);
 
       var ingredientsSectionText = document.createElement('h4');
+      ingredientsSectionText.setAttribute('class', 'padding-top-bottom5');
       ingredientsSectionText.textContent = 'Ingredients';
       ingredientsSection.appendChild(ingredientsSectionText);
 
