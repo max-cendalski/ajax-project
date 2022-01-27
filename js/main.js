@@ -253,11 +253,10 @@ function handleImageClick(event) {
       var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
 
       var goBack = document.createElement('a');
-      goBack.textContent = 'Go Back';
-      goBack.setAttribute('class', 'instruction-link');
+      goBack.textContent = 'Go Back To Search Results';
+      goBack.setAttribute('class', 'go-back-button');
       $detailedRecipeContainer.appendChild(goBack);
-      goBack.addEventListener('click', function (event) {
-        event.preventDefault();
+      goBack.addEventListener('click', function () {
         switchingViews('basic-search-view');
         $form.setAttribute('class', 'view');
       });
@@ -428,7 +427,6 @@ function handleImageClick(event) {
     );
   }
   foodXhr.send();
-
 }
 
 function switchingViews(viewName, optional) {
