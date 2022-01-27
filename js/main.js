@@ -21,7 +21,7 @@ var recipeId = '';
 
 function renderEntry(entry) {
   var liElement = document.createElement('li');
-  liElement.setAttribute('class', 'column-width90 margin-top20 border-radius10');
+  liElement.setAttribute('class', 'box-shadow5 column-width90 margin-top20 border-radius10');
   liElement.setAttribute('data-recipeId', recipeId);
   $list.appendChild(liElement);
 
@@ -252,34 +252,37 @@ function handleImageClick(event) {
       var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
 
+      var imageAndLinksContainer = document.createElement('div');
+      imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
       var goBack = document.createElement('a');
       goBack.textContent = 'Go Back To Search Results';
-      goBack.setAttribute('class', 'go-back-button');
-      $detailedRecipeContainer.appendChild(goBack);
+      goBack.setAttribute('class', ' box-shadow5 go-back-button');
+      imageAndLinksContainer.appendChild(goBack);
       goBack.addEventListener('click', function () {
         switchingViews('basic-search-view');
         $form.setAttribute('class', 'view');
       });
 
       var imageContainer = document.createElement('div');
-      imageContainer.setAttribute('class', 'row column-width90 margin-top10');
-      $detailedRecipeContainer.appendChild(imageContainer);
+      imageContainer.setAttribute('class', 'detailed-image-container margin-top10');
+      imageAndLinksContainer.appendChild(imageContainer);
+      $detailedRecipeContainer.appendChild(imageAndLinksContainer);
 
       var imageElement = document.createElement('img');
-      imageElement.setAttribute('class', 'detailed-view-image border-radius5');
+      imageElement.setAttribute('class', 'box-shadow5 border-radius5');
       imageElement.setAttribute('src', foodXhr.response.recipe.image);
       imageContainer.appendChild(imageElement);
 
       var linkElement = document.createElement('a');
-      linkElement.setAttribute('class', 'instruction-link margin-top10 border-radius5');
+      linkElement.setAttribute('class', 'box-shadow5 instruction-link margin-top10 border-radius5');
       linkElement.setAttribute('href', foodXhr.response.recipe.url);
       linkElement.textContent = 'Instruction';
-      $detailedRecipeContainer.appendChild(linkElement);
+      imageAndLinksContainer.appendChild(linkElement);
 
       // DETAILED NUTRITION SECTION
 
       var detailedNutritionContainer = document.createElement('div');
-      detailedNutritionContainer.setAttribute('class', 'row row-column column-width90 border-radius-all margin-top10 ');
+      detailedNutritionContainer.setAttribute('class', 'column-width90 border-radius-all margin-top10 ');
       $detailedRecipeContainer.appendChild(detailedNutritionContainer);
 
       var recipeHeader = document.createElement('div');

@@ -84,6 +84,15 @@ ul {
   cursor: pointer;
 }
 
+.detailed-image-container {
+  display: flex;
+  width: 100%;
+}
+
+.detailed-image-container img {
+  width: 100%;
+}
+
 .header-container {
   border-bottom: 1px solid rgb(168, 160, 160);
   overflow: hidden;
@@ -94,31 +103,6 @@ h3 {
   padding-bottom: 5px;
   padding-left: 5px;
   overflow: hidden;
-}
-
-.column-width40 p {
-  padding-top: 10px;
-  width: 40%;
-}
-
-.column-width45 {
-  width: 45%;
-}
-
-.column-width50 {
-  width: 50%;
-}
-
-.column-width60 {
-  width: 60%;
-}
-
-.column-width60 p {
-  padding-top: 10px;
-}
-
-.column-width95 {
-  width: 95%;
 }
 
 .li-element {
@@ -254,15 +238,14 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 0.7rem;
 }
 
-.detailed-view-image {
-  width: 100%;
-  height: 20rem;
-}
-
 .border-top-grey {
   border-top: 1px solid grey;
 }
 
 .ingredients {
   font-size: 0.8rem;
+}
+
+.box-shadow5 {
+  box-shadow: 4px 4px rgb(231, 227, 227);
 }
