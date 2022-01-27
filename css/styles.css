@@ -40,10 +40,6 @@ input::placeholder {
   font-size: 1rem;
 }
 
-.margin-top20 {
-  margin-top: 20px;
-}
-
 .add-option-button {
   background-color: rgb(41, 117, 21);
   color: white;
@@ -85,6 +81,16 @@ ul {
 .image-container img {
   border-radius: 7px 0 0 7px;
   width: 100%;
+  cursor: pointer;
+}
+
+.detailed-image-container {
+  display: flex;
+  width: 100%;
+}
+
+.detailed-image-container img {
+  width: 100%;
 }
 
 .header-container {
@@ -97,16 +103,6 @@ h3 {
   padding-bottom: 5px;
   padding-left: 5px;
   overflow: hidden;
-}
-
-.column-width40 p {
-  font-weight: 600;
-  padding-top: 10px;
-  padding-left: 5px;
-}
-
-.column-width60 p {
-  padding-top: 10px;
 }
 
 .li-element {
@@ -128,6 +124,14 @@ input[type=number]::-webkit-outer-spin-button {
   margin-right: 20px;
 }
 
+.margin-top20 {
+  margin-top: 20px;
+}
+
+.margin-top10 {
+  margin-top: 10px;
+}
+
 .width20 {
   width: 20%;
 }
@@ -141,6 +145,107 @@ input[type=number]::-webkit-outer-spin-button {
   border: 1px solid grey;
 }
 
+.padding-left5 {
+  padding-left: 5px;
+}
+
+.border-radius5 {
+  border-radius: 5px;
+}
+
 .text-centered {
   text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.row-column {
+  flex-direction: column;
+}
+
+.padding-bottom10 {
+  padding-bottom: 10px;
+}
+
+.padding-left10 {
+  padding-left: 10px;
+}
+
+.padding-top5 {
+  padding-top: 5px;
+}
+
+.padding-bottom5 {
+  padding-bottom: 5px;
+}
+
+.padding-top10 {
+  padding-top: 10px;
+}
+
+.padding-top-bottom5 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.instruction-link {
+  height: 2rem;
+  background-color: rgb(41, 117, 21);
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1.2rem;
+  padding-top: 0.9rem;
+  letter-spacing: 0.1rem;
+  width: 15rem;
+  cursor: pointer;
+  line-height: 0.2;
+}
+
+.go-back-button {
+  height: 2rem;
+  background-color: rgb(224, 39, 76);
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.border-bottom-grey {
+  border-bottom: 1px solid grey;
+}
+
+.nutrition-text-small {
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding-bottom: 3px;
+}
+
+.value-text-thin {
+  font-weight: 200;
+}
+
+.value-text-thick {
+  font-weight: 600;
+}
+
+.value-text-small {
+  font-size: 0.7rem;
+}
+
+.border-top-grey {
+  border-top: 1px solid grey;
+}
+
+.ingredients {
+  font-size: 0.8rem;
+}
+
+.box-shadow5 {
+  box-shadow: 4px 4px rgb(231, 227, 227);
 }
