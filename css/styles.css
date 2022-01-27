@@ -216,6 +216,7 @@ input[type=number]::-webkit-outer-spin-button {
   padding-top: 0.9rem;
   letter-spacing: 0.2rem;
   width: 13rem;
+  cursor: pointer;
 }
 
 .border-bottom-grey {
