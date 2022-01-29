@@ -96,6 +96,7 @@ function renderEntry(entry) {
   var paragraphElInfo = document.createElement('p');
   paragraphElInfo.textContent = '* all values are for one portion';
   paragraphElInfo.setAttribute('class', 'info-text-small');
+  innerColumnWidth60.appendChild(paragraphElInfo);
 
   return liElement;
 }
