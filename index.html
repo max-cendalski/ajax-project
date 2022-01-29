@@ -30,7 +30,7 @@
       <div class="row">
         <form id="form" class="view" data-view="search-form">
             <div class=" row column-width90 margin-top20">
-              <input id="search-box" class="column-width90 box-shadow5" type="text" name="search" placeholder="search" required autofocus>
+              <input id="search-box" class="column-width90 box-shadow5" type="text" name="search" placeholder="search for a recipe" required autofocus>
               <button class="submit-button box-shadow5">&#128270</button>
           </div>
           <div class="column-width90">
@@ -67,6 +67,12 @@
 
         </div>
       </div>
+
+    <div class="view hidden" data-view="favorites">
+      <ul class="column-full row flex wrap" id="favorite-list">
+
+      </ul>
+    </div>
     </div>
   </main>
   <script src="js/data.js"></script>
