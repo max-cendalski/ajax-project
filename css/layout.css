@@ -35,6 +35,7 @@ body {
 
 .column-width90 {
   width: 90%;
+  position: relative;
 }
 
 .column-width80 {
@@ -43,6 +44,7 @@ body {
 
 .column-width60 {
   width: 60%;
+  position: relative;
 }
 
 .column-width60 p {
