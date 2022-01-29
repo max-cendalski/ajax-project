@@ -1,8 +1,7 @@
 /* exported data */
 
 var data = {
-  view: 'entries',
+  view: 'favorites',
   entries: [],
-  editing: null,
   nextEntryId: 1
 };
