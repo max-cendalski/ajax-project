@@ -29,11 +29,6 @@ body {
   border: 1px solid grey;
 }
 
-.column-width40 p {
-  padding-top: 10px;
-  width: 40%;
-}
-
 .column-width95 {
   width: 95%;
 }
@@ -51,7 +46,7 @@ body {
 }
 
 .column-width60 p {
-  padding-top: 10px;
+  padding-top: 5px;
 }
 
 .column-width50 {

@@ -93,6 +93,10 @@ function renderEntry(entry) {
   paragraphElCarbsAPI.textContent = carbs + 'g';
   innerColumnWidth60.appendChild(paragraphElCarbsAPI);
 
+  var paragraphElInfo = document.createElement('p');
+  paragraphElInfo.textContent = '* all values are for one portion';
+  paragraphElInfo.setAttribute('class', 'info-text-small');
+
   return liElement;
 }
 var minCalories = 1;
