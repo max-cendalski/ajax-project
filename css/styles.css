@@ -4,6 +4,10 @@
   color: white;
 }
 
+h2 {
+  font-size: 1.8rem;
+}
+
 form {
   width: 100%;
 }
