@@ -63,6 +63,10 @@ body {
   width: 20%;
 }
 
+.colum-width5 {
+  width: 5%;
+}
+
 .image-links-container {
   display: flex;
   flex-direction: column;

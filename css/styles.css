@@ -4,10 +4,6 @@
   color: white;
 }
 
-h2 {
-  font-size: 1.8rem;
-}
-
 form {
   width: 100%;
 }
@@ -67,14 +63,17 @@ select {
 .icon {
   color: white;
   padding-top: 15px;
-  padding-left: 5%;
+  padding-left: 3%;
   cursor: pointer;
 }
 
 .favorite-icon {
   color: orange;
-  display: inline-block;
   cursor: pointer;
+}
+
+.inline-element {
+  display: inline-block;
 }
 
 ul {

@@ -295,9 +295,13 @@ function handleImageClick(event) {
       detailedNutritionContainer.appendChild(recipeHeader);
 
       var recipeHeaderName = document.createElement('h2');
-      recipeHeaderName.setAttribute('class', 'padding-bottom10');
+      recipeHeaderName.setAttribute('class', 'column-width95 inline-element padding-top5 padding-bottom10');
       recipeHeaderName.textContent = recipeName;
       recipeHeader.appendChild(recipeHeaderName);
+
+      var favoriteIcon = document.createElement('span');
+      favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
+      recipeHeader.appendChild(favoriteIcon);
 
       var headerTextContainer = document.createElement('div');
       headerTextContainer.setAttribute('class', 'column-full row');
