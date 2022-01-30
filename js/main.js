@@ -299,7 +299,7 @@ function handleImageClick(event) {
       recipeHeaderName.textContent = recipeName;
       recipeHeader.appendChild(recipeHeaderName);
 
-      var favoriteIcon = document.createElement('span');
+      var favoriteIcon = document.createElement('div');
       favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
       recipeHeader.appendChild(favoriteIcon);
 
