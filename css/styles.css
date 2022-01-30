@@ -67,6 +67,12 @@ select {
   cursor: pointer;
 }
 
+.favorite-icon {
+  color: orange;
+  display: inline-block;
+  cursor: pointer;
+}
+
 ul {
   margin-top: 30px;
   list-style-type: none;
