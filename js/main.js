@@ -468,7 +468,9 @@ function handleImageClick(event) {
         };
         data.entries.push(singleRecipeDetails);
         // console.log('singleRecipeDetails', data);
-        // console.log('recipeID', singleRecipeDetails.recipeId);
+        // console.log('recipeID', singleRecipeDetails);
+        var dataJSON = JSON.stringify(data);
+        localStorage.setItem('favorite-recipes', dataJSON);
       }
     }
     );
