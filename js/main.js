@@ -442,8 +442,6 @@ function handleImageClick(event) {
       $addToFavorites.addEventListener('click', handleFavorites);
 
       function handleFavorites() {
-        // console.log('whee');
-
         var singleRecipeDetails = {
           amountOfServings,
           recipeName,
@@ -467,8 +465,6 @@ function handleImageClick(event) {
 
         };
         data.entries.push(singleRecipeDetails);
-        // console.log('singleRecipeDetails', data);
-        // console.log('recipeID', singleRecipeDetails);
         var dataJSON = JSON.stringify(data);
         localStorage.setItem('favorite-recipes', dataJSON);
       }
