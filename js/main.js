@@ -164,9 +164,6 @@ function handleFormSubmit(event) {
   foodXhr.responseType = 'json';
 
   foodXhr.addEventListener('load', function () {
-    if (foodXhr.status !== 200) {
-      alert('No Results!');
-    }
     $list.replaceChildren();
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
@@ -182,8 +179,13 @@ function handleFormSubmit(event) {
       var result = renderEntry(foodXhr.response.hits[i]);
       $list.appendChild(result);
     }
+    if (!foodXhr.response.hits[0]) {
+      alert('no results');
+    }
   });
+
   foodXhr.send();
+
 }
 
 function createMinMaxNutritionBox(value) {
@@ -239,7 +241,6 @@ function handleImageClick(event) {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
-
       var amountOfServings = foodXhr.response.recipe.yield;
       var recipeName = foodXhr.response.recipe.label.slice(0, 30);
       calories = Math.floor((foodXhr.response.recipe.calories) / amountOfServings);
