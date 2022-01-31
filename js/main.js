@@ -232,6 +232,7 @@ function handleNutritionChoice(event) {
 }
 
 function handleImageClick(event) {
+
   event.preventDefault();
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
   switchingViews('detailed-search-view');
@@ -436,10 +437,19 @@ function handleImageClick(event) {
         text.textContent = `${index + 1}) ${item.text}`;
         ingredientsListContainer.appendChild(text);
       });
+
+      var $addToFavorites = document.querySelector('.favorite-icon');
+      $addToFavorites.addEventListener('click', handleFavorites);
+
+      function handleFavorites() {
+        // console.log('whee');
+      }
     }
     );
   }
+
   foodXhr.send();
+
 }
 
 function switchingViews(viewName, optional) {
