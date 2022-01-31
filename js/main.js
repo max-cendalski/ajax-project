@@ -443,6 +443,32 @@ function handleImageClick(event) {
 
       function handleFavorites() {
         // console.log('whee');
+
+        var singleRecipeDetails = {
+          amountOfServings,
+          recipeName,
+          calories,
+          sugar,
+          protein,
+          carbs,
+          cholesterol,
+          calcium,
+          iron,
+          potassium,
+          magnesium,
+          sodium,
+          vitaminE,
+          vitaminB6,
+          vitaminD,
+          zinc,
+          url: foodXhr.response.recipe.url,
+          recipeInstruction: foodXhr.response.recipe.uri,
+          recipeId: dataIdAttribute
+
+        };
+        data.entries.push(singleRecipeDetails);
+        // console.log('singleRecipeDetails', data);
+        // console.log('recipeID', singleRecipeDetails.recipeId);
       }
     }
     );
