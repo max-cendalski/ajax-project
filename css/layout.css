@@ -29,17 +29,13 @@ body {
   border: 1px solid grey;
 }
 
-.column-width40 p {
-  padding-top: 10px;
-  width: 40%;
-}
-
 .column-width95 {
   width: 95%;
 }
 
 .column-width90 {
   width: 90%;
+  position: relative;
 }
 
 .column-width80 {
@@ -48,10 +44,11 @@ body {
 
 .column-width60 {
   width: 60%;
+  position: relative;
 }
 
 .column-width60 p {
-  padding-top: 10px;
+  padding-top: 7px;
 }
 
 .column-width50 {
@@ -64,6 +61,10 @@ body {
 
 .column-width20 {
   width: 20%;
+}
+
+.colum-width5 {
+  width: 5%;
 }
 
 .image-links-container {

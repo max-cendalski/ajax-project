@@ -63,8 +63,17 @@ select {
 .icon {
   color: white;
   padding-top: 15px;
-  padding-left: 5%;
+  padding-left: 3%;
   cursor: pointer;
+}
+
+.favorite-icon {
+  color: orange;
+  cursor: pointer;
+}
+
+.inline-element {
+  display: inline-block;
 }
 
 ul {
@@ -248,4 +257,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 .box-shadow5 {
   box-shadow: 4px 4px rgb(231, 227, 227);
+}
+
+.info-text-small {
+  position: absolute;
+  bottom: 0;
+  padding-left: 5px;
+  font-size: 0.5rem;
+  font-weight: 700;
 }

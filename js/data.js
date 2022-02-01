@@ -1,8 +1,13 @@
 /* exported data */
 
 var data = {
-  view: 'entries',
-  entries: [],
-  editing: null,
-  nextEntryId: 1
+  view: 'favorites',
+  entries: []
 };
+
+function handleBeforUnload() {
+  var dataJSON = JSON.stringify(data);
+  localStorage.setItem('favorite-recipes', dataJSON);
+}
+
+window.addEventListener('beforeunload', handleBeforUnload);

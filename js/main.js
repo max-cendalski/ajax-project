@@ -93,6 +93,11 @@ function renderEntry(entry) {
   paragraphElCarbsAPI.textContent = carbs + 'g';
   innerColumnWidth60.appendChild(paragraphElCarbsAPI);
 
+  var paragraphElInfo = document.createElement('p');
+  paragraphElInfo.textContent = '* all values are for one portion';
+  paragraphElInfo.setAttribute('class', 'info-text-small');
+  headerContainer.appendChild(paragraphElInfo);
+
   return liElement;
 }
 var minCalories = 1;
@@ -159,9 +164,6 @@ function handleFormSubmit(event) {
   foodXhr.responseType = 'json';
 
   foodXhr.addEventListener('load', function () {
-    if (foodXhr.status !== 200) {
-      alert('No Results!');
-    }
     $list.replaceChildren();
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
@@ -177,8 +179,13 @@ function handleFormSubmit(event) {
       var result = renderEntry(foodXhr.response.hits[i]);
       $list.appendChild(result);
     }
+    if (!foodXhr.response.hits[0]) {
+      alert('no results');
+    }
   });
+
   foodXhr.send();
+
 }
 
 function createMinMaxNutritionBox(value) {
@@ -225,6 +232,7 @@ function handleNutritionChoice(event) {
 }
 
 function handleImageClick(event) {
+
   event.preventDefault();
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
   switchingViews('detailed-search-view');
@@ -234,7 +242,6 @@ function handleImageClick(event) {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
-
       var amountOfServings = foodXhr.response.recipe.yield;
       var recipeName = foodXhr.response.recipe.label.slice(0, 30);
       calories = Math.floor((foodXhr.response.recipe.calories) / amountOfServings);
@@ -289,10 +296,14 @@ function handleImageClick(event) {
       recipeHeader.setAttribute('class', 'column-full border-bottom-grey padding-left10');
       detailedNutritionContainer.appendChild(recipeHeader);
 
-      var headerRecipeName = document.createElement('h2');
-      headerRecipeName.setAttribute('class', 'padding-bottom10');
-      headerRecipeName.textContent = recipeName;
-      recipeHeader.appendChild(headerRecipeName);
+      var recipeHeaderName = document.createElement('h2');
+      recipeHeaderName.setAttribute('class', 'column-width95 inline-element padding-top5 padding-bottom10');
+      recipeHeaderName.textContent = recipeName;
+      recipeHeader.appendChild(recipeHeaderName);
+
+      var favoriteIcon = document.createElement('div');
+      favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
+      recipeHeader.appendChild(favoriteIcon);
 
       var headerTextContainer = document.createElement('div');
       headerTextContainer.setAttribute('class', 'column-full row');
@@ -426,10 +437,41 @@ function handleImageClick(event) {
         text.textContent = `${index + 1}) ${item.text}`;
         ingredientsListContainer.appendChild(text);
       });
+
+      var $addToFavorites = document.querySelector('.favorite-icon');
+      $addToFavorites.addEventListener('click', handleFavorites);
+
+      function handleFavorites() {
+        var singleRecipeDetails = {
+          amountOfServings,
+          recipeName,
+          calories,
+          sugar,
+          protein,
+          carbs,
+          cholesterol,
+          calcium,
+          iron,
+          potassium,
+          magnesium,
+          sodium,
+          vitaminE,
+          vitaminB6,
+          vitaminD,
+          zinc,
+          url: foodXhr.response.recipe.url,
+          recipeInstruction: foodXhr.response.recipe.uri,
+          recipeId: dataIdAttribute
+
+        };
+        data.entries.push(singleRecipeDetails);
+      }
     }
     );
   }
+
   foodXhr.send();
+
 }
 
 function switchingViews(viewName, optional) {
