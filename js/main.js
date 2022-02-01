@@ -4,6 +4,7 @@ var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
 var $minMaxContainer = document.querySelector('.min-max-container');
 var $detailedRecipeContainer = document.querySelector('#detailed-recipe-container');
+var $favoriteList = document.querySelector('#favorite-list');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -18,6 +19,13 @@ var carbs = '';
 var recipeImage = '';
 var amountOfServings = 0;
 var recipeId = '';
+
+window.addEventListener('DOMContentLoaded', event => {
+  for (var i = 0; data.entries.length; i++) {
+    var result = renderEntry(data.entries[i]);
+    $favoriteList.appendChild(result);
+  }
+});
 
 function renderEntry(entry) {
   var liElement = document.createElement('li');
