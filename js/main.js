@@ -4,6 +4,7 @@ var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
 var $minMaxContainer = document.querySelector('.min-max-container');
 var $detailedRecipeContainer = document.querySelector('#detailed-recipe-container');
+var $favoriteIcon = document.querySelector('#favorite-icon');
 var $favoriteList = document.querySelector('#favorite-list');
 
 var sugarCount = 0;
@@ -21,10 +22,16 @@ var amountOfServings = 0;
 var recipeId = '';
 
 window.addEventListener('DOMContentLoaded', event => {
-  for (var i = 0; data.entries.length; i++) {
+  for (var i = 0; i < data.entries.length; i++) {
     var result = renderEntry(data.entries[i]);
+    // console.log('dataEntries', data.entries[0]);
     $favoriteList.appendChild(result);
   }
+});
+
+$favoriteIcon.addEventListener('click', function () {
+  // console.log(data.entries);
+  switchingViews('favorites');
 });
 
 function renderEntry(entry) {
