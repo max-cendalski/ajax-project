@@ -264,189 +264,196 @@ function handleImageClick(event) {
       var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
 
-      var imageAndLinksContainer = document.createElement('div');
-      imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
-      var goBack = document.createElement('a');
-      goBack.textContent = 'Go Back To Search Results';
-      goBack.setAttribute('class', ' box-shadow5 go-back-button');
-      imageAndLinksContainer.appendChild(goBack);
-      goBack.addEventListener('click', function () {
-        switchingViews('basic-search-view');
-        $form.setAttribute('class', 'view');
-      });
+      function renderDetailedInfo(recipe) {
 
-      var imageContainer = document.createElement('div');
-      imageContainer.setAttribute('class', 'detailed-image-container margin-top10');
-      imageAndLinksContainer.appendChild(imageContainer);
-      $detailedRecipeContainer.appendChild(imageAndLinksContainer);
+        var liElement = document.createElement('li');
 
-      var imageElement = document.createElement('img');
-      imageElement.setAttribute('class', 'box-shadow5 border-radius5');
-      imageElement.setAttribute('src', foodXhr.response.recipe.image);
-      imageContainer.appendChild(imageElement);
+        var imageAndLinksContainer = document.createElement('div');
+        imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
+        var goBack = document.createElement('a');
+        goBack.textContent = 'Go Back To Search Results';
+        goBack.setAttribute('class', ' box-shadow5 go-back-button');
+        imageAndLinksContainer.appendChild(goBack);
+        liElement.appendChild(imageAndLinksContainer);
+        goBack.addEventListener('click', function () {
+          switchingViews('basic-search-view');
+          $form.setAttribute('class', 'view');
+        });
 
-      var linkElement = document.createElement('a');
-      linkElement.setAttribute('class', 'box-shadow5 instruction-link margin-top10 border-radius5');
-      linkElement.setAttribute('href', foodXhr.response.recipe.url);
-      linkElement.textContent = 'Instruction';
-      imageAndLinksContainer.appendChild(linkElement);
+        var imageContainer = document.createElement('div');
+        imageContainer.setAttribute('class', 'detailed-image-container margin-top10');
+        imageAndLinksContainer.appendChild(imageContainer);
+        $detailedRecipeContainer.appendChild(imageAndLinksContainer);
 
-      // DETAILED NUTRITION SECTION
+        var imageElement = document.createElement('img');
+        imageElement.setAttribute('class', 'box-shadow5 border-radius5');
+        imageElement.setAttribute('src', foodXhr.response.recipe.image);
+        imageContainer.appendChild(imageElement);
 
-      var detailedNutritionContainer = document.createElement('div');
-      detailedNutritionContainer.setAttribute('class', 'column-width90 border-radius-all margin-top10 ');
-      $detailedRecipeContainer.appendChild(detailedNutritionContainer);
+        var linkElement = document.createElement('a');
+        linkElement.setAttribute('class', 'box-shadow5 instruction-link margin-top10 border-radius5');
+        linkElement.setAttribute('href', foodXhr.response.recipe.url);
+        linkElement.textContent = 'Instruction';
+        imageAndLinksContainer.appendChild(linkElement);
 
-      var recipeHeader = document.createElement('div');
-      recipeHeader.setAttribute('class', 'column-full border-bottom-grey padding-left10');
-      detailedNutritionContainer.appendChild(recipeHeader);
+        // DETAILED NUTRITION SECTION
 
-      var recipeHeaderName = document.createElement('h2');
-      recipeHeaderName.setAttribute('class', 'column-width95 inline-element padding-top5 padding-bottom10');
-      recipeHeaderName.textContent = recipeName;
-      recipeHeader.appendChild(recipeHeaderName);
+        var detailedNutritionContainer = document.createElement('div');
+        detailedNutritionContainer.setAttribute('class', 'column-width90 border-radius-all margin-top10 ');
+        $detailedRecipeContainer.appendChild(detailedNutritionContainer);
 
-      var favoriteIcon = document.createElement('div');
-      favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
-      recipeHeader.appendChild(favoriteIcon);
+        var recipeHeader = document.createElement('div');
+        recipeHeader.setAttribute('class', 'column-full border-bottom-grey padding-left10');
+        detailedNutritionContainer.appendChild(recipeHeader);
 
-      var headerTextContainer = document.createElement('div');
-      headerTextContainer.setAttribute('class', 'column-full row');
-      recipeHeader.appendChild(headerTextContainer);
+        var recipeHeaderName = document.createElement('h2');
+        recipeHeaderName.setAttribute('class', 'column-width95 inline-element padding-top5 padding-bottom10');
+        recipeHeaderName.textContent = recipeName;
+        recipeHeader.appendChild(recipeHeaderName);
 
-      var headerTextContainerLeft = document.createElement('p');
-      headerTextContainerLeft.textContent = 'Nutrition Information';
-      headerTextContainerLeft.setAttribute('class', 'column-width50 nutrition-text-small');
-      headerTextContainer.appendChild(headerTextContainerLeft);
+        var favoriteIcon = document.createElement('div');
+        favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
+        recipeHeader.appendChild(favoriteIcon);
 
-      var headerTextContainerRight = document.createElement('p');
-      headerTextContainerRight.textContent = '% Daily Value';
-      headerTextContainerRight.setAttribute('class', 'column-width50 nutrition-text-small');
-      headerTextContainer.appendChild(headerTextContainerRight);
+        var headerTextContainer = document.createElement('div');
+        headerTextContainer.setAttribute('class', 'column-full row');
+        recipeHeader.appendChild(headerTextContainer);
 
-      // BASIC NUTRITION SECTION
+        var headerTextContainerLeft = document.createElement('p');
+        headerTextContainerLeft.textContent = 'Nutrition Information';
+        headerTextContainerLeft.setAttribute('class', 'column-width50 nutrition-text-small');
+        headerTextContainer.appendChild(headerTextContainerLeft);
 
-      var basicAndDetailsContainer = document.createElement('div');
-      basicAndDetailsContainer.setAttribute('class', 'row column-width95');
+        var headerTextContainerRight = document.createElement('p');
+        headerTextContainerRight.textContent = '% Daily Value';
+        headerTextContainerRight.setAttribute('class', 'column-width50 nutrition-text-small');
+        headerTextContainer.appendChild(headerTextContainerRight);
 
-      var nutritionLeftContainer = document.createElement('div');
-      nutritionLeftContainer.setAttribute('class', 'row column-width50');
-      detailedNutritionContainer.appendChild(basicAndDetailsContainer);
+        // BASIC NUTRITION SECTION
 
-      var nutritionBasicNames = document.createElement('div');
-      nutritionBasicNames.setAttribute('class', 'column-width50');
-      nutritionLeftContainer.appendChild(nutritionBasicNames);
-      basicAndDetailsContainer.appendChild(nutritionLeftContainer);
+        var basicAndDetailsContainer = document.createElement('div');
+        basicAndDetailsContainer.setAttribute('class', 'row column-width95');
 
-      var paragraphElCalories = document.createElement('p');
-      paragraphElCalories.setAttribute('class', 'value-text-thick padding-top10');
-      paragraphElCalories.textContent = 'Calories:';
-      nutritionBasicNames.appendChild(paragraphElCalories);
+        var nutritionLeftContainer = document.createElement('div');
+        nutritionLeftContainer.setAttribute('class', 'row column-width50');
+        detailedNutritionContainer.appendChild(basicAndDetailsContainer);
 
-      var paragraphElSugar = document.createElement('p');
-      paragraphElSugar.setAttribute('class', 'value-text-thick padding-top10');
-      paragraphElSugar.textContent = 'Sugar:';
-      nutritionBasicNames.appendChild(paragraphElSugar);
+        var nutritionBasicNames = document.createElement('div');
+        nutritionBasicNames.setAttribute('class', 'column-width50');
+        nutritionLeftContainer.appendChild(nutritionBasicNames);
+        basicAndDetailsContainer.appendChild(nutritionLeftContainer);
 
-      var paragraphElProtein = document.createElement('p');
-      paragraphElProtein.setAttribute('class', 'value-text-thick padding-top10');
-      paragraphElProtein.textContent = 'Protein:';
-      nutritionBasicNames.appendChild(paragraphElProtein);
+        var paragraphElCalories = document.createElement('p');
+        paragraphElCalories.setAttribute('class', 'value-text-thick padding-top10');
+        paragraphElCalories.textContent = 'Calories:';
+        nutritionBasicNames.appendChild(paragraphElCalories);
 
-      var paragraphElCarbs = document.createElement('p');
-      paragraphElCarbs.setAttribute('class', 'value-text-thick padding-top10');
-      paragraphElCarbs.textContent = 'Carbs:';
-      nutritionBasicNames.appendChild(paragraphElCarbs);
+        var paragraphElSugar = document.createElement('p');
+        paragraphElSugar.setAttribute('class', 'value-text-thick padding-top10');
+        paragraphElSugar.textContent = 'Sugar:';
+        nutritionBasicNames.appendChild(paragraphElSugar);
 
-      var nutritionBasicLeftValues = document.createElement('div');
-      nutritionBasicLeftValues.setAttribute('class', 'column-width50');
-      nutritionLeftContainer.appendChild(nutritionBasicLeftValues);
+        var paragraphElProtein = document.createElement('p');
+        paragraphElProtein.setAttribute('class', 'value-text-thick padding-top10');
+        paragraphElProtein.textContent = 'Protein:';
+        nutritionBasicNames.appendChild(paragraphElProtein);
 
-      var paragraphElCaloriesAPI = document.createElement('p');
-      paragraphElCaloriesAPI.textContent = calories + 'kcal';
-      paragraphElCaloriesAPI.setAttribute('class', 'padding-top10');
-      nutritionBasicLeftValues.appendChild(paragraphElCaloriesAPI);
+        var paragraphElCarbs = document.createElement('p');
+        paragraphElCarbs.setAttribute('class', 'value-text-thick padding-top10');
+        paragraphElCarbs.textContent = 'Carbs:';
+        nutritionBasicNames.appendChild(paragraphElCarbs);
 
-      var paragraphElSugarAPI = document.createElement('p');
-      paragraphElSugarAPI.textContent = sugar + 'g';
-      paragraphElSugarAPI.setAttribute('class', 'padding-top10');
-      nutritionBasicLeftValues.appendChild(paragraphElSugarAPI);
+        var nutritionBasicLeftValues = document.createElement('div');
+        nutritionBasicLeftValues.setAttribute('class', 'column-width50');
+        nutritionLeftContainer.appendChild(nutritionBasicLeftValues);
 
-      var paragraphElProteinAPI = document.createElement('p');
-      paragraphElProteinAPI.textContent = protein + 'g';
-      paragraphElProteinAPI.setAttribute('class', 'padding-top10');
-      nutritionBasicLeftValues.appendChild(paragraphElProteinAPI);
+        var paragraphElCaloriesAPI = document.createElement('p');
+        paragraphElCaloriesAPI.textContent = calories + 'kcal';
+        paragraphElCaloriesAPI.setAttribute('class', 'padding-top10');
+        nutritionBasicLeftValues.appendChild(paragraphElCaloriesAPI);
 
-      var paragraphElCarbsAPI = document.createElement('p');
-      paragraphElCarbsAPI.textContent = carbs + 'g';
-      paragraphElCarbsAPI.setAttribute('class', 'padding-top10');
-      nutritionBasicLeftValues.appendChild(paragraphElCarbsAPI);
+        var paragraphElSugarAPI = document.createElement('p');
+        paragraphElSugarAPI.textContent = sugar + 'g';
+        paragraphElSugarAPI.setAttribute('class', 'padding-top10');
+        nutritionBasicLeftValues.appendChild(paragraphElSugarAPI);
 
-      var nutritionRightContainer = document.createElement('div');
-      nutritionRightContainer.setAttribute('class', 'row column-width50');
-      basicAndDetailsContainer.appendChild(nutritionRightContainer);
+        var paragraphElProteinAPI = document.createElement('p');
+        paragraphElProteinAPI.textContent = protein + 'g';
+        paragraphElProteinAPI.setAttribute('class', 'padding-top10');
+        nutritionBasicLeftValues.appendChild(paragraphElProteinAPI);
 
-      // VITAMIN NAMES SECTION
+        var paragraphElCarbsAPI = document.createElement('p');
+        paragraphElCarbsAPI.textContent = carbs + 'g';
+        paragraphElCarbsAPI.setAttribute('class', 'padding-top10');
+        nutritionBasicLeftValues.appendChild(paragraphElCarbsAPI);
 
-      var $vitaminNamesContainer = document.createElement('div');
-      $vitaminNamesContainer.setAttribute('class', 'column-width50');
-      nutritionRightContainer.appendChild($vitaminNamesContainer);
+        var nutritionRightContainer = document.createElement('div');
+        nutritionRightContainer.setAttribute('class', 'row column-width50');
+        basicAndDetailsContainer.appendChild(nutritionRightContainer);
 
-      var vitaminNames = ['Cholesterol', 'Calcium', 'Iron', 'Potassium', 'Magnesium', 'Sodium', 'VitaminE', 'VitaminB6', 'VitaminD', 'Zinc'];
-      vitaminNames.forEach(name => {
-        var item = document.createElement('p');
-        item.setAttribute('class', 'value-text-thick value-text-small padding-top5');
-        item.textContent = name;
-        $vitaminNamesContainer.appendChild(item);
-      });
+        // VITAMIN NAMES SECTION
 
-      // DAILY VITAMIN VALUES SECTION
+        var $vitaminNamesContainer = document.createElement('div');
+        $vitaminNamesContainer.setAttribute('class', 'column-width50');
+        nutritionRightContainer.appendChild($vitaminNamesContainer);
 
-      var vitaminDailyValues = [cholesterol, calcium, iron, potassium, magnesium, sodium, vitaminE, vitaminB6, vitaminD, zinc];
-      var $vitaminDailyValuesContainer = document.createElement('div');
-      $vitaminDailyValuesContainer.setAttribute('class', 'column-width50');
+        var vitaminNames = ['Cholesterol', 'Calcium', 'Iron', 'Potassium', 'Magnesium', 'Sodium', 'VitaminE', 'VitaminB6', 'VitaminD', 'Zinc'];
+        vitaminNames.forEach(name => {
+          var item = document.createElement('p');
+          item.setAttribute('class', 'value-text-thick value-text-small padding-top5');
+          item.textContent = name;
+          $vitaminNamesContainer.appendChild(item);
+        });
 
-      vitaminDailyValues.forEach(item => {
-        var value = document.createElement('p');
-        value.setAttribute('class', 'value-text-thick value-text-small padding-top5');
-        value.textContent = item + '%';
-        $vitaminDailyValuesContainer.appendChild(value);
-      });
+        // DAILY VITAMIN VALUES SECTION
 
-      nutritionRightContainer.appendChild($vitaminDailyValuesContainer);
+        var vitaminDailyValues = [cholesterol, calcium, iron, potassium, magnesium, sodium, vitaminE, vitaminB6, vitaminD, zinc];
+        var $vitaminDailyValuesContainer = document.createElement('div');
+        $vitaminDailyValuesContainer.setAttribute('class', 'column-width50');
 
-      // INGREDIENTS SECTION
+        vitaminDailyValues.forEach(item => {
+          var value = document.createElement('p');
+          value.setAttribute('class', 'value-text-thick value-text-small padding-top5');
+          value.textContent = item + '%';
+          $vitaminDailyValuesContainer.appendChild(value);
+        });
 
-      var ingredientsSection = document.createElement('div');
-      ingredientsSection.setAttribute('class', 'border-top-grey column-full padding-left10 margin-top10');
-      detailedNutritionContainer.appendChild(ingredientsSection);
+        nutritionRightContainer.appendChild($vitaminDailyValuesContainer);
 
-      var ingredientsSectionText = document.createElement('h4');
-      ingredientsSectionText.setAttribute('class', 'padding-top-bottom5');
-      ingredientsSectionText.textContent = 'Ingredients';
-      ingredientsSection.appendChild(ingredientsSectionText);
+        // INGREDIENTS SECTION
 
-      var ingredientsListContainer = document.createElement('div');
-      ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
-      detailedNutritionContainer.appendChild(ingredientsListContainer);
+        var ingredientsSection = document.createElement('div');
+        ingredientsSection.setAttribute('class', 'border-top-grey column-full padding-left10 margin-top10');
+        detailedNutritionContainer.appendChild(ingredientsSection);
 
-      var ingredients = [];
-      var ingredientsList = foodXhr.response.recipe.ingredients;
-      for (var i = 0; i < ingredientsList.length; i++) {
-        ingredients.push(ingredientsList[i].text);
+        var ingredientsSectionText = document.createElement('h4');
+        ingredientsSectionText.setAttribute('class', 'padding-top-bottom5');
+        ingredientsSectionText.textContent = 'Ingredients';
+        ingredientsSection.appendChild(ingredientsSectionText);
+
+        var ingredientsListContainer = document.createElement('div');
+        ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
+        detailedNutritionContainer.appendChild(ingredientsListContainer);
+
+        var ingredients = [];
+        var ingredientsList = foodXhr.response.recipe.ingredients;
+        for (var i = 0; i < ingredientsList.length; i++) {
+          ingredients.push(ingredientsList[i].text);
+        }
+
+        ingredientsList.forEach((item, index) => {
+          var text = document.createElement('p');
+          text.setAttribute('class', 'ingredients padding-top5 padding-left10');
+          text.textContent = `${index + 1}) ${item.text}`;
+          ingredientsListContainer.appendChild(text);
+        });
+        return liElement;
       }
 
-      ingredientsList.forEach((item, index) => {
-        var text = document.createElement('p');
-        text.setAttribute('class', 'ingredients padding-top5 padding-left10');
-        text.textContent = `${index + 1}) ${item.text}`;
-        ingredientsListContainer.appendChild(text);
-      });
-
-      var $addToFavorites = document.querySelector('.favorite-icon');
+      /* var $addToFavorites = document.querySelector('.favorite-icon');
       $addToFavorites.addEventListener('click', handleFavorites);
-
-      function handleFavorites() {
+ */
+      /*     function handleFavorites() {
         var singleRecipeDetails = {
           recipeId: dataIdAttribute,
           recipeName,
@@ -494,7 +501,7 @@ function handleImageClick(event) {
           var result = renderEntry(data.entries[i]);
           $favoriteList.appendChild(result);
         }
-      }
+      } */
     }
     );
   }
@@ -554,3 +561,53 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
+
+/*   function handleFavorites() {
+        var singleRecipeDetails = {
+          recipeId: dataIdAttribute,
+          recipeName,
+          recipeImage: foodXhr.response.recipe.image,
+          calories,
+          sugar,
+          protein,
+          carbs,
+          amountOfServings,
+          cholesterol,
+          calcium,
+          iron,
+          potassium,
+          magnesium,
+          sodium,
+          vitaminE,
+          vitaminB6,
+          vitaminD,
+          zinc,
+          url: foodXhr.response.recipe.url
+        };
+        data.entries.push(singleRecipeDetails);
+        $favoriteList.replaceChildren();
+        $goToMainPage.replaceChildren();
+
+        var goBackLinkContainer = document.createElement('div');
+        goBackLinkContainer.setAttribute('class', 'row column-full');
+        var goBack = document.createElement('a');
+        goBack.textContent = 'Go Back To Main Page';
+        goBack.setAttribute('class', ' box-shadow5 go-back-button');
+        goBackLinkContainer.appendChild(goBack);
+        $goToMainPage.appendChild(goBackLinkContainer);
+        goBack.addEventListener('click', function () {
+          switchingViews('basic-search-view');
+          $form.setAttribute('class', 'view');
+        });
+        for (var i = 0; i < data.entries.length; i++) {
+          recipeId = data.entries[i].recipeId;
+          recipeImage = data.entries[i].recipeImage;
+          recipeName = data.entries[i].recipeName;
+          calories = data.entries[i].calories;
+          sugar = data.entries[i].sugar;
+          protein = data.entries[i].protein;
+          carbs = data.entries[i].carbs;
+          var result = renderEntry(data.entries[i]);
+          $favoriteList.appendChild(result);
+        }
+      } */

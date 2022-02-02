@@ -267,8 +267,9 @@ input[type=number]::-webkit-outer-spin-button {
   font-weight: 700;
 }
 
-.favorite-recipes-header {
+.favorite-recipes-header h2 {
   margin-top: 30px;
   text-align: center;
-  color: green;
+  color: rgb(41, 117, 21);
+  font-weight: 700;
 }
