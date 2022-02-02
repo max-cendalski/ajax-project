@@ -6,6 +6,7 @@ var $minMaxContainer = document.querySelector('.min-max-container');
 var $detailedRecipeContainer = document.querySelector('#detailed-recipe-container');
 var $favoriteIcon = document.querySelector('#favorite-icon');
 var $favoriteList = document.querySelector('#favorite-list');
+var $goToMainPage = document.querySelector('#go-to-main-page');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -183,7 +184,10 @@ function handleFormSubmit(event) {
       $list.appendChild(result);
     }
     if (!foodXhr.response.hits[0]) {
-      alert('no results');
+      $list.replaceChildren();
+      var noResults = document.createElement('h1');
+      noResults.textContent = 'No Recipes Found';
+      $list.appendChild(noResults);
     }
   });
   foodXhr.send();
@@ -466,6 +470,7 @@ function handleImageClick(event) {
         };
         data.entries.push(singleRecipeDetails);
         $favoriteList.replaceChildren();
+        $goToMainPage.replaceChildren();
 
         var goBackLinkContainer = document.createElement('div');
         goBackLinkContainer.setAttribute('class', 'row column-full');
@@ -473,7 +478,7 @@ function handleImageClick(event) {
         goBack.textContent = 'Go Back To Main Page';
         goBack.setAttribute('class', ' box-shadow5 go-back-button');
         goBackLinkContainer.appendChild(goBack);
-        $favoriteList.appendChild(goBackLinkContainer);
+        $goToMainPage.appendChild(goBackLinkContainer);
         goBack.addEventListener('click', function () {
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
@@ -508,13 +513,20 @@ function switchingViews(viewName, optional) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+  if (data.entries.length === 0) {
+    var noFavorites = document.createElement('h1');
+    noFavorites.textContent = 'No Favorite Recipes';
+    $favoriteList.replaceChildren();
+    $favoriteList.appendChild(noFavorites);
+  }
   var goBackLinkContainer = document.createElement('div');
   goBackLinkContainer.setAttribute('class', 'row column-full');
   var goBack = document.createElement('a');
   goBack.textContent = 'Go Back To Main Page';
   goBack.setAttribute('class', ' box-shadow5 go-back-button');
   goBackLinkContainer.appendChild(goBack);
-  $favoriteList.appendChild(goBackLinkContainer);
+  $goToMainPage.appendChild(goBackLinkContainer);
+
   goBack.addEventListener('click', function () {
     switchingViews('basic-search-view');
     $form.setAttribute('class', 'view');
@@ -534,6 +546,7 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 $favoriteIcon.addEventListener('click', function () {
+  event.preventDefault();
   switchingViews('favorites');
 });
 
