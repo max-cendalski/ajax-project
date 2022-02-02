@@ -21,19 +21,6 @@ var recipeImage = '';
 var amountOfServings = 0;
 var recipeId = '';
 
-window.addEventListener('DOMContentLoaded', event => {
-  for (var i = 0; i < data.entries.length; i++) {
-    var result = renderEntry(data.entries[i]);
-    // console.log('dataEntries', data.entries[0]);
-    $favoriteList.appendChild(result);
-  }
-});
-
-$favoriteIcon.addEventListener('click', function () {
-  // console.log(data.entries);
-  switchingViews('favorites');
-});
-
 function renderEntry(entry) {
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'box-shadow5 column-width90 margin-top20 border-radius10');
@@ -115,6 +102,7 @@ function renderEntry(entry) {
 
   return liElement;
 }
+
 var minCalories = 1;
 var maxCalories = 999;
 
@@ -198,9 +186,7 @@ function handleFormSubmit(event) {
       alert('no results');
     }
   });
-
   foodXhr.send();
-
 }
 
 function createMinMaxNutritionBox(value) {
@@ -241,13 +227,13 @@ function handleAddOptionButton(event) {
     createMinMaxNutritionBox('carbs');
   }
 }
+
 function handleNutritionChoice(event) {
   event.preventDefault();
   selectNutritionName = event.target.value;
 }
 
 function handleImageClick(event) {
-
   event.preventDefault();
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
   switchingViews('detailed-search-view');
@@ -458,12 +444,14 @@ function handleImageClick(event) {
 
       function handleFavorites() {
         var singleRecipeDetails = {
-          amountOfServings,
+          recipeId: dataIdAttribute,
           recipeName,
+          recipeImage,
           calories,
           sugar,
           protein,
           carbs,
+          amountOfServings,
           cholesterol,
           calcium,
           iron,
@@ -474,19 +462,15 @@ function handleImageClick(event) {
           vitaminB6,
           vitaminD,
           zinc,
-          url: foodXhr.response.recipe.url,
-          recipeInstruction: foodXhr.response.recipe.uri,
-          recipeId: dataIdAttribute
-
+          url: foodXhr.response.recipe.url
+          // recipeInstruction: foodXhr.response.recipe.uri
         };
         data.entries.push(singleRecipeDetails);
       }
     }
     );
   }
-
   foodXhr.send();
-
 }
 
 function switchingViews(viewName, optional) {
@@ -499,6 +483,27 @@ function switchingViews(viewName, optional) {
     }
   }
 }
+
+window.addEventListener('DOMContentLoaded', event => {
+  console.log('data.entries', data.entries);
+
+  for (var i = 0; i < data.entries.length; i++) {
+    recipeId = data.entries[i].recipeId;
+    recipeImage = data.entries[i].recipeImage;
+    recipeName = data.entries[i].recipeName;
+    calories = data.entries[i].calories;
+    sugar = data.entries[i].sugar;
+    protein = data.entries[i].protein;
+    carbs = data.entries[i].carbs;
+    var result = renderEntry(data.entries[i]);
+    $favoriteList.appendChild(result);
+  }
+});
+
+$favoriteIcon.addEventListener('click', function () {
+  // console.log(data.entries);
+  switchingViews('favorites');
+});
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
