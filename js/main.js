@@ -264,6 +264,30 @@ function handleImageClick(event) {
       var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
 
+      var detailedRecipeObject = {
+        recipeId: dataIdAttribute,
+        recipeName,
+        imageElement: foodXhr.response.recipe.image,
+        calories,
+        sugar,
+        protein,
+        carbs,
+        amountOfServings,
+        cholesterol,
+        calcium,
+        iron,
+        potassium,
+        magnesium,
+        sodium,
+        vitaminE,
+        vitaminB6,
+        vitaminD,
+        zinc,
+        url: foodXhr.response.recipe.url
+      };
+
+      console.log('detailedInfoObject', detailedRecipeObject);
+
       function renderDetailedInfo(recipe) {
 
         var liElement = document.createElement('li');
