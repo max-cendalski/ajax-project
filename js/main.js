@@ -446,7 +446,7 @@ function handleImageClick(event) {
         var singleRecipeDetails = {
           recipeId: dataIdAttribute,
           recipeName,
-          recipeImage,
+          recipeImage: foodXhr.response.recipe.image,
           calories,
           sugar,
           protein,
@@ -463,9 +463,32 @@ function handleImageClick(event) {
           vitaminD,
           zinc,
           url: foodXhr.response.recipe.url
-          // recipeInstruction: foodXhr.response.recipe.uri
         };
         data.entries.push(singleRecipeDetails);
+        $favoriteList.replaceChildren();
+
+        var goBackLinkContainer = document.createElement('div');
+        goBackLinkContainer.setAttribute('class', 'row column-full');
+        var goBack = document.createElement('a');
+        goBack.textContent = 'Go Back To Main Page';
+        goBack.setAttribute('class', ' box-shadow5 go-back-button');
+        goBackLinkContainer.appendChild(goBack);
+        $favoriteList.appendChild(goBackLinkContainer);
+        goBack.addEventListener('click', function () {
+          switchingViews('basic-search-view');
+          $form.setAttribute('class', 'view');
+        });
+        for (var i = 0; i < data.entries.length; i++) {
+          recipeId = data.entries[i].recipeId;
+          recipeImage = data.entries[i].recipeImage;
+          recipeName = data.entries[i].recipeName;
+          calories = data.entries[i].calories;
+          sugar = data.entries[i].sugar;
+          protein = data.entries[i].protein;
+          carbs = data.entries[i].carbs;
+          var result = renderEntry(data.entries[i]);
+          $favoriteList.appendChild(result);
+        }
       }
     }
     );
@@ -485,7 +508,17 @@ function switchingViews(viewName, optional) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
-  console.log('data.entries', data.entries);
+  var goBackLinkContainer = document.createElement('div');
+  goBackLinkContainer.setAttribute('class', 'row column-full');
+  var goBack = document.createElement('a');
+  goBack.textContent = 'Go Back To Main Page';
+  goBack.setAttribute('class', ' box-shadow5 go-back-button');
+  goBackLinkContainer.appendChild(goBack);
+  $favoriteList.appendChild(goBackLinkContainer);
+  goBack.addEventListener('click', function () {
+    switchingViews('basic-search-view');
+    $form.setAttribute('class', 'view');
+  });
 
   for (var i = 0; i < data.entries.length; i++) {
     recipeId = data.entries[i].recipeId;
@@ -501,7 +534,6 @@ window.addEventListener('DOMContentLoaded', event => {
 });
 
 $favoriteIcon.addEventListener('click', function () {
-  // console.log(data.entries);
   switchingViews('favorites');
 });
 
