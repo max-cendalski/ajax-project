@@ -288,7 +288,7 @@ function handleImageClick(event) {
 
       console.log('detailedInfoObject', detailedRecipeObject);
 
-      function renderDetailedInfo(recipe) {
+      function renderRecipeDetailes(recipe) {
 
         var liElement = document.createElement('li');
 
@@ -473,7 +473,8 @@ function handleImageClick(event) {
         });
         return liElement;
       }
-
+      var result = renderRecipeDetailes(detailedRecipeObject);
+      $list.appendChild(result);
       /* var $addToFavorites = document.querySelector('.favorite-icon');
       $addToFavorites.addEventListener('click', handleFavorites);
  */
@@ -526,6 +527,7 @@ function handleImageClick(event) {
           $favoriteList.appendChild(result);
         }
       } */
+
     }
     );
   }
