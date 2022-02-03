@@ -488,43 +488,23 @@ function handleImageClick(event) {
           if (data.entries[i].recipeId === dataIdAttribute) {
             $detailedRecipeContainer.replaceChildren();
             var infoText = document.createElement('h2');
+            infoText.setAttribute('class', 'margin-top20');
+
             infoText.textContent = 'Recipe already added to favorites';
             $detailedRecipeContainer.appendChild(infoText);
             break;
+          } else {
+            data.entries.push(detailedRecipeObject);
+            switchingViews('basic-search-view');
+            $form.setAttribute('class', 'view');
           }
         }
-        // for (var i = 0; i < data.entries.length; i++) {
-        /*  if (data.entries[i].recipeId === dataIdAttribute) {
-            var infoContainer = document.createElement('h2');
-            infoContainer.setAttribute('class', 'column-width60 margin-top20');
-            infoContainer.textContent = 'This recipe already exists in favorites';
-            $detailedRecipeContainer.replaceChildren();
-            $detailedRecipeContainer.appendChild(infoContainer);
-            break;
-          } else { */
-        data.entries.push(detailedRecipeObject);
-        switchingViews('basic-search-view');
-        $form.setAttribute('class', 'view');
-
         console.log('detailedRecipeObject', detailedRecipeObject);
         console.log('dataAttribute', dataIdAttribute);
 
-        /*     var goBackLinkContainer = document.createElement('div');
-        goBackLinkContainer.setAttribute('class', 'row column-full');
-        var goBack = document.createElement('a');
-        goBack.textContent = 'Go Back To Main Page';
-        goBack.setAttribute('class', ' box-shadow5 go-back-button');
-        goBackLinkContainer.appendChild(goBack);
-        $goToMainPage.appendChild(goBackLinkContainer);
-        goBack.addEventListener('click', function () {
-
-          $form.setAttribute('class', 'view');
-        }); */
-
       }
-      // }
     }
-      // }
+
     );
   }
   foodXhr.send();
