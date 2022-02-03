@@ -286,17 +286,13 @@ function handleImageClick(event) {
         url: foodXhr.response.recipe.url
       };
 
-      console.log('detailedRecipeObject', detailedRecipeObject);
-
       function renderRecipeDetailes(recipe) {
-
         var liElement = document.createElement('li');
-
         var imageAndLinksContainer = document.createElement('div');
         imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
         var goBack = document.createElement('a');
         goBack.textContent = 'Go Back To Search Results';
-        goBack.setAttribute('class', ' box-shadow5 go-back-button');
+        goBack.setAttribute('class', 'box-shadow5 go-back-button');
         imageAndLinksContainer.appendChild(goBack);
         liElement.appendChild(imageAndLinksContainer);
         goBack.addEventListener('click', function () {
@@ -480,18 +476,26 @@ function handleImageClick(event) {
       $addToFavorites.addEventListener('click', handleFavorites);
 
       function handleFavorites() {
-
-        // console.log('dataIdAttribute', dataIdAttribute);
-        console.log('data.entries', data.entries);
-        console.log('detailedRecipeObject', detailedRecipeObject);
         for (var i = 0; i < data.entries.length; i++) {
           if (data.entries[i].recipeId === dataIdAttribute) {
             $detailedRecipeContainer.replaceChildren();
-            var infoText = document.createElement('h2');
-            infoText.setAttribute('class', 'margin-top20');
+            var infoContainer = document.createElement('div');
+            infoContainer.setAttribute('class', 'column-full text-centered margin-top20');
+            var goBack = document.createElement('a');
+            goBack.textContent = 'Go Back To Search Results';
+            goBack.setAttribute('class', 'column-width95 box-shadow5 go-back-button');
+            infoContainer.appendChild(goBack);
+            goBack.addEventListener('click', function () {
+              switchingViews('basic-search-view');
+              $form.setAttribute('class', 'view');
+            });
 
+            var infoText = document.createElement('h2');
+            infoText.setAttribute('class', 'column-width95 margin-top20');
             infoText.textContent = 'Recipe already added to favorites';
-            $detailedRecipeContainer.appendChild(infoText);
+            infoContainer.appendChild(infoText);
+            $detailedRecipeContainer.appendChild(infoContainer);
+
             break;
           } else {
             data.entries.push(detailedRecipeObject);
@@ -499,12 +503,8 @@ function handleImageClick(event) {
             $form.setAttribute('class', 'view');
           }
         }
-        console.log('detailedRecipeObject', detailedRecipeObject);
-        console.log('dataAttribute', dataIdAttribute);
-
       }
     }
-
     );
   }
   foodXhr.send();
