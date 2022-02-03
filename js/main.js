@@ -484,7 +484,15 @@ function handleImageClick(event) {
         // console.log('dataIdAttribute', dataIdAttribute);
         console.log('data.entries', data.entries);
         console.log('detailedRecipeObject', detailedRecipeObject);
-
+        for (var i = 0; i < data.entries.length; i++) {
+          if (data.entries[i].recipeId === dataIdAttribute) {
+            $detailedRecipeContainer.replaceChildren();
+            var infoText = document.createElement('h2');
+            infoText.textContent = 'Recipe already added to favorites';
+            $detailedRecipeContainer.appendChild(infoText);
+            break;
+          }
+        }
         // for (var i = 0; i < data.entries.length; i++) {
         /*  if (data.entries[i].recipeId === dataIdAttribute) {
             var infoContainer = document.createElement('h2');
@@ -496,6 +504,8 @@ function handleImageClick(event) {
           } else { */
         data.entries.push(detailedRecipeObject);
         switchingViews('basic-search-view');
+        $form.setAttribute('class', 'view');
+
         console.log('detailedRecipeObject', detailedRecipeObject);
         console.log('dataAttribute', dataIdAttribute);
 
@@ -554,7 +564,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
   for (var i = 0; i < data.entries.length; i++) {
     recipeId = data.entries[i].recipeId;
-    recipeImage = data.entries[i].recipeImage;
+    recipeImage = data.entries[i].imageElement;
     recipeName = data.entries[i].recipeName;
     calories = data.entries[i].calories;
     sugar = data.entries[i].sugar;
