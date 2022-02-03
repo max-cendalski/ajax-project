@@ -480,73 +480,41 @@ function handleImageClick(event) {
       $addToFavorites.addEventListener('click', handleFavorites);
 
       function handleFavorites() {
-        /*  var singleRecipeDetails = {
-          recipeId: dataIdAttribute,
-          recipeName,
-          recipeImage: foodXhr.response.recipe.image,
-          calories,
-          sugar,
-          protein,
-          carbs,
-          amountOfServings,
-          cholesterol,
-          calcium,
-          iron,
-          potassium,
-          magnesium,
-          sodium,
-          vitaminE,
-          vitaminB6,
-          vitaminD,
-          zinc,
-          url: foodXhr.response.recipe.url
-        }; */
-        console.log('dataIdAttribute', dataIdAttribute);
-        console.log('data.entries[0].recipeId', data.entries[0].recipeId);
 
-        for (var i = 0; i < data.entries.length; i++) {
-          if (data.entries[i].recipeId === dataIdAttribute) {
+        // console.log('dataIdAttribute', dataIdAttribute);
+        console.log('data.entries', data.entries);
+        console.log('detailedRecipeObject', detailedRecipeObject);
+
+        // for (var i = 0; i < data.entries.length; i++) {
+        /*  if (data.entries[i].recipeId === dataIdAttribute) {
             var infoContainer = document.createElement('h2');
             infoContainer.setAttribute('class', 'column-width60 margin-top20');
             infoContainer.textContent = 'This recipe already exists in favorites';
             $detailedRecipeContainer.replaceChildren();
             $detailedRecipeContainer.appendChild(infoContainer);
-            return;
-          } else {
-            data.entries.push(detailedRecipeObject);
-            $favoriteList.replaceChildren();
-            $goToMainPage.replaceChildren();
-
-            var goBackLinkContainer = document.createElement('div');
-            goBackLinkContainer.setAttribute('class', 'row column-full');
-            var goBack = document.createElement('a');
-            goBack.textContent = 'Go Back To Main Page';
-            goBack.setAttribute('class', ' box-shadow5 go-back-button');
-            goBackLinkContainer.appendChild(goBack);
-            $goToMainPage.appendChild(goBackLinkContainer);
-            goBack.addEventListener('click', function () {
-              switchingViews('basic-search-view');
-              $form.setAttribute('class', 'view');
-            });
-          }
-        }
+            break;
+          } else { */
         data.entries.push(detailedRecipeObject);
-        $favoriteList.replaceChildren();
-        $goToMainPage.replaceChildren();
+        switchingViews('basic-search-view');
+        console.log('detailedRecipeObject', detailedRecipeObject);
+        console.log('dataAttribute', dataIdAttribute);
 
-      /*   for (var i = 0; i < data.entries.length; i++) {
-          recipeId = data.entries[i].recipeId;
-          recipeImage = data.entries[i].recipeImage;
-          recipeName = data.entries[i].recipeName;
-          calories = data.entries[i].calories;
-          sugar = data.entries[i].sugar;
-          protein = data.entries[i].protein;
-          carbs = data.entries[i].carbs;
-          var result = renderEntry(data.entries[i]);
-          $favoriteList.appendChild(result);
-        } */
+        /*     var goBackLinkContainer = document.createElement('div');
+        goBackLinkContainer.setAttribute('class', 'row column-full');
+        var goBack = document.createElement('a');
+        goBack.textContent = 'Go Back To Main Page';
+        goBack.setAttribute('class', ' box-shadow5 go-back-button');
+        goBackLinkContainer.appendChild(goBack);
+        $goToMainPage.appendChild(goBackLinkContainer);
+        goBack.addEventListener('click', function () {
+
+          $form.setAttribute('class', 'view');
+        }); */
+
       }
+      // }
     }
+      // }
     );
   }
   foodXhr.send();
