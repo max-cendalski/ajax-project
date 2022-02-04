@@ -14,26 +14,29 @@ var carbsCount = 0;
 
 var selectNutritionName = '';
 var recipeName = '';
-var calories = '';
-var sugar = '';
-var protein = '';
-var carbs = '';
+var calories = 0;
+var sugar = 0;
+var protein = 0;
+var carbs = 0;
 var recipeImage = '';
 var amountOfServings = 0;
 var recipeId = '';
-var cholesterol = '';
-var calcium = '';
-var iron = '';
-var potassium = '';
-var magnesium = '';
-var sodium = '';
-var vitaminB6 = '';
-var vitaminD = '';
-var vitaminE = '';
-var zinc = '';
+var cholesterol = 0;
+var calcium = 0;
+var iron = 0;
+var potassium = 0;
+var magnesium = 0;
+var sodium = 0;
+var vitaminB6 = 0;
+var vitaminD = 0;
+var vitaminE = 0;
+var zinc = 0;
 var url = '';
+var ingredients = [];
+var ingredientsList = '';
 
 function renderEntry(entry) {
+
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'box-shadow5 column-width90 margin-top20 border-radius10');
   liElement.setAttribute('data-recipeId', recipeId);
@@ -116,6 +119,7 @@ function renderEntry(entry) {
 }
 
 function renderRecipeDetailes(recipe) {
+
   var detailedLiElement = document.createElement('li');
   detailedLiElement.setAttribute('class', 'row flex-column column-width95 border-bottom-green padding-bottom15');
 
@@ -278,9 +282,7 @@ function renderRecipeDetailes(recipe) {
   ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
   detailedNutritionContainer.appendChild(ingredientsListContainer);
 
-  var ingredients = [];
-  var ingredientsList = ingredients;
-  for (var i = 0; i < ingredientsList.length; i++) {
+  /* for (var i = 0; i < ingredientsList.length; i++) {
     ingredients.push(ingredientsList[i].text);
   }
 
@@ -289,7 +291,7 @@ function renderRecipeDetailes(recipe) {
     text.setAttribute('class', 'ingredients padding-top5 padding-left10');
     text.textContent = `${index + 1}) ${item.text}`;
     ingredientsListContainer.appendChild(text);
-  });
+  }); */
   return detailedLiElement;
 }
 
@@ -428,7 +430,10 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
+  console.log('even.target.tagName', event.target.tagName);
+  console.log('even.target.value', event.target.value);
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
+  console.log('dtaattribute', dataIdAttribute);
   switchingViews('detailed-search-view');
   var foodXhr = new XMLHttpRequest();
   $detailedRecipeContainer.replaceChildren();
@@ -436,8 +441,8 @@ function handleImageClick(event) {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
-      var amountOfServings = foodXhr.response.recipe.yield;
-      var recipeName = foodXhr.response.recipe.label.slice(0, 30);
+      amountOfServings = foodXhr.response.recipe.yield;
+      recipeName = foodXhr.response.recipe.label.slice(0, 30);
       calories = Math.floor((foodXhr.response.recipe.calories) / amountOfServings);
       sugar = Math.floor((foodXhr.response.recipe.totalNutrients.SUGAR.quantity) / amountOfServings);
       protein = Math.floor((foodXhr.response.recipe.totalNutrients.PROCNT.quantity) / amountOfServings);
@@ -452,11 +457,14 @@ function handleImageClick(event) {
       var vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
       var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
+      recipeImage = foodXhr.response.recipe.image;
+      ingredientsList = foodXhr.response.recipe.ingredients;
+      url = foodXhr.response.recipe.url;
 
       var detailedRecipeObject = {
         recipeId: dataIdAttribute,
         recipeName,
-        imageElement: foodXhr.response.recipe.image,
+        recipeImage,
         calories,
         sugar,
         protein,
@@ -472,7 +480,7 @@ function handleImageClick(event) {
         vitaminB6,
         vitaminD,
         zinc,
-        url: foodXhr.response.recipe.url
+        url
       };
 
       var result = renderRecipeDetailes(detailedRecipeObject);
@@ -573,12 +581,9 @@ window.addEventListener('DOMContentLoaded', event => {
     vitaminD = data.entries[i].vitaminD;
     vitaminE = data.entries[i].vitaminE;
     zinc = data.entries[i].zinc;
-    console.log('zinc', zinc);
+
     var result = renderRecipeDetailes(data.entries[i]);
-    // $detailedRecipeContainer.appendChild(result);
     $favoriteList.appendChild(result);
-    // var result = renderEntry(data.entries[i]);
-    // $favoriteList.appendChild($detailedRecipeContainer);
   }
 });
 
