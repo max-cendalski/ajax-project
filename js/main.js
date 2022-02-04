@@ -282,16 +282,12 @@ function renderRecipeDetailes(recipe) {
   ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
   detailedNutritionContainer.appendChild(ingredientsListContainer);
 
-  /* for (var i = 0; i < ingredientsList.length; i++) {
-    ingredients.push(ingredientsList[i].text);
-  }
-
-  ingredientsList.forEach((item, index) => {
+  ingredients.forEach((item, index) => {
     var text = document.createElement('p');
     text.setAttribute('class', 'ingredients padding-top5 padding-left10');
-    text.textContent = `${index + 1}) ${item.text}`;
+    text.textContent = `${index + 1}) ${item}`;
     ingredientsListContainer.appendChild(text);
-  }); */
+  });
   return detailedLiElement;
 }
 
@@ -458,8 +454,12 @@ function handleImageClick(event) {
       vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
       recipeImage = foodXhr.response.recipe.image;
-      console.log('foodXhr.response.recipe', foodXhr.response.recipe.ingredients);
-      ingredientsList = foodXhr.response.recipe.ingredients;
+      // console.log('foodXhr.response.recipe', foodXhr.response.recipe.ingredients);
+      foodXhr.response.recipe.ingredients.forEach(item => {
+        ingredients.push(item.text);
+        // console.log('ingredients', ingredients);
+      });
+      console.log('ingredients', ingredients);
       url = foodXhr.response.recipe.url;
 
       var detailedRecipeObject = {
