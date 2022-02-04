@@ -287,7 +287,7 @@ function handleImageClick(event) {
       };
 
       function renderRecipeDetailes(recipe) {
-        var liElement = document.createElement('li');
+        var liElement = document.createElement('div');
         var imageAndLinksContainer = document.createElement('div');
         imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
         var goBack = document.createElement('a');
@@ -475,8 +475,10 @@ function handleImageClick(event) {
       var $addToFavorites = document.querySelector('.favorite-icon');
       $addToFavorites.addEventListener('click', handleFavorites);
 
-      function handleFavorites() {
+      function handleFavorites(event) {
+        event.preventDefault();
         for (var i = 0; i < data.entries.length; i++) {
+
           if (data.entries[i].recipeId === dataIdAttribute) {
             $detailedRecipeContainer.replaceChildren();
             var infoContainer = document.createElement('div');
@@ -495,8 +497,6 @@ function handleImageClick(event) {
             infoText.textContent = 'Recipe already added to favorites';
             infoContainer.appendChild(infoText);
             $detailedRecipeContainer.appendChild(infoContainer);
-
-            break;
           } else {
             data.entries.push(detailedRecipeObject);
             switchingViews('basic-search-view');
@@ -564,53 +564,3 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
-
-/*   function handleFavorites() {
-        var singleRecipeDetails = {
-          recipeId: dataIdAttribute,
-          recipeName,
-          recipeImage: foodXhr.response.recipe.image,
-          calories,
-          sugar,
-          protein,
-          carbs,
-          amountOfServings,
-          cholesterol,
-          calcium,
-          iron,
-          potassium,
-          magnesium,
-          sodium,
-          vitaminE,
-          vitaminB6,
-          vitaminD,
-          zinc,
-          url: foodXhr.response.recipe.url
-        };
-        data.entries.push(singleRecipeDetails);
-        $favoriteList.replaceChildren();
-        $goToMainPage.replaceChildren();
-
-        var goBackLinkContainer = document.createElement('div');
-        goBackLinkContainer.setAttribute('class', 'row column-full');
-        var goBack = document.createElement('a');
-        goBack.textContent = 'Go Back To Main Page';
-        goBack.setAttribute('class', ' box-shadow5 go-back-button');
-        goBackLinkContainer.appendChild(goBack);
-        $goToMainPage.appendChild(goBackLinkContainer);
-        goBack.addEventListener('click', function () {
-          switchingViews('basic-search-view');
-          $form.setAttribute('class', 'view');
-        });
-        for (var i = 0; i < data.entries.length; i++) {
-          recipeId = data.entries[i].recipeId;
-          recipeImage = data.entries[i].recipeImage;
-          recipeName = data.entries[i].recipeName;
-          calories = data.entries[i].calories;
-          sugar = data.entries[i].sugar;
-          protein = data.entries[i].protein;
-          carbs = data.entries[i].carbs;
-          var result = renderEntry(data.entries[i]);
-          $favoriteList.appendChild(result);
-        }
-      } */
