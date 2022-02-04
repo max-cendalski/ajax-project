@@ -447,17 +447,18 @@ function handleImageClick(event) {
       sugar = Math.floor((foodXhr.response.recipe.totalNutrients.SUGAR.quantity) / amountOfServings);
       protein = Math.floor((foodXhr.response.recipe.totalNutrients.PROCNT.quantity) / amountOfServings);
       carbs = Math.floor((foodXhr.response.recipe.totalNutrients.CHOCDF.quantity) / amountOfServings);
-      var cholesterol = Math.floor((foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings);
-      var calcium = Math.floor((foodXhr.response.recipe.totalDaily.CA.quantity) / amountOfServings);
-      var iron = Math.floor((foodXhr.response.recipe.totalDaily.FE.quantity) / amountOfServings);
-      var potassium = Math.floor((foodXhr.response.recipe.totalDaily.K.quantity) / amountOfServings);
-      var magnesium = Math.floor((foodXhr.response.recipe.totalDaily.MG.quantity) / amountOfServings);
-      var sodium = Math.floor((foodXhr.response.recipe.totalDaily.NA.quantity) / amountOfServings);
-      var vitaminE = Math.floor((foodXhr.response.recipe.totalDaily.TOCPHA.quantity) / amountOfServings);
-      var vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
-      var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
-      var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
+      cholesterol = Math.floor((foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings);
+      calcium = Math.floor((foodXhr.response.recipe.totalDaily.CA.quantity) / amountOfServings);
+      iron = Math.floor((foodXhr.response.recipe.totalDaily.FE.quantity) / amountOfServings);
+      potassium = Math.floor((foodXhr.response.recipe.totalDaily.K.quantity) / amountOfServings);
+      magnesium = Math.floor((foodXhr.response.recipe.totalDaily.MG.quantity) / amountOfServings);
+      sodium = Math.floor((foodXhr.response.recipe.totalDaily.NA.quantity) / amountOfServings);
+      vitaminE = Math.floor((foodXhr.response.recipe.totalDaily.TOCPHA.quantity) / amountOfServings);
+      vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
+      vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
+      zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
       recipeImage = foodXhr.response.recipe.image;
+      console.log('foodXhr.response.recipe', foodXhr.response.recipe.ingredients);
       ingredientsList = foodXhr.response.recipe.ingredients;
       url = foodXhr.response.recipe.url;
 
@@ -560,7 +561,7 @@ window.addEventListener('DOMContentLoaded', event => {
   });
 
   for (var i = 0; i < data.entries.length; i++) {
-    console.log('data.entries', data.entries[i]);
+    // console.log('data.entries', data.entries[i]);
     recipeId = data.entries[i].recipeId;
     recipeImage = data.entries[i].imageElement;
     recipeName = data.entries[i].recipeName;
