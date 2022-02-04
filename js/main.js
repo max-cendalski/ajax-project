@@ -116,8 +116,8 @@ function renderEntry(entry) {
 }
 
 function renderRecipeDetailes(recipe) {
-  var detailedLiElement = document.createElement('div');
-  detailedLiElement.setAttribute('class', 'column-width90 border-bottom-green');
+  var detailedLiElement = document.createElement('li');
+  detailedLiElement.setAttribute('class', 'row flex-column column-width95 border-bottom-green padding-bottom15');
 
   var imageAndLinksContainer = document.createElement('div');
   imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
