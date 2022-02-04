@@ -477,30 +477,34 @@ function handleImageClick(event) {
 
       function handleFavorites(event) {
         event.preventDefault();
-        for (var i = 0; i < data.entries.length; i++) {
-
-          if (data.entries[i].recipeId === dataIdAttribute) {
-            $detailedRecipeContainer.replaceChildren();
-            var infoContainer = document.createElement('div');
-            infoContainer.setAttribute('class', 'column-full text-centered margin-top20');
-            var goBack = document.createElement('a');
-            goBack.textContent = 'Go Back To Search Results';
-            goBack.setAttribute('class', 'column-width95 box-shadow5 go-back-button');
-            infoContainer.appendChild(goBack);
-            goBack.addEventListener('click', function () {
+        if (data.entries.length === 0) {
+          data.entries.push(detailedRecipeObject);
+          switchingViews('basic-search-view');
+          $form.setAttribute('class', 'view');
+        } else {
+          for (var i = 0; i < data.entries.length; i++) {
+            if (data.entries[i].recipeId === dataIdAttribute) {
+              $detailedRecipeContainer.replaceChildren();
+              var infoContainer = document.createElement('div');
+              infoContainer.setAttribute('class', 'column-full text-centered margin-top20');
+              var goBack = document.createElement('a');
+              goBack.textContent = 'Go Back To Search Results';
+              goBack.setAttribute('class', 'column-width95 box-shadow5 go-back-button');
+              infoContainer.appendChild(goBack);
+              goBack.addEventListener('click', function () {
+                switchingViews('basic-search-view');
+                $form.setAttribute('class', 'view');
+              });
+              var infoText = document.createElement('h2');
+              infoText.setAttribute('class', 'column-width95 margin-top20');
+              infoText.textContent = 'Recipe already added to favorites';
+              infoContainer.appendChild(infoText);
+              $detailedRecipeContainer.appendChild(infoContainer);
+            } if (data.entries[i].recipeId !== dataIdAttribute) {
+              data.entries.push(detailedRecipeObject);
               switchingViews('basic-search-view');
               $form.setAttribute('class', 'view');
-            });
-
-            var infoText = document.createElement('h2');
-            infoText.setAttribute('class', 'column-width95 margin-top20');
-            infoText.textContent = 'Recipe already added to favorites';
-            infoContainer.appendChild(infoText);
-            $detailedRecipeContainer.appendChild(infoContainer);
-          } else {
-            data.entries.push(detailedRecipeObject);
-            switchingViews('basic-search-view');
-            $form.setAttribute('class', 'view');
+            }
           }
         }
       }
