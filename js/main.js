@@ -35,7 +35,7 @@ var zinc = 0;
 var url = '';
 var ingredients = [];
 var detailedRecipeObject = {};
-// var icon = true;
+var dataIdAttribute = '';
 
 function renderEntry(entry) {
 
@@ -280,10 +280,6 @@ function renderRecipeDetailes(recipe) {
   ingredientsSectionText.textContent = 'Ingredients';
   ingredientsSection.appendChild(ingredientsSectionText);
 
-  /* if (icon === false) {
-    ingredientsSectionText.textContent = 'No Ingredients';
-  } */
-
   var ingredientsListContainer = document.createElement('div');
   ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
   detailedNutritionContainer.appendChild(ingredientsListContainer);
@@ -433,7 +429,7 @@ function handleNutritionChoice(event) {
 function handleImageClick(event) {
   event.preventDefault();
 
-  var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
+  dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
   switchingViews('detailed-search-view');
   var foodXhr = new XMLHttpRequest();
   $detailedRecipeContainer.replaceChildren();
@@ -473,12 +469,13 @@ function handleImageClick(event) {
       vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
       vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
+      url = foodXhr.response.recipe.url;
       foodXhr.response.recipe.ingredients.forEach(item => {
         ingredients.push(item.text);
       });
-      url = foodXhr.response.recipe.url;
+
       detailedRecipeObject = {
-        recipeId: dataIdAttribute,
+        dataIdAttribute,
         recipeName,
         recipeImage,
         calories,
@@ -502,41 +499,32 @@ function handleImageClick(event) {
 
       var result = renderRecipeDetailes(detailedRecipeObject);
       $detailedRecipeContainer.appendChild(result);
-      ingredients = [];
       var $addToFavorites = document.querySelector('.favorite-icon');
       $addToFavorites.addEventListener('click', handleFavorites);
-
       function handleFavorites(event) {
         event.preventDefault();
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
+          var result = renderRecipeDetailes(detailedRecipeObject);
+          $favoriteList.appendChild(result);
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
+        }
+        if (data.entries.some(recipe => recipe.dataIdAttribute === dataIdAttribute)) {
+          $detailedRecipeContainer.replaceChildren();
+          var infoContainer = document.createElement('div');
+          infoContainer.setAttribute('class', 'column-full text-centered margin-top20');
+          var infoText = document.createElement('h2');
+          infoText.setAttribute('class', 'column-width95 margin-top20');
+          infoText.textContent = 'Recipe already added to favorites';
+          infoContainer.appendChild(infoText);
+          $detailedRecipeContainer.appendChild(infoContainer);
         } else {
-          for (var i = 0; i < data.entries.length; i++) {
-            if (data.entries[i].recipeId === dataIdAttribute) {
-              $detailedRecipeContainer.replaceChildren();
-              var infoContainer = document.createElement('div');
-              infoContainer.setAttribute('class', 'column-full text-centered margin-top20');
-              var goBack = document.createElement('a');
-              goBack.textContent = 'Go Back To Search Results';
-              goBack.setAttribute('class', 'column-width95 box-shadow5 go-back-button');
-              infoContainer.appendChild(goBack);
-              goBack.addEventListener('click', function () {
-                switchingViews('basic-search-view');
-                $form.setAttribute('class', 'view');
-              });
-              var infoText = document.createElement('h2');
-              infoText.setAttribute('class', 'column-width95 margin-top20');
-              infoText.textContent = 'Recipe already added to favorites';
-              infoContainer.appendChild(infoText);
-              $detailedRecipeContainer.appendChild(infoContainer);
-            } if (data.entries[i].recipeId !== dataIdAttribute) {
-              data.entries.push(detailedRecipeObject);
-              switchingViews('basic-search-view');
-              $form.setAttribute('class', 'view');
-            }
-          }
+          data.entries.push(detailedRecipeObject);
+          result = renderRecipeDetailes(detailedRecipeObject);
+          $favoriteList.appendChild(result);
+          switchingViews('basic-search-view');
+          $form.setAttribute('class', 'view');
         }
       }
     }
@@ -558,7 +546,6 @@ function switchingViews(viewName, optional) {
 
 window.addEventListener('DOMContentLoaded', event => {
   // data.entries = [];
-  console.log('data.entries[0]', data.entries[0]);
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
     noFavorites.textContent = 'No Favorite Recipes';
@@ -574,21 +561,15 @@ window.addEventListener('DOMContentLoaded', event => {
   goBackLinkContainer.appendChild(goBack);
   $goToMainPageFromFavorites.appendChild(goBackLinkContainer);
 
-  goBack.addEventListener('click', function () {
-    switchingViews('basic-search-view');
-    $form.setAttribute('class', 'view');
-  });
-
   for (var i = 0; i < data.entries.length; i++) {
-    recipeId = data.entries[i].recipeId;
     recipeImage = data.entries[i].recipeImage;
+    recipeId = data.entries[i].recipeId;
     recipeName = data.entries[i].recipeName;
     calories = data.entries[i].calories;
     sugar = data.entries[i].sugar;
     protein = data.entries[i].protein;
     carbs = data.entries[i].carbs;
     cholesterol = data.entries[i].cholesterol;
-    recipeImage = data.entries[i].imageElement;
     iron = data.entries[i].iron;
     magnesium = data.entries[i].magnesium;
     potassium = data.entries[i].potassium;
@@ -605,6 +586,11 @@ window.addEventListener('DOMContentLoaded', event => {
     var result = renderRecipeDetailes(data.entries[i]);
     $favoriteList.appendChild(result);
   }
+  goBack.addEventListener('click', function () {
+    switchingViews('basic-search-view');
+    $form.setAttribute('class', 'view');
+  });
+
 });
 
 $favoriteIcon.addEventListener('click', function () {
@@ -616,17 +602,3 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
-
-/* var result = renderRecipeDetailes(detailedRecipeObject);
-      $detailedRecipeContainer.appendChild(result); */
-
-/*
-      var goBack = document.createElement('a');
-  goBack.textContent = 'Go Back To Search Results';
-  goBack.setAttribute('class', 'box-shadow5 go-back-button');
-  imageAndLinksContainer.appendChild(goBack);
-
-  goBack.addEventListener('click', function () {
-    switchingViews('basic-search-view');
-    $form.setAttribute('class', 'view');
-  }); */
