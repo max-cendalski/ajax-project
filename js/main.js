@@ -428,11 +428,11 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
-
+  $detailedRecipeContainer.replaceChildren();
+  $goToMainPageFromDetailed.replaceChildren();
   dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
   switchingViews('detailed-search-view');
   var foodXhr = new XMLHttpRequest();
-  $detailedRecipeContainer.replaceChildren();
 
   var goBackLinkContainer = document.createElement('div');
   goBackLinkContainer.setAttribute('class', 'row column-full');
