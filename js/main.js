@@ -506,12 +506,12 @@ function handleImageClick(event) {
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
           var result = renderRecipeDetailes(detailedRecipeObject);
+          $favoriteList.replaceChildren();
           $favoriteList.appendChild(result);
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
         }
         if (data.entries.some(recipe => recipe.dataIdAttribute === dataIdAttribute)) {
-          $detailedRecipeContainer.replaceChildren();
           var infoContainer = document.createElement('div');
           infoContainer.setAttribute('class', 'column-full text-centered margin-top20');
           var infoText = document.createElement('h2');
@@ -545,7 +545,6 @@ function switchingViews(viewName, optional) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
-  // data.entries = [];
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
     noFavorites.textContent = 'No Favorite Recipes';
