@@ -6,7 +6,8 @@ var $minMaxContainer = document.querySelector('.min-max-container');
 var $detailedRecipeContainer = document.querySelector('#detailed-recipe-container');
 var $favoriteIcon = document.querySelector('#favorite-icon');
 var $favoriteList = document.querySelector('#favorite-list');
-var $goToMainPage = document.querySelector('#go-to-main-page');
+var $goToMainPageFromDetailed = document.querySelector('#go-to-main-page-detailed');
+var $goToMainPageFromFavorites = document.querySelector('#go-to-main-page-favorites');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -33,7 +34,8 @@ var vitaminE = 0;
 var zinc = 0;
 var url = '';
 var ingredients = [];
-var ingredientsList = '';
+var detailedRecipeObject = {};
+// var icon = true;
 
 function renderEntry(entry) {
 
@@ -278,6 +280,10 @@ function renderRecipeDetailes(recipe) {
   ingredientsSectionText.textContent = 'Ingredients';
   ingredientsSection.appendChild(ingredientsSectionText);
 
+  /* if (icon === false) {
+    ingredientsSectionText.textContent = 'No Ingredients';
+  } */
+
   var ingredientsListContainer = document.createElement('div');
   ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
   detailedNutritionContainer.appendChild(ingredientsListContainer);
@@ -426,17 +432,31 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
-  console.log('even.target.tagName', event.target.tagName);
-  console.log('even.target.value', event.target.value);
+
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
-  console.log('dtaattribute', dataIdAttribute);
   switchingViews('detailed-search-view');
   var foodXhr = new XMLHttpRequest();
   $detailedRecipeContainer.replaceChildren();
+
+  var goBackLinkContainer = document.createElement('div');
+  goBackLinkContainer.setAttribute('class', 'row column-full');
+  var goBack = document.createElement('a');
+  goBack.textContent = 'Go Back To Search Result';
+  goBack.setAttribute('class', ' box-shadow5 go-back-button');
+  goBackLinkContainer.appendChild(goBack);
+  $goToMainPageFromDetailed.appendChild(goBackLinkContainer);
+
+  goBack.addEventListener('click', function () {
+    switchingViews('basic-search-view');
+    $form.setAttribute('class', 'view');
+    $goToMainPageFromDetailed.replaceChildren();
+  });
   if (event.target.tagName === 'IMG') {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
+      ingredients = [];
+      recipeImage = foodXhr.response.recipe.image;
       amountOfServings = foodXhr.response.recipe.yield;
       recipeName = foodXhr.response.recipe.label.slice(0, 30);
       calories = Math.floor((foodXhr.response.recipe.calories) / amountOfServings);
@@ -453,16 +473,11 @@ function handleImageClick(event) {
       vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
       vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
       zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
-      recipeImage = foodXhr.response.recipe.image;
-      // console.log('foodXhr.response.recipe', foodXhr.response.recipe.ingredients);
       foodXhr.response.recipe.ingredients.forEach(item => {
         ingredients.push(item.text);
-        // console.log('ingredients', ingredients);
       });
-      console.log('ingredients', ingredients);
       url = foodXhr.response.recipe.url;
-
-      var detailedRecipeObject = {
+      detailedRecipeObject = {
         recipeId: dataIdAttribute,
         recipeName,
         recipeImage,
@@ -481,11 +496,13 @@ function handleImageClick(event) {
         vitaminB6,
         vitaminD,
         zinc,
-        url
+        url,
+        ingredients
       };
 
       var result = renderRecipeDetailes(detailedRecipeObject);
       $detailedRecipeContainer.appendChild(result);
+      ingredients = [];
       var $addToFavorites = document.querySelector('.favorite-icon');
       $addToFavorites.addEventListener('click', handleFavorites);
 
@@ -541,19 +558,21 @@ function switchingViews(viewName, optional) {
 
 window.addEventListener('DOMContentLoaded', event => {
   // data.entries = [];
+  console.log('data.entries[0]', data.entries[0]);
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
     noFavorites.textContent = 'No Favorite Recipes';
     $favoriteList.replaceChildren();
     $favoriteList.appendChild(noFavorites);
   }
+
   var goBackLinkContainer = document.createElement('div');
   goBackLinkContainer.setAttribute('class', 'row column-full');
   var goBack = document.createElement('a');
   goBack.textContent = 'Go Back To Main Page';
   goBack.setAttribute('class', ' box-shadow5 go-back-button');
   goBackLinkContainer.appendChild(goBack);
-  $goToMainPage.appendChild(goBackLinkContainer);
+  $goToMainPageFromFavorites.appendChild(goBackLinkContainer);
 
   goBack.addEventListener('click', function () {
     switchingViews('basic-search-view');
@@ -561,9 +580,8 @@ window.addEventListener('DOMContentLoaded', event => {
   });
 
   for (var i = 0; i < data.entries.length; i++) {
-    // console.log('data.entries', data.entries[i]);
     recipeId = data.entries[i].recipeId;
-    recipeImage = data.entries[i].imageElement;
+    recipeImage = data.entries[i].recipeImage;
     recipeName = data.entries[i].recipeName;
     calories = data.entries[i].calories;
     sugar = data.entries[i].sugar;
@@ -582,6 +600,7 @@ window.addEventListener('DOMContentLoaded', event => {
     vitaminD = data.entries[i].vitaminD;
     vitaminE = data.entries[i].vitaminE;
     zinc = data.entries[i].zinc;
+    ingredients = data.entries[i].ingredients;
 
     var result = renderRecipeDetailes(data.entries[i]);
     $favoriteList.appendChild(result);
