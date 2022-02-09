@@ -293,10 +293,9 @@ function renderRecipeDetailes(recipe) {
   return detailedLiElement;
 }
 
-var minCalories = 1;
-var maxCalories = 999;
-
 function handleFormSubmit(event) {
+  var minCalories = 1;
+  var maxCalories = 999;
 
   event.preventDefault();
   var foodXhr = new XMLHttpRequest();
