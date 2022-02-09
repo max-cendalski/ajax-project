@@ -26,7 +26,6 @@ var vitaminE = 0;
 var zinc = 0;
 var url = '';
 
-var ingredients = [];
 var detailedRecipeObject = {};
 var dataIdAttribute = '';
 
