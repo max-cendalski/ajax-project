@@ -12,16 +12,8 @@ var $goToMainPageFromFavorites = document.querySelector('#go-to-main-page-favori
 var sugarCount = 0;
 var proteinCount = 0;
 var carbsCount = 0;
-
 var selectNutritionName = '';
-var recipeName = '';
-var calories = 0;
-var sugar = 0;
-var protein = 0;
-var carbs = 0;
-var recipeImage = '';
-var amountOfServings = 0;
-var recipeId = '';
+
 var cholesterol = 0;
 var calcium = 0;
 var iron = 0;
@@ -33,6 +25,7 @@ var vitaminD = 0;
 var vitaminE = 0;
 var zinc = 0;
 var url = '';
+
 var ingredients = [];
 var detailedRecipeObject = {};
 var dataIdAttribute = '';
@@ -41,7 +34,7 @@ function renderEntry(entry) {
 
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'box-shadow5 column-width90 margin-top20 border-radius10');
-  liElement.setAttribute('data-recipeId', recipeId);
+  liElement.setAttribute('data-recipeId', entry.recipeId);
   $list.appendChild(liElement);
 
   var mainRow = document.createElement('div');
@@ -53,7 +46,7 @@ function renderEntry(entry) {
   mainRow.appendChild(imageContainer);
 
   var imageElement = document.createElement('img');
-  imageElement.setAttribute('src', recipeImage);
+  imageElement.setAttribute('src', entry.recipeImage);
   imageContainer.appendChild(imageElement);
 
   var columnWidth60 = document.createElement('div');
@@ -65,7 +58,7 @@ function renderEntry(entry) {
   columnWidth60.appendChild(headerContainer);
 
   var headerElement = document.createElement('h3');
-  headerElement.textContent = recipeName.slice(0, 30);
+  headerElement.textContent = entry.recipeName.slice(0, 30);
   headerContainer.appendChild(headerElement);
 
   var innerRow = document.createElement('div');
@@ -97,19 +90,19 @@ function renderEntry(entry) {
   innerRow.appendChild(innerColumnWidth60);
 
   var paragraphElCaloriesAPI = document.createElement('p');
-  paragraphElCaloriesAPI.textContent = calories + 'kcal';
+  paragraphElCaloriesAPI.textContent = entry.calories + 'kcal';
   innerColumnWidth60.appendChild(paragraphElCaloriesAPI);
 
   var paragraphElSugarAPI = document.createElement('p');
-  paragraphElSugarAPI.textContent = sugar + 'g';
+  paragraphElSugarAPI.textContent = entry.sugar + 'g';
   innerColumnWidth60.appendChild(paragraphElSugarAPI);
 
   var paragraphElProteinAPI = document.createElement('p');
-  paragraphElProteinAPI.textContent = protein + 'g';
+  paragraphElProteinAPI.textContent = entry.protein + 'g';
   innerColumnWidth60.appendChild(paragraphElProteinAPI);
 
   var paragraphElCarbsAPI = document.createElement('p');
-  paragraphElCarbsAPI.textContent = carbs + 'g';
+  paragraphElCarbsAPI.textContent = entry.carbs + 'g';
   innerColumnWidth60.appendChild(paragraphElCarbsAPI);
 
   var paragraphElInfo = document.createElement('p');
@@ -136,7 +129,7 @@ function renderRecipeDetailes(recipe) {
 
   var imageElement = document.createElement('img');
   imageElement.setAttribute('class', 'box-shadow5 border-radius5');
-  imageElement.setAttribute('src', recipeImage);
+  imageElement.setAttribute('src', recipe.recipeImage);
   imageContainer.appendChild(imageElement);
 
   var linkElement = document.createElement('a');
@@ -157,7 +150,7 @@ function renderRecipeDetailes(recipe) {
 
   var recipeHeaderName = document.createElement('h2');
   recipeHeaderName.setAttribute('class', 'column-width95 inline-element padding-top5 padding-bottom10');
-  recipeHeaderName.textContent = recipeName;
+  recipeHeaderName.textContent = recipe.recipeName;
   recipeHeader.appendChild(recipeHeaderName);
 
   var favoriteIcon = document.createElement('div');
@@ -217,22 +210,22 @@ function renderRecipeDetailes(recipe) {
   nutritionLeftContainer.appendChild(nutritionBasicLeftValues);
 
   var paragraphElCaloriesAPI = document.createElement('p');
-  paragraphElCaloriesAPI.textContent = calories + 'kcal';
+  paragraphElCaloriesAPI.textContent = recipe.calories + 'kcal';
   paragraphElCaloriesAPI.setAttribute('class', 'padding-top10');
   nutritionBasicLeftValues.appendChild(paragraphElCaloriesAPI);
 
   var paragraphElSugarAPI = document.createElement('p');
-  paragraphElSugarAPI.textContent = sugar + 'g';
+  paragraphElSugarAPI.textContent = recipe.sugar + 'g';
   paragraphElSugarAPI.setAttribute('class', 'padding-top10');
   nutritionBasicLeftValues.appendChild(paragraphElSugarAPI);
 
   var paragraphElProteinAPI = document.createElement('p');
-  paragraphElProteinAPI.textContent = protein + 'g';
+  paragraphElProteinAPI.textContent = recipe.protein + 'g';
   paragraphElProteinAPI.setAttribute('class', 'padding-top10');
   nutritionBasicLeftValues.appendChild(paragraphElProteinAPI);
 
   var paragraphElCarbsAPI = document.createElement('p');
-  paragraphElCarbsAPI.textContent = carbs + 'g';
+  paragraphElCarbsAPI.textContent = recipe.carbs + 'g';
   paragraphElCarbsAPI.setAttribute('class', 'padding-top10');
   nutritionBasicLeftValues.appendChild(paragraphElCarbsAPI);
 
@@ -357,18 +350,30 @@ function handleFormSubmit(event) {
 
   foodXhr.addEventListener('load', function () {
     $list.replaceChildren();
+
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
       var recipeIdHashPosition = recipeIdString.indexOf('#');
-      recipeId = recipeIdString.slice(recipeIdHashPosition + 1);
-      recipeName = foodXhr.response.hits[i].recipe.label;
-      recipeImage = foodXhr.response.hits[i].recipe.image;
-      amountOfServings = foodXhr.response.hits[i].recipe.yield;
-      calories = Math.floor(foodXhr.response.hits[i].recipe.calories / amountOfServings);
-      sugar = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.SUGAR.quantity / amountOfServings);
-      protein = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.PROCNT.quantity / amountOfServings);
-      carbs = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.CHOCDF.quantity / amountOfServings);
-      var result = renderEntry(foodXhr.response.hits[i]);
+      var recipeId = recipeIdString.slice(recipeIdHashPosition + 1);
+      var recipeName = foodXhr.response.hits[i].recipe.label;
+      var recipeImage = foodXhr.response.hits[i].recipe.image;
+      var amountOfServings = foodXhr.response.hits[i].recipe.yield;
+      var calories = Math.floor(foodXhr.response.hits[i].recipe.calories / amountOfServings);
+      var sugar = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.SUGAR.quantity / amountOfServings);
+      var protein = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.PROCNT.quantity / amountOfServings);
+      var carbs = Math.floor(foodXhr.response.hits[i].recipe.totalNutrients.CHOCDF.quantity / amountOfServings);
+      var resultObject = {
+        recipeId,
+        recipeName,
+        recipeImage,
+        calories,
+        sugar,
+        protein,
+        carbs,
+        resultObject
+      };
+      var result = renderEntry(resultObject);
+      // var result = renderEntry(foodXhr.response.hits[i]);
       $list.appendChild(result);
     }
     if (!foodXhr.response.hits[0]) {
