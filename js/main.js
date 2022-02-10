@@ -14,8 +14,8 @@ var sugarCount = 0;
 var proteinCount = 0;
 var carbsCount = 0;
 var selectNutritionName = '';
-var iconState = true;
-
+var favoriteIcon = null;
+var deleteIcon = null;
 function renderBasicRecipeInfo(data) {
 
   var liElement = document.createElement('li');
@@ -139,15 +139,13 @@ function renderRecipeDetailes(recipe) {
   recipeHeaderName.textContent = recipe.recipeName;
   recipeHeader.appendChild(recipeHeaderName);
 
-  if (iconState === true) {
-    var favoriteIcon = document.createElement('div');
-    favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
-    recipeHeader.appendChild(favoriteIcon);
-  } else {
-    favoriteIcon = document.createElement('div');
-    favoriteIcon.setAttribute('class', 'inline-element delete-icon fa-solid fa-trash-can fa-sm column-width5 ');
-    recipeHeader.appendChild(favoriteIcon);
-  }
+  favoriteIcon = document.createElement('div');
+  favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 hidden');
+  recipeHeader.appendChild(favoriteIcon);
+
+  deleteIcon = document.createElement('div');
+  deleteIcon.setAttribute('class', 'inline-element delete-icon fa-solid fa-trash-can fa-sm column-width5');
+  recipeHeader.appendChild(deleteIcon);
 
   var headerTextContainer = document.createElement('div');
   headerTextContainer.setAttribute('class', 'column-full row');
@@ -441,6 +439,7 @@ function handleImageClick(event) {
     $goToMainPageFromDetailed.replaceChildren();
   });
   if (event.target.tagName === 'IMG') {
+
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
@@ -493,9 +492,11 @@ function handleImageClick(event) {
       $detailedRecipeContainer.appendChild(result);
       var $addToFavorites = document.querySelector('.favorite-icon');
       $addToFavorites.addEventListener('click', handleFavorites);
+      deleteIcon.setAttribute('class', 'hidden');
+      favoriteIcon.classList.remove('hidden');
+
       function handleFavorites(event) {
         event.preventDefault();
-        iconState = false;
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
           var result = renderRecipeDetailes(detailedRecipeObject);
@@ -519,7 +520,6 @@ function handleImageClick(event) {
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
         }
-        iconState = true;
       }
     }
     );
@@ -539,7 +539,7 @@ function switchingViews(viewName, optional) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
-  iconState = false;
+
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
     noFavorites.textContent = 'No Favorite Recipes';
@@ -580,11 +580,17 @@ window.addEventListener('DOMContentLoaded', event => {
     var result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
+  var $deleteIcon = document.querySelector('.delete-icon');
+  $deleteIcon.addEventListener('click', handleDeleteFavorites);
+  function handleDeleteFavorites() {
+    event.preventDefault();
+    console.log('wheee');
+  }
   goBack.addEventListener('click', function () {
     switchingViews('basic-search-view');
     $form.setAttribute('class', 'view');
   });
-  iconState = true;
+
 });
 
 $favoriteIcon.addEventListener('click', function () {
