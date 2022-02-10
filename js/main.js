@@ -14,26 +14,11 @@ var proteinCount = 0;
 var carbsCount = 0;
 var selectNutritionName = '';
 
-var cholesterol = 0;
-var calcium = 0;
-var iron = 0;
-var potassium = 0;
-var magnesium = 0;
-var sodium = 0;
-var vitaminB6 = 0;
-var vitaminD = 0;
-var vitaminE = 0;
-var zinc = 0;
-var url = '';
-
-var detailedRecipeObject = {};
-var dataIdAttribute = '';
-
-function renderEntry(entry) {
+function renderBasicRecipeInfo(data) {
 
   var liElement = document.createElement('li');
   liElement.setAttribute('class', 'box-shadow5 column-width90 margin-top20 border-radius10');
-  liElement.setAttribute('data-recipeId', entry.recipeId);
+  liElement.setAttribute('data-recipeId', data.recipeId);
   $list.appendChild(liElement);
 
   var mainRow = document.createElement('div');
@@ -45,7 +30,7 @@ function renderEntry(entry) {
   mainRow.appendChild(imageContainer);
 
   var imageElement = document.createElement('img');
-  imageElement.setAttribute('src', entry.recipeImage);
+  imageElement.setAttribute('src', data.recipeImage);
   imageContainer.appendChild(imageElement);
 
   var columnWidth60 = document.createElement('div');
@@ -57,7 +42,7 @@ function renderEntry(entry) {
   columnWidth60.appendChild(headerContainer);
 
   var headerElement = document.createElement('h3');
-  headerElement.textContent = entry.recipeName.slice(0, 30);
+  headerElement.textContent = data.recipeName.slice(0, 30);
   headerContainer.appendChild(headerElement);
 
   var innerRow = document.createElement('div');
@@ -89,19 +74,19 @@ function renderEntry(entry) {
   innerRow.appendChild(innerColumnWidth60);
 
   var paragraphElCaloriesAPI = document.createElement('p');
-  paragraphElCaloriesAPI.textContent = entry.calories + 'kcal';
+  paragraphElCaloriesAPI.textContent = data.calories + 'kcal';
   innerColumnWidth60.appendChild(paragraphElCaloriesAPI);
 
   var paragraphElSugarAPI = document.createElement('p');
-  paragraphElSugarAPI.textContent = entry.sugar + 'g';
+  paragraphElSugarAPI.textContent = data.sugar + 'g';
   innerColumnWidth60.appendChild(paragraphElSugarAPI);
 
   var paragraphElProteinAPI = document.createElement('p');
-  paragraphElProteinAPI.textContent = entry.protein + 'g';
+  paragraphElProteinAPI.textContent = data.protein + 'g';
   innerColumnWidth60.appendChild(paragraphElProteinAPI);
 
   var paragraphElCarbsAPI = document.createElement('p');
-  paragraphElCarbsAPI.textContent = entry.carbs + 'g';
+  paragraphElCarbsAPI.textContent = data.carbs + 'g';
   innerColumnWidth60.appendChild(paragraphElCarbsAPI);
 
   var paragraphElInfo = document.createElement('p');
@@ -115,7 +100,7 @@ function renderEntry(entry) {
 function renderRecipeDetailes(recipe) {
 
   var detailedLiElement = document.createElement('li');
-  detailedLiElement.setAttribute('class', 'row flex-column column-width95 border-bottom-green padding-bottom15');
+  detailedLiElement.setAttribute('class', 'row flex-column column-width95 border-bottom-green padding-bottom20');
 
   var imageAndLinksContainer = document.createElement('div');
   imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
@@ -133,7 +118,7 @@ function renderRecipeDetailes(recipe) {
 
   var linkElement = document.createElement('a');
   linkElement.setAttribute('class', 'box-shadow5 instruction-link margin-top10 border-radius5');
-  linkElement.setAttribute('href', url);
+  linkElement.setAttribute('href', recipe.url);
   linkElement.textContent = 'Instruction';
   imageAndLinksContainer.appendChild(linkElement);
 
@@ -248,7 +233,7 @@ function renderRecipeDetailes(recipe) {
 
   // DAILY VITAMIN VALUES SECTION
 
-  var vitaminDailyValues = [cholesterol, calcium, iron, potassium, magnesium, sodium, vitaminE, vitaminB6, vitaminD, zinc];
+  var vitaminDailyValues = [recipe.cholesterol, recipe.calcium, recipe.iron, recipe.potassium, recipe.magnesium, recipe.sodium, recipe.vitaminE, recipe.vitaminB6, recipe.vitaminD, recipe.zinc];
   var $vitaminDailyValuesContainer = document.createElement('div');
   $vitaminDailyValuesContainer.setAttribute('class', 'column-width50');
 
@@ -276,7 +261,7 @@ function renderRecipeDetailes(recipe) {
   ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
   detailedNutritionContainer.appendChild(ingredientsListContainer);
 
-  ingredients.forEach((item, index) => {
+  recipe.ingredients.forEach((item, index) => {
     var text = document.createElement('p');
     text.setAttribute('class', 'ingredients padding-top5 padding-left10');
     text.textContent = `${index + 1}) ${item}`;
@@ -346,10 +331,8 @@ function handleFormSubmit(event) {
 
   foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}&nutrients%5BCHOCDF%5D=${minCarbs}-${maxCarbs}`);
   foodXhr.responseType = 'json';
-
   foodXhr.addEventListener('load', function () {
     $list.replaceChildren();
-
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
       var recipeIdHashPosition = recipeIdString.indexOf('#');
@@ -371,8 +354,7 @@ function handleFormSubmit(event) {
         carbs,
         resultObject
       };
-      var result = renderEntry(resultObject);
-      // var result = renderEntry(foodXhr.response.hits[i]);
+      var result = renderBasicRecipeInfo(resultObject);
       $list.appendChild(result);
     }
     if (!foodXhr.response.hits[0]) {
@@ -433,7 +415,7 @@ function handleImageClick(event) {
   event.preventDefault();
   $detailedRecipeContainer.replaceChildren();
   $goToMainPageFromDetailed.replaceChildren();
-  dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
+  var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
   switchingViews('detailed-search-view');
   var foodXhr = new XMLHttpRequest();
 
@@ -454,30 +436,29 @@ function handleImageClick(event) {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
-      ingredients = [];
-      recipeImage = foodXhr.response.recipe.image;
-      amountOfServings = foodXhr.response.recipe.yield;
-      recipeName = foodXhr.response.recipe.label.slice(0, 30);
-      calories = Math.floor((foodXhr.response.recipe.calories) / amountOfServings);
-      sugar = Math.floor((foodXhr.response.recipe.totalNutrients.SUGAR.quantity) / amountOfServings);
-      protein = Math.floor((foodXhr.response.recipe.totalNutrients.PROCNT.quantity) / amountOfServings);
-      carbs = Math.floor((foodXhr.response.recipe.totalNutrients.CHOCDF.quantity) / amountOfServings);
-      cholesterol = Math.floor((foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings);
-      calcium = Math.floor((foodXhr.response.recipe.totalDaily.CA.quantity) / amountOfServings);
-      iron = Math.floor((foodXhr.response.recipe.totalDaily.FE.quantity) / amountOfServings);
-      potassium = Math.floor((foodXhr.response.recipe.totalDaily.K.quantity) / amountOfServings);
-      magnesium = Math.floor((foodXhr.response.recipe.totalDaily.MG.quantity) / amountOfServings);
-      sodium = Math.floor((foodXhr.response.recipe.totalDaily.NA.quantity) / amountOfServings);
-      vitaminE = Math.floor((foodXhr.response.recipe.totalDaily.TOCPHA.quantity) / amountOfServings);
-      vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
-      vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
-      zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
-      url = foodXhr.response.recipe.url;
+      var ingredients = [];
+      var recipeImage = foodXhr.response.recipe.image;
+      var amountOfServings = foodXhr.response.recipe.yield;
+      var recipeName = foodXhr.response.recipe.label.slice(0, 30);
+      var calories = Math.floor((foodXhr.response.recipe.calories) / amountOfServings);
+      var sugar = Math.floor((foodXhr.response.recipe.totalNutrients.SUGAR.quantity) / amountOfServings);
+      var protein = Math.floor((foodXhr.response.recipe.totalNutrients.PROCNT.quantity) / amountOfServings);
+      var carbs = Math.floor((foodXhr.response.recipe.totalNutrients.CHOCDF.quantity) / amountOfServings);
+      var cholesterol = Math.floor((foodXhr.response.recipe.totalDaily.CHOLE.quantity) / amountOfServings);
+      var calcium = Math.floor((foodXhr.response.recipe.totalDaily.CA.quantity) / amountOfServings);
+      var iron = Math.floor((foodXhr.response.recipe.totalDaily.FE.quantity) / amountOfServings);
+      var potassium = Math.floor((foodXhr.response.recipe.totalDaily.K.quantity) / amountOfServings);
+      var magnesium = Math.floor((foodXhr.response.recipe.totalDaily.MG.quantity) / amountOfServings);
+      var sodium = Math.floor((foodXhr.response.recipe.totalDaily.NA.quantity) / amountOfServings);
+      var vitaminE = Math.floor((foodXhr.response.recipe.totalDaily.TOCPHA.quantity) / amountOfServings);
+      var vitaminB6 = Math.floor((foodXhr.response.recipe.totalDaily.VITB6A.quantity) / amountOfServings);
+      var vitaminD = Math.floor((foodXhr.response.recipe.totalDaily.VITD.quantity) / amountOfServings);
+      var zinc = Math.floor((foodXhr.response.recipe.totalDaily.ZN.quantity) / amountOfServings);
+      var url = foodXhr.response.recipe.url;
       foodXhr.response.recipe.ingredients.forEach(item => {
         ingredients.push(item.text);
       });
-
-      detailedRecipeObject = {
+      var detailedRecipeObject = {
         dataIdAttribute,
         recipeName,
         recipeImage,
@@ -564,28 +545,28 @@ window.addEventListener('DOMContentLoaded', event => {
   $goToMainPageFromFavorites.appendChild(goBackLinkContainer);
 
   for (var i = 0; i < data.entries.length; i++) {
-    recipeImage = data.entries[i].recipeImage;
-    recipeId = data.entries[i].recipeId;
-    recipeName = data.entries[i].recipeName;
-    calories = data.entries[i].calories;
-    sugar = data.entries[i].sugar;
-    protein = data.entries[i].protein;
-    carbs = data.entries[i].carbs;
-    cholesterol = data.entries[i].cholesterol;
-    iron = data.entries[i].iron;
-    magnesium = data.entries[i].magnesium;
-    potassium = data.entries[i].potassium;
-    protein = data.entries[i].protein;
-    sodium = data.entries[i].sodium;
-    sugar = data.entries[i].sugar;
-    url = data.entries[i].url;
-    vitaminB6 = data.entries[i].vitaminB6;
-    vitaminD = data.entries[i].vitaminD;
-    vitaminE = data.entries[i].vitaminE;
-    zinc = data.entries[i].zinc;
-    ingredients = data.entries[i].ingredients;
-
-    var result = renderRecipeDetailes(data.entries[i]);
+    var resultObject = {
+      recipeImage: data.entries[i].recipeImage,
+      recipeId: data.entries[i].recipeId,
+      recipeName: data.entries[i].recipeName,
+      calories: data.entries[i].calories,
+      sugar: data.entries[i].sugar,
+      carbs: data.entries[i].carbs,
+      cholesterol: data.entries[i].cholesterol,
+      iron: data.entries[i].iron,
+      magnesium: data.entries[i].magnesium,
+      potassium: data.entries[i].potassium,
+      calcium: data.entries[i].calcium,
+      protein: data.entries[i].protein,
+      sodium: data.entries[i].sodium,
+      url: data.entries[i].url,
+      vitaminB6: data.entries[i].vitaminB6,
+      vitaminD: data.entries[i].vitaminD,
+      vitaminE: data.entries[i].vitaminE,
+      zinc: data.entries[i].zinc,
+      ingredients: data.entries[i].ingredients
+    };
+    var result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
   goBack.addEventListener('click', function () {

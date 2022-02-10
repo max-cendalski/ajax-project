@@ -190,6 +190,10 @@ input[type=number]::-webkit-outer-spin-button {
   padding-bottom: 5px;
 }
 
+.padding-bottom20 {
+  padding-bottom: 20px;
+}
+
 .padding-top10 {
   padding-top: 10px;
 }
