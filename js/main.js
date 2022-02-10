@@ -495,6 +495,7 @@ function handleImageClick(event) {
       $addToFavorites.addEventListener('click', handleFavorites);
       function handleFavorites(event) {
         event.preventDefault();
+        iconState = false;
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
           var result = renderRecipeDetailes(detailedRecipeObject);
@@ -518,6 +519,7 @@ function handleImageClick(event) {
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
         }
+        iconState = true;
       }
     }
     );
@@ -537,6 +539,7 @@ function switchingViews(viewName, optional) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+  iconState = false;
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
     noFavorites.textContent = 'No Favorite Recipes';
@@ -581,7 +584,7 @@ window.addEventListener('DOMContentLoaded', event => {
     switchingViews('basic-search-view');
     $form.setAttribute('class', 'view');
   });
-
+  iconState = true;
 });
 
 $favoriteIcon.addEventListener('click', function () {
