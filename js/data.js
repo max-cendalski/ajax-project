@@ -1,9 +1,14 @@
 /* exported data */
 
 var data = {
-  view: 'favorites',
+  view: 'search-form',
   entries: []
 };
+
+var previousDataJson = localStorage.getItem('favorite-recipes');
+if (previousDataJson !== null) {
+  data = JSON.parse(previousDataJson);
+}
 
 function handleBeforUnload() {
   var dataJSON = JSON.stringify(data);

@@ -17,7 +17,7 @@
         <div class="column-full header">
           <div class="row">
             <h1 class="column-width80">Recipe Planner</h1>
-            <i class="icon fas fa-star fa-lg"></i>
+            <i class="icon fas fa-star fa-lg" id="favorite-icon"></i>
           <div>
           </div>
         </div>
@@ -63,16 +63,20 @@
         </div>
       </div>
       <div class="view hidden" data-view="detailed-search-view">
-        <div id="detailed-recipe-container" class="row flex-column">
+        <div id="go-to-main-page-detailed"></div>
+        <ul id="detailed-recipe-container" class="row flex-column column-width95">
 
-        </div>
+        </ul>
       </div>
+      <div class="view hidden" data-view="favorites">
+        <div id="go-to-main-page-favorites"></div>
+        <div class="favorite-recipes-header column-width60">
+          <h2>Favorite Recipes</h2>
+        </div>
+          <ul class="row flex-wrap" id="favorite-list">
 
-    <div class="view hidden" data-view="favorites">
-      <ul class="column-full row flex wrap" id="favorite-list">
-
-      </ul>
-    </div>
+          </ul>
+      </div>
     </div>
   </main>
   <script src="js/data.js"></script>

@@ -77,7 +77,7 @@ select {
 }
 
 ul {
-  margin-top: 30px;
+  margin-top: 20px;
   list-style-type: none;
   padding: 0;
 }
@@ -190,6 +190,10 @@ input[type=number]::-webkit-outer-spin-button {
   padding-bottom: 5px;
 }
 
+.padding-bottom20 {
+  padding-bottom: 20px;
+}
+
 .padding-top10 {
   padding-top: 10px;
 }
@@ -255,6 +259,10 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 0.8rem;
 }
 
+.border-bottom-green {
+  border-bottom: 6px solid rgb(41, 117, 21);
+}
+
 .box-shadow5 {
   box-shadow: 4px 4px rgb(231, 227, 227);
 }
@@ -264,5 +272,12 @@ input[type=number]::-webkit-outer-spin-button {
   bottom: 0;
   padding-left: 5px;
   font-size: 0.5rem;
+  font-weight: 700;
+}
+
+.favorite-recipes-header h2 {
+  margin-top: 30px;
+  text-align: center;
+  color: rgb(41, 117, 21);
   font-weight: 700;
 }
