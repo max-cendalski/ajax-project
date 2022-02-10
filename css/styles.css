@@ -62,7 +62,7 @@ select {
 
 .icon {
   color: white;
-  padding-top: 15px;
+  padding-top: 25px;
   padding-left: 3%;
   cursor: pointer;
 }
@@ -188,10 +188,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .padding-bottom5 {
   padding-bottom: 5px;
-}
-
-.padding-bottom20 {
-  padding-bottom: 20px;
 }
 
 .padding-top10 {
