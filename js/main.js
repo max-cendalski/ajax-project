@@ -1,3 +1,4 @@
+
 var $form = document.querySelector('#form');
 var $list = document.querySelector('#list');
 var $addOptionButton = document.querySelector('.add-option-button');
@@ -13,6 +14,7 @@ var sugarCount = 0;
 var proteinCount = 0;
 var carbsCount = 0;
 var selectNutritionName = '';
+var iconState = true;
 
 function renderBasicRecipeInfo(data) {
 
@@ -137,9 +139,15 @@ function renderRecipeDetailes(recipe) {
   recipeHeaderName.textContent = recipe.recipeName;
   recipeHeader.appendChild(recipeHeaderName);
 
-  var favoriteIcon = document.createElement('div');
-  favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
-  recipeHeader.appendChild(favoriteIcon);
+  if (iconState === true) {
+    var favoriteIcon = document.createElement('div');
+    favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 ');
+    recipeHeader.appendChild(favoriteIcon);
+  } else {
+    favoriteIcon = document.createElement('div');
+    favoriteIcon.setAttribute('class', 'inline-element delete-icon fa-solid fa-trash-can fa-sm column-width5 ');
+    recipeHeader.appendChild(favoriteIcon);
+  }
 
   var headerTextContainer = document.createElement('div');
   headerTextContainer.setAttribute('class', 'column-full row');
