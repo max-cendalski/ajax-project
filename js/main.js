@@ -16,6 +16,7 @@ var carbsCount = 0;
 var selectNutritionName = '';
 var favoriteIcon = null;
 var deleteIcon = null;
+
 function renderBasicRecipeInfo(data) {
 
   var liElement = document.createElement('li');
@@ -102,6 +103,7 @@ function renderBasicRecipeInfo(data) {
 function renderRecipeDetailes(recipe) {
 
   var detailedLiElement = document.createElement('li');
+  detailedLiElement.setAttribute('data-recipeid', recipe['data-recipeid']);
   detailedLiElement.setAttribute('class', 'row flex-column column-width95 border-bottom-green padding-bottom20');
 
   var imageAndLinksContainer = document.createElement('div');
@@ -421,7 +423,7 @@ function handleImageClick(event) {
   event.preventDefault();
   $detailedRecipeContainer.replaceChildren();
   $goToMainPageFromDetailed.replaceChildren();
-  var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeId');
+  var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
   switchingViews('detailed-search-view');
   var foodXhr = new XMLHttpRequest();
 
@@ -466,7 +468,7 @@ function handleImageClick(event) {
         ingredients.push(item.text);
       });
       var detailedRecipeObject = {
-        dataIdAttribute,
+        'data-recipeid': dataIdAttribute,
         recipeName,
         recipeImage,
         calories,
@@ -505,7 +507,8 @@ function handleImageClick(event) {
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
         }
-        if (data.entries.some(recipe => recipe.dataIdAttribute === dataIdAttribute)) {
+        if (data.entries.some(recipe => recipe['data-recipeid'] === dataIdAttribute)) {
+          $detailedRecipeContainer.replaceChildren();
           var infoContainer = document.createElement('div');
           infoContainer.setAttribute('class', 'column-full text-centered margin-top20');
           var infoText = document.createElement('h2');
@@ -558,7 +561,7 @@ window.addEventListener('DOMContentLoaded', event => {
   for (var i = 0; i < data.entries.length; i++) {
     var resultObject = {
       recipeImage: data.entries[i].recipeImage,
-      recipeId: data.entries[i].recipeId,
+      'data-recipeid': data.entries[i]['data-recipeid'],
       recipeName: data.entries[i].recipeName,
       calories: data.entries[i].calories,
       sugar: data.entries[i].sugar,
@@ -577,15 +580,22 @@ window.addEventListener('DOMContentLoaded', event => {
       zinc: data.entries[i].zinc,
       ingredients: data.entries[i].ingredients
     };
+
     var result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
   var $deleteIcon = document.querySelector('.delete-icon');
+
   $deleteIcon.addEventListener('click', handleDeleteFavorites);
-  function handleDeleteFavorites() {
+  function handleDeleteFavorites(event) {
     event.preventDefault();
-    console.log('wheee');
+
+    var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
+    console.log('dataIdAttribute', dataIdAttribute);
+    console.log('event.target', event.target.closest('li'));
+    console.log('data.entries[0]', data.entries);
   }
+
   goBack.addEventListener('click', function () {
     switchingViews('basic-search-view');
     $form.setAttribute('class', 'view');
