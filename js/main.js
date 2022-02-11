@@ -499,6 +499,7 @@ function handleImageClick(event) {
 
       function handleFavorites(event) {
         event.preventDefault();
+        console.log('data.entriesbefoeFavorri', data.entries);
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
           var result = renderRecipeDetailes(detailedRecipeObject);
@@ -523,6 +524,8 @@ function handleImageClick(event) {
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
         }
+        console.log('data.entriesafterfavorites', data.entries);
+
       }
     }
     );
@@ -587,11 +590,14 @@ window.addEventListener('DOMContentLoaded', event => {
   var $deleteIcon = document.querySelector('#favorite-list');
   $deleteIcon.addEventListener('click', function (event) {
     event.preventDefault();
+    console.log('data.entriesBeforeRemove', data.entries);
     if (event.target.tagName === 'DIV') {
       var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
-      console.log(dataIdAttribute);
-      console.log('event.target.closest.li', event.target.closest('li'));
-      console.log('whe2');
+      var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
+      data.entries.splice(objectToRemove, 1);
+      var renderedObjects = document.querySelectorAll('li');
+      renderedObjects[objectToRemove].remove();
+      console.log('data.entriesBeforeRemove', data.entries);
     }
   });
 
