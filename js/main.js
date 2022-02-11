@@ -499,7 +499,6 @@ function handleImageClick(event) {
 
       function handleFavorites(event) {
         event.preventDefault();
-        console.log('data.entriesbefoeFavorri', data.entries);
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
           var result = renderRecipeDetailes(detailedRecipeObject);
@@ -524,8 +523,6 @@ function handleImageClick(event) {
           switchingViews('basic-search-view');
           $form.setAttribute('class', 'view');
         }
-        console.log('data.entriesafterfavorites', data.entries);
-
       }
     }
     );
@@ -545,6 +542,22 @@ function switchingViews(viewName, optional) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+  var $deleteIcon = document.querySelector('#favorite-list');
+  $deleteIcon.addEventListener('click', function (event) {
+    event.preventDefault();
+    if (event.target.tagName === 'DIV') {
+      var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
+      var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
+      data.entries.splice(objectToRemove, 1);
+      var renderedObjects = document.querySelectorAll('li');
+      for (var j = 0; j < renderedObjects.length; j++) {
+        if (renderedObjects[j].dataset.recipeid === dataIdAttribute) {
+          renderedObjects[j].remove();
+        }
+      }
+      renderedObjects[objectToRemove].remove();
+    }
+  });
 
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
@@ -587,19 +600,6 @@ window.addEventListener('DOMContentLoaded', event => {
     var result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
-  var $deleteIcon = document.querySelector('#favorite-list');
-  $deleteIcon.addEventListener('click', function (event) {
-    event.preventDefault();
-    console.log('data.entriesBeforeRemove', data.entries);
-    if (event.target.tagName === 'DIV') {
-      var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
-      var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
-      data.entries.splice(objectToRemove, 1);
-      var renderedObjects = document.querySelectorAll('li');
-      renderedObjects[objectToRemove].remove();
-      console.log('data.entriesBeforeRemove', data.entries);
-    }
-  });
 
   goBack.addEventListener('click', function () {
     switchingViews('basic-search-view');
