@@ -584,23 +584,21 @@ window.addEventListener('DOMContentLoaded', event => {
     var result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
-  var $deleteIcon = document.querySelector('.delete-icon');
-
-  $deleteIcon.addEventListener('click', handleDeleteFavorites);
-  function handleDeleteFavorites(event) {
+  var $deleteIcon = document.querySelector('#favorite-list');
+  $deleteIcon.addEventListener('click', function (event) {
     event.preventDefault();
-
-    var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
-    console.log('dataIdAttribute', dataIdAttribute);
-    console.log('event.target', event.target.closest('li'));
-    console.log('data.entries[0]', data.entries);
-  }
+    if (event.target.tagName === 'DIV') {
+      var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
+      console.log(dataIdAttribute);
+      console.log('event.target.closest.li', event.target.closest('li'));
+      console.log('whe2');
+    }
+  });
 
   goBack.addEventListener('click', function () {
     switchingViews('basic-search-view');
     $form.setAttribute('class', 'view');
   });
-
 });
 
 $favoriteIcon.addEventListener('click', function () {
