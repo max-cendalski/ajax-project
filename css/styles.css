@@ -62,7 +62,7 @@ select {
 
 .icon {
   color: white;
-  padding-top: 15px;
+  padding-top: 25px;
   padding-left: 3%;
   cursor: pointer;
 }
@@ -280,4 +280,9 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: center;
   color: rgb(41, 117, 21);
   font-weight: 700;
+}
+
+.delete-icon {
+  color: red;
+  cursor: pointer;
 }
