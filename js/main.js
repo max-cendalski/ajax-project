@@ -1,6 +1,7 @@
 
 var $form = document.querySelector('#form');
 var $list = document.querySelector('#list');
+var $views = document.querySelectorAll('.view');
 var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
 var $minMaxContainer = document.querySelector('.min-max-container');
@@ -345,6 +346,7 @@ function handleFormSubmit(event) {
 
   foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}&nutrients%5BCHOCDF%5D=${minCarbs}-${maxCarbs}`);
   foodXhr.responseType = 'json';
+  window.location.hash = 'basic-search-view';
   foodXhr.addEventListener('load', function () {
     $list.replaceChildren();
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
@@ -442,12 +444,13 @@ function handleImageClick(event) {
   $goToMainPageFromDetailed.appendChild(goBackLinkContainer);
 
   goBack.addEventListener('click', function () {
-    switchingViews('basic-search-view');
+    window.location.hash = 'basic-search-view';
     $form.setAttribute('class', 'view');
     $goToMainPageFromDetailed.replaceChildren();
   });
   if (event.target.tagName === 'IMG') {
-
+    $form.className = 'hidden';
+    window.location.hash = 'detailed-search-view';
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
@@ -535,7 +538,7 @@ function handleImageClick(event) {
   }
   foodXhr.send();
 }
-
+/*
 function switchingViews(viewName, optional) {
   var $viewList = document.querySelectorAll('.view');
   for (var i = 0; i < $viewList.length; i++) {
@@ -546,8 +549,24 @@ function switchingViews(viewName, optional) {
     }
   }
 }
+ */
+
+function switchingViews(newHash) {
+
+  var route = newHash.startsWith('#') ? newHash.replace('#', '') : newHash;
+  if (route === '') return;
+
+  for (var viewIndex = 0; viewIndex < $views.length; viewIndex++) {
+    if ($views[viewIndex].getAttribute('data-view') !== route) {
+      $views[viewIndex].className = 'hidden';
+    } else {
+      $views[viewIndex].className = 'view';
+    }
+  }
+}
 
 window.addEventListener('DOMContentLoaded', event => {
+  window.location.hash = 'homepage';
   var $deleteIcon = document.querySelector('#favorite-list');
   $deleteIcon.addEventListener('click', function (event) {
     event.preventDefault();
@@ -608,14 +627,15 @@ window.addEventListener('DOMContentLoaded', event => {
   }
 
   goBack.addEventListener('click', function () {
-    switchingViews('basic-search-view');
+    window.location.hash = 'homepage';
     $form.setAttribute('class', 'view');
   });
 });
 
 $favoriteIcon.addEventListener('click', function () {
   event.preventDefault();
-  switchingViews('favorites');
+  window.location.hash = 'favorites';
+  $form.className = 'hidden';
 });
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
