@@ -616,3 +616,37 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
+
+/* switchingViews(window.location.hash)
+console.log(window.location.hash)
+
+window.addEventListener('hashchange',function(event) {
+  switchingViews(window.location.hash)
+})
+
+$buttonToAbout.addEventListener('click',function() {
+event.preventDefault()
+window.location.hash = 'about'
+switchingViews(window.location.hash)
+})
+
+$buttonToHome.addEventListener('click',function() {
+event.preventDefault()
+window.location.hash = 'homepage'
+switchingViews(window.location.hash)
+
+})
+
+function switchingViews(newHash) {
+  //debugger;
+  var route = newHash.startsWith('#') ? newHash.replace('#', '') : newHash;
+  if (route ==='') return
+
+  for (var viewIndex = 0; viewIndex < $views.length; viewIndex++) {
+    if ($views[viewIndex].getAttribute('data-view') !== route) {
+      $views[viewIndex].className = 'hidden';
+    } else {
+      $views[viewIndex].className = 'view hidden'
+    }
+  }
+} */
