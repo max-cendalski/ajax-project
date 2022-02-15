@@ -278,6 +278,12 @@ function renderRecipeDetailes(recipe) {
   return detailedLiElement;
 }
 
+switchingViews(window.location.hash);
+
+window.addEventListener('hashchange', function (event) {
+  switchingViews(window.location.hash);
+});
+
 function handleFormSubmit(event) {
   var minCalories = 1;
   var maxCalories = 999;
@@ -650,3 +656,5 @@ function switchingViews(newHash) {
     }
   }
 } */
+
+// class="view" data-view="search-form"
