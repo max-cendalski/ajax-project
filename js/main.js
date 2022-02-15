@@ -539,7 +539,9 @@ function switchingViews(newHash) {
 
   var route = newHash.startsWith('#') ? newHash.replace('#', '') : newHash;
   if (route === '') return;
-
+  if (route === 'homepage' || route === 'basic-search-view') {
+    $form.className = 'view';
+  }
   for (var viewIndex = 0; viewIndex < $views.length; viewIndex++) {
     if ($views[viewIndex].getAttribute('data-view') !== route) {
       $views[viewIndex].className = 'hidden';
