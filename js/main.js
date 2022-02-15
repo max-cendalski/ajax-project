@@ -513,8 +513,6 @@ function handleImageClick(event) {
           var result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.replaceChildren();
           $favoriteList.appendChild(result);
-          switchingViews('basic-search-view');
-          $form.setAttribute('class', 'view');
         }
         if (data.entries.some(recipe => recipe['data-recipeid'] === dataIdAttribute)) {
           $detailedRecipeContainer.replaceChildren();
@@ -529,8 +527,6 @@ function handleImageClick(event) {
           data.entries.push(detailedRecipeObject);
           result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.appendChild(result);
-          switchingViews('basic-search-view');
-          $form.setAttribute('class', 'view');
         }
       }
     }
@@ -538,18 +534,6 @@ function handleImageClick(event) {
   }
   foodXhr.send();
 }
-/*
-function switchingViews(viewName, optional) {
-  var $viewList = document.querySelectorAll('.view');
-  for (var i = 0; i < $viewList.length; i++) {
-    if ($viewList[i].getAttribute('data-view') === viewName) {
-      $viewList[i].className = 'view';
-    } else {
-      $viewList[i].className = 'view hidden ';
-    }
-  }
-}
- */
 
 function switchingViews(newHash) {
 
@@ -621,7 +605,6 @@ window.addEventListener('DOMContentLoaded', event => {
       zinc: data.entries[i].zinc,
       ingredients: data.entries[i].ingredients
     };
-
     var result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
@@ -642,39 +625,3 @@ $nutritionChoice.addEventListener('click', handleNutritionChoice);
 $form.addEventListener('submit', handleFormSubmit);
 $addOptionButton.addEventListener('click', handleAddOptionButton);
 $list.addEventListener('click', handleImageClick);
-
-/* switchingViews(window.location.hash)
-console.log(window.location.hash)
-
-window.addEventListener('hashchange',function(event) {
-  switchingViews(window.location.hash)
-})
-
-$buttonToAbout.addEventListener('click',function() {
-event.preventDefault()
-window.location.hash = 'about'
-switchingViews(window.location.hash)
-})
-
-$buttonToHome.addEventListener('click',function() {
-event.preventDefault()
-window.location.hash = 'homepage'
-switchingViews(window.location.hash)
-
-})
-
-function switchingViews(newHash) {
-  //debugger;
-  var route = newHash.startsWith('#') ? newHash.replace('#', '') : newHash;
-  if (route ==='') return
-
-  for (var viewIndex = 0; viewIndex < $views.length; viewIndex++) {
-    if ($views[viewIndex].getAttribute('data-view') !== route) {
-      $views[viewIndex].className = 'hidden';
-    } else {
-      $views[viewIndex].className = 'view hidden'
-    }
-  }
-} */
-
-// class="view" data-view="search-form"
