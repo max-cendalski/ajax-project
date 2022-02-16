@@ -10,6 +10,7 @@ var $favoriteIcon = document.querySelector('#favorite-icon');
 var $favoriteList = document.querySelector('#favorite-list');
 var $goToMainPageFromDetailed = document.querySelector('#go-to-main-page-detailed');
 var $goToMainPageFromFavorites = document.querySelector('#go-to-main-page-favorites');
+var $mainHeader = document.querySelector('#main-header');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -283,6 +284,7 @@ switchingViews(window.location.hash);
 
 window.addEventListener('hashchange', function (event) {
   switchingViews(window.location.hash);
+  data.view = window.location.hash;
 });
 
 function handleFormSubmit(event) {
@@ -346,8 +348,9 @@ function handleFormSubmit(event) {
 
   foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}&nutrients%5BCHOCDF%5D=${minCarbs}-${maxCarbs}`);
   foodXhr.responseType = 'json';
-  window.location.hash = 'basic-search-view';
+
   foodXhr.addEventListener('load', function () {
+    window.location.hash = 'basic-search-view';
     $list.replaceChildren();
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
@@ -535,7 +538,6 @@ function handleImageClick(event) {
 }
 
 function switchingViews(newHash) {
-
   var route = newHash.startsWith('#') ? newHash.replace('#', '') : newHash;
   if (route === '') return;
   if (route === 'homepage' || route === 'basic-search-view') {
@@ -554,7 +556,6 @@ function switchingViews(newHash) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
-
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
     noFavorites.textContent = 'No Favorite Recipes';
@@ -598,7 +599,6 @@ window.addEventListener('DOMContentLoaded', event => {
 
   var $deleteIcon = document.querySelector('#favorite-list');
   $deleteIcon.addEventListener('click', function (event) {
-    event.preventDefault();
     if (event.target.tagName === 'DIV') {
       var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
       var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
@@ -610,8 +610,6 @@ window.addEventListener('DOMContentLoaded', event => {
         }
       }
       renderedObjects[objectToRemove].remove();
-    } if (event.target.tagName === 'A') {
-      window.location = event.target.href;
     }
   });
 
@@ -623,6 +621,11 @@ window.addEventListener('DOMContentLoaded', event => {
 $favoriteIcon.addEventListener('click', function () {
   event.preventDefault();
   window.location.hash = 'favorites';
+});
+
+$mainHeader.addEventListener('click', function () {
+  event.preventDefault();
+  window.location.hash = 'homepage';
 });
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);

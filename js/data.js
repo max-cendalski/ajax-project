@@ -1,8 +1,8 @@
 /* exported data */
 
 var data = {
-  view: 'search-form',
-  entries: []
+  entries: [],
+  view: 'homepage'
 };
 
 var previousDataJson = localStorage.getItem('favorite-recipes');
@@ -13,6 +13,8 @@ if (previousDataJson !== null) {
 function handleBeforUnload() {
   var dataJSON = JSON.stringify(data);
   localStorage.setItem('favorite-recipes', dataJSON);
+  var lastView = window.location.hash;
+  data.view = lastView;
 }
 
 window.addEventListener('beforeunload', handleBeforUnload);
