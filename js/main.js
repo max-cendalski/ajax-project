@@ -105,7 +105,7 @@ function renderRecipeDetailes(recipe) {
 
   var detailedLiElement = document.createElement('li');
   detailedLiElement.setAttribute('data-recipeid', recipe['data-recipeid']);
-  detailedLiElement.setAttribute('class', 'row flex-column column-width95 border-bottom-green padding-bottom20');
+  detailedLiElement.setAttribute('class', ' row flex-column column-width95 border-bottom-green padding-bottom20');
 
   var imageAndLinksContainer = document.createElement('div');
   imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
@@ -445,7 +445,6 @@ function handleImageClick(event) {
 
   goBack.addEventListener('click', function () {
     window.location.hash = 'basic-search-view';
-    $form.setAttribute('class', 'view');
     $goToMainPageFromDetailed.replaceChildren();
   });
   if (event.target.tagName === 'IMG') {
@@ -542,6 +541,9 @@ function switchingViews(newHash) {
   if (route === 'homepage' || route === 'basic-search-view') {
     $form.className = 'view';
   }
+  if (route === 'favorites' || route === 'detailed-search-view') {
+    $form.className = 'hidden';
+  }
   for (var viewIndex = 0; viewIndex < $views.length; viewIndex++) {
     if ($views[viewIndex].getAttribute('data-view') !== route) {
       $views[viewIndex].className = 'hidden';
@@ -552,23 +554,6 @@ function switchingViews(newHash) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
-  window.location.hash = 'homepage';
-  var $deleteIcon = document.querySelector('#favorite-list');
-  $deleteIcon.addEventListener('click', function (event) {
-    event.preventDefault();
-    if (event.target.tagName === 'DIV') {
-      var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
-      var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
-      data.entries.splice(objectToRemove, 1);
-      var renderedObjects = document.querySelectorAll('li');
-      for (var j = 0; j < renderedObjects.length; j++) {
-        if (renderedObjects[j].dataset.recipeid === dataIdAttribute) {
-          renderedObjects[j].remove();
-        }
-      }
-      renderedObjects[objectToRemove].remove();
-    }
-  });
 
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
@@ -611,16 +596,33 @@ window.addEventListener('DOMContentLoaded', event => {
     $favoriteList.appendChild(result);
   }
 
+  var $deleteIcon = document.querySelector('#favorite-list');
+  $deleteIcon.addEventListener('click', function (event) {
+    event.preventDefault();
+    if (event.target.tagName === 'DIV') {
+      var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
+      var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
+      data.entries.splice(objectToRemove, 1);
+      var renderedObjects = document.querySelectorAll('li');
+      for (var j = 0; j < renderedObjects.length; j++) {
+        if (renderedObjects[j].dataset.recipeid === dataIdAttribute) {
+          renderedObjects[j].remove();
+        }
+      }
+      renderedObjects[objectToRemove].remove();
+    } if (event.target.tagName === 'A') {
+      window.location = event.target.href;
+    }
+  });
+
   goBack.addEventListener('click', function () {
     window.location.hash = 'homepage';
-    $form.setAttribute('class', 'view');
   });
 });
 
 $favoriteIcon.addEventListener('click', function () {
   event.preventDefault();
   window.location.hash = 'favorites';
-  $form.className = 'hidden';
 });
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
