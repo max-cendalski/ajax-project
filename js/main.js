@@ -555,11 +555,27 @@ function switchingViews(newHash) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+  var goBackFromFavoritesLinkContainer = document.createElement('div');
+  goBackFromFavoritesLinkContainer.setAttribute('class', 'row column-full');
+  var goBack = document.createElement('a');
+  goBack.textContent = 'Go Back To Main Page';
+  goBack.setAttribute('class', ' box-shadow5 go-back-button');
+  goBackFromFavoritesLinkContainer.appendChild(goBack);
+  $goToMainPageFromFavorites.appendChild(goBackFromFavoritesLinkContainer);
+
   var detailedRecipeObject = data.detailRecipeObject;
   var result = renderRecipeDetailes(detailedRecipeObject);
   $detailedRecipeContainer.appendChild(result);
   deleteIcon.setAttribute('class', 'hidden');
   favoriteIcon.classList.remove('hidden');
+
+  var goBackFromDetailsContainer = document.createElement('div');
+  goBackFromDetailsContainer.setAttribute('class', 'row column-full');
+  var goBackFromDetailsLink = document.createElement('a');
+  goBackFromDetailsLink.textContent = 'Go Back To Search Result';
+  goBackFromDetailsLink.setAttribute('class', ' box-shadow5 go-back-button');
+  goBackFromDetailsContainer.appendChild(goBackFromDetailsLink);
+  $goToMainPageFromDetailed.appendChild(goBackFromDetailsContainer);
 
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
@@ -567,13 +583,6 @@ window.addEventListener('DOMContentLoaded', event => {
     $favoriteList.replaceChildren();
     $favoriteList.appendChild(noFavorites);
   }
-  var goBackLinkContainer = document.createElement('div');
-  goBackLinkContainer.setAttribute('class', 'row column-full');
-  var goBack = document.createElement('a');
-  goBack.textContent = 'Go Back To Main Page';
-  goBack.setAttribute('class', ' box-shadow5 go-back-button');
-  goBackLinkContainer.appendChild(goBack);
-  $goToMainPageFromFavorites.appendChild(goBackLinkContainer);
 
   for (var i = 0; i < data.entries.length; i++) {
     var resultObject = {
