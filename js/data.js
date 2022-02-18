@@ -1,7 +1,8 @@
 /* exported data */
 
 var data = {
-  entries: []
+  entries: [],
+  detailRecipeObject: {}
 };
 
 var previousDataJson = localStorage.getItem('favorite-recipes');

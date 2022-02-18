@@ -286,10 +286,11 @@ function renderRecipeDetailes(recipe) {
 }
 
 function handleFormSubmit(event) {
+  event.preventDefault();
+
   var minCalories = 1;
   var maxCalories = 999;
 
-  event.preventDefault();
   var foodXhr = new XMLHttpRequest();
   var searchRecipe = event.target.search.value;
 
@@ -448,8 +449,6 @@ function handleImageClick(event) {
 
   goBack.addEventListener('click', function () {
     window.location.hash = 'basic-search-view';
-
-    $goToMainPageFromDetailed.replaceChildren();
   });
   if (event.target.tagName === 'IMG') {
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
@@ -500,6 +499,7 @@ function handleImageClick(event) {
         ingredients
       };
 
+      data.detailRecipeObject = detailedRecipeObject;
       var result = renderRecipeDetailes(detailedRecipeObject);
       $detailedRecipeContainer.appendChild(result);
       var $addToFavorites = document.querySelector('.favorite-icon');
@@ -555,13 +555,18 @@ function switchingViews(newHash) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+  var detailedRecipeObject = data.detailRecipeObject;
+  var result = renderRecipeDetailes(detailedRecipeObject);
+  $detailedRecipeContainer.appendChild(result);
+  deleteIcon.setAttribute('class', 'hidden');
+  favoriteIcon.classList.remove('hidden');
+
   if (data.entries.length === 0) {
     var noFavorites = document.createElement('h1');
     noFavorites.textContent = 'No Favorite Recipes';
     $favoriteList.replaceChildren();
     $favoriteList.appendChild(noFavorites);
   }
-
   var goBackLinkContainer = document.createElement('div');
   goBackLinkContainer.setAttribute('class', 'row column-full');
   var goBack = document.createElement('a');
@@ -592,7 +597,7 @@ window.addEventListener('DOMContentLoaded', event => {
       zinc: data.entries[i].zinc,
       ingredients: data.entries[i].ingredients
     };
-    var result = renderRecipeDetailes(resultObject);
+    result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
 
@@ -614,18 +619,15 @@ window.addEventListener('DOMContentLoaded', event => {
 
   goBack.addEventListener('click', function () {
     window.location.hash = 'homepage';
-
   });
 });
 
 $favoriteIcon.addEventListener('click', function () {
-  event.preventDefault();
   window.location.hash = 'favorites';
 
 });
 
 $mainHeader.addEventListener('click', function () {
-  event.preventDefault();
   window.location.hash = 'homepage';
 
 });
