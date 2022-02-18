@@ -19,6 +19,11 @@ var selectNutritionName = '';
 var favoriteIcon = null;
 var deleteIcon = null;
 
+switchingViews(window.location.hash);
+window.addEventListener('hashchange', function (event) {
+  switchingViews(window.location.hash);
+});
+
 function renderBasicRecipeInfo(data) {
 
   var liElement = document.createElement('li');
@@ -280,13 +285,6 @@ function renderRecipeDetailes(recipe) {
   return detailedLiElement;
 }
 
-switchingViews(window.location.hash);
-
-window.addEventListener('hashchange', function (event) {
-  switchingViews(window.location.hash);
-  data.view = window.location.hash;
-});
-
 function handleFormSubmit(event) {
   var minCalories = 1;
   var maxCalories = 999;
@@ -348,9 +346,8 @@ function handleFormSubmit(event) {
 
   foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}&nutrients%5BCHOCDF%5D=${minCarbs}-${maxCarbs}`);
   foodXhr.responseType = 'json';
-
   foodXhr.addEventListener('load', function () {
-    window.location.hash = 'basic-search-view';
+
     $list.replaceChildren();
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
@@ -384,6 +381,7 @@ function handleFormSubmit(event) {
     }
   });
   foodXhr.send();
+  window.location.hash = 'basic-search-view';
 }
 
 function createMinMaxNutritionBox(value) {
@@ -432,10 +430,12 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
+  window.location.hash = 'detailed-search-view';
+
   $detailedRecipeContainer.replaceChildren();
   $goToMainPageFromDetailed.replaceChildren();
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
-  switchingViews('detailed-search-view');
+
   var foodXhr = new XMLHttpRequest();
 
   var goBackLinkContainer = document.createElement('div');
@@ -448,11 +448,10 @@ function handleImageClick(event) {
 
   goBack.addEventListener('click', function () {
     window.location.hash = 'basic-search-view';
+
     $goToMainPageFromDetailed.replaceChildren();
   });
   if (event.target.tagName === 'IMG') {
-    $form.className = 'hidden';
-    window.location.hash = 'detailed-search-view';
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
@@ -548,7 +547,7 @@ function switchingViews(newHash) {
   }
   for (var viewIndex = 0; viewIndex < $views.length; viewIndex++) {
     if ($views[viewIndex].getAttribute('data-view') !== route) {
-      $views[viewIndex].className = 'hidden';
+      $views[viewIndex].className = 'view hidden';
     } else {
       $views[viewIndex].className = 'view';
     }
@@ -615,17 +614,20 @@ window.addEventListener('DOMContentLoaded', event => {
 
   goBack.addEventListener('click', function () {
     window.location.hash = 'homepage';
+
   });
 });
 
 $favoriteIcon.addEventListener('click', function () {
   event.preventDefault();
   window.location.hash = 'favorites';
+
 });
 
 $mainHeader.addEventListener('click', function () {
   event.preventDefault();
   window.location.hash = 'homepage';
+
 });
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
