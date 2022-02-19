@@ -2,6 +2,7 @@
 
 var data = {
   entries: [],
+  basicSearchArray: [],
   detailRecipeObject: {}
 };
 
