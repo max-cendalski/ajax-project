@@ -1,6 +1,7 @@
 
 var $form = document.querySelector('#form');
 var $list = document.querySelector('#list');
+var $views = document.querySelectorAll('.view');
 var $addOptionButton = document.querySelector('.add-option-button');
 var $nutritionChoice = document.querySelector('#nutrients-choice');
 var $minMaxContainer = document.querySelector('.min-max-container');
@@ -9,6 +10,7 @@ var $favoriteIcon = document.querySelector('#favorite-icon');
 var $favoriteList = document.querySelector('#favorite-list');
 var $goToMainPageFromDetailed = document.querySelector('#go-to-main-page-detailed');
 var $goToMainPageFromFavorites = document.querySelector('#go-to-main-page-favorites');
+var $mainHeader = document.querySelector('#main-header');
 
 var sugarCount = 0;
 var proteinCount = 0;
@@ -16,6 +18,11 @@ var carbsCount = 0;
 var selectNutritionName = '';
 var favoriteIcon = null;
 var deleteIcon = null;
+
+switchingViews(window.location.hash);
+window.addEventListener('hashchange', function (event) {
+  switchingViews(window.location.hash);
+});
 
 function renderBasicRecipeInfo(data) {
 
@@ -104,7 +111,7 @@ function renderRecipeDetailes(recipe) {
 
   var detailedLiElement = document.createElement('li');
   detailedLiElement.setAttribute('data-recipeid', recipe['data-recipeid']);
-  detailedLiElement.setAttribute('class', 'row flex-column column-width95 border-bottom-green padding-bottom20');
+  detailedLiElement.setAttribute('class', ' row flex-column column-width95 border-bottom-green padding-bottom20');
 
   var imageAndLinksContainer = document.createElement('div');
   imageAndLinksContainer.setAttribute('class', 'column-width90 image-links-container');
@@ -279,10 +286,11 @@ function renderRecipeDetailes(recipe) {
 }
 
 function handleFormSubmit(event) {
+  event.preventDefault();
+
   var minCalories = 1;
   var maxCalories = 999;
 
-  event.preventDefault();
   var foodXhr = new XMLHttpRequest();
   var searchRecipe = event.target.search.value;
 
@@ -340,6 +348,7 @@ function handleFormSubmit(event) {
   foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}&nutrients%5BCHOCDF%5D=${minCarbs}-${maxCarbs}`);
   foodXhr.responseType = 'json';
   foodXhr.addEventListener('load', function () {
+    data.basicSearchArray = [];
     $list.replaceChildren();
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
@@ -362,6 +371,7 @@ function handleFormSubmit(event) {
         carbs,
         resultObject
       };
+      data.basicSearchArray.push(resultObject);
       var result = renderBasicRecipeInfo(resultObject);
       $list.appendChild(result);
     }
@@ -373,6 +383,7 @@ function handleFormSubmit(event) {
     }
   });
   foodXhr.send();
+  window.location.hash = 'basic-search-view';
 }
 
 function createMinMaxNutritionBox(value) {
@@ -421,27 +432,26 @@ function handleNutritionChoice(event) {
 
 function handleImageClick(event) {
   event.preventDefault();
+  window.location.hash = 'detailed-search-view';
+
   $detailedRecipeContainer.replaceChildren();
   $goToMainPageFromDetailed.replaceChildren();
   var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
-  switchingViews('detailed-search-view');
+
   var foodXhr = new XMLHttpRequest();
 
   var goBackLinkContainer = document.createElement('div');
   goBackLinkContainer.setAttribute('class', 'row column-full');
-  var goBack = document.createElement('a');
-  goBack.textContent = 'Go Back To Search Result';
-  goBack.setAttribute('class', ' box-shadow5 go-back-button');
-  goBackLinkContainer.appendChild(goBack);
+  var goBackFromDetailsContainer = document.createElement('a');
+  goBackFromDetailsContainer.textContent = 'Go Back To Search Result';
+  goBackFromDetailsContainer.setAttribute('class', ' box-shadow5 go-back-button');
+  goBackLinkContainer.appendChild(goBackFromDetailsContainer);
   $goToMainPageFromDetailed.appendChild(goBackLinkContainer);
 
-  goBack.addEventListener('click', function () {
-    switchingViews('basic-search-view');
-    $form.setAttribute('class', 'view');
-    $goToMainPageFromDetailed.replaceChildren();
+  goBackFromDetailsContainer.addEventListener('click', function () {
+    window.location.hash = 'basic-search-view';
   });
   if (event.target.tagName === 'IMG') {
-
     foodXhr.open('GET', `https://api.edamam.com/api/recipes/v2/%23${dataIdAttribute}?type=public&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32`);
     foodXhr.responseType = 'json';
     foodXhr.addEventListener('load', function () {
@@ -490,6 +500,7 @@ function handleImageClick(event) {
         ingredients
       };
 
+      data.detailRecipeObject = detailedRecipeObject;
       var result = renderRecipeDetailes(detailedRecipeObject);
       $detailedRecipeContainer.appendChild(result);
       var $addToFavorites = document.querySelector('.favorite-icon');
@@ -504,8 +515,6 @@ function handleImageClick(event) {
           var result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.replaceChildren();
           $favoriteList.appendChild(result);
-          switchingViews('basic-search-view');
-          $form.setAttribute('class', 'view');
         }
         if (data.entries.some(recipe => recipe['data-recipeid'] === dataIdAttribute)) {
           $detailedRecipeContainer.replaceChildren();
@@ -520,8 +529,6 @@ function handleImageClick(event) {
           data.entries.push(detailedRecipeObject);
           result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.appendChild(result);
-          switchingViews('basic-search-view');
-          $form.setAttribute('class', 'view');
         }
       }
     }
@@ -530,33 +537,55 @@ function handleImageClick(event) {
   foodXhr.send();
 }
 
-function switchingViews(viewName, optional) {
-  var $viewList = document.querySelectorAll('.view');
-  for (var i = 0; i < $viewList.length; i++) {
-    if ($viewList[i].getAttribute('data-view') === viewName) {
-      $viewList[i].className = 'view';
+function switchingViews(newHash) {
+  var route = newHash.startsWith('#') ? newHash.replace('#', '') : newHash;
+  if (route === '') return;
+  if (route === 'homepage' || route === 'basic-search-view') {
+    $form.className = 'view';
+  }
+  if (route === 'favorites' || route === 'detailed-search-view') {
+    $form.className = 'hidden';
+  }
+  for (var viewIndex = 0; viewIndex < $views.length; viewIndex++) {
+    if ($views[viewIndex].getAttribute('data-view') !== route) {
+      $views[viewIndex].className = 'view hidden';
     } else {
-      $viewList[i].className = 'view hidden ';
+      $views[viewIndex].className = 'view';
     }
   }
 }
 
 window.addEventListener('DOMContentLoaded', event => {
-  var $deleteIcon = document.querySelector('#favorite-list');
-  $deleteIcon.addEventListener('click', function (event) {
-    event.preventDefault();
-    if (event.target.tagName === 'DIV') {
-      var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
-      var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
-      data.entries.splice(objectToRemove, 1);
-      var renderedObjects = document.querySelectorAll('li');
-      for (var j = 0; j < renderedObjects.length; j++) {
-        if (renderedObjects[j].dataset.recipeid === dataIdAttribute) {
-          renderedObjects[j].remove();
-        }
-      }
-      renderedObjects[objectToRemove].remove();
-    }
+  // FAVORITES
+  var goBackFromFavoritesLinkContainer = document.createElement('div');
+  goBackFromFavoritesLinkContainer.setAttribute('class', 'row column-full');
+  var goBack = document.createElement('a');
+  goBack.textContent = 'Go Back To Main Page';
+  goBack.setAttribute('class', ' box-shadow5 go-back-button');
+  goBackFromFavoritesLinkContainer.appendChild(goBack);
+  $goToMainPageFromFavorites.appendChild(goBackFromFavoritesLinkContainer);
+
+  // BASIC SEARCH VIEW
+
+  data.basicSearchArray.forEach(element => renderBasicRecipeInfo(element));
+
+  // DETAILED SEARCH VIEW
+  var detailedRecipeObject = data.detailRecipeObject;
+  var result = renderRecipeDetailes(detailedRecipeObject);
+  $detailedRecipeContainer.appendChild(result);
+  deleteIcon.setAttribute('class', 'hidden');
+  favoriteIcon.classList.remove('hidden');
+
+  var goBackFromDetailsContainer = document.createElement('div');
+  goBackFromDetailsContainer.setAttribute('class', 'row column-full');
+  var goBackFromDetailsLink = document.createElement('a');
+  goBackFromDetailsLink.textContent = 'Go Back To Search Result';
+  goBackFromDetailsLink.setAttribute('class', ' box-shadow5 go-back-button');
+  goBackFromDetailsContainer.appendChild(goBackFromDetailsLink);
+
+  $goToMainPageFromDetailed.appendChild(goBackFromDetailsContainer);
+  goBackFromDetailsContainer.addEventListener('click', function () {
+    window.location.hash = 'basic-search-view';
   });
 
   if (data.entries.length === 0) {
@@ -565,14 +594,6 @@ window.addEventListener('DOMContentLoaded', event => {
     $favoriteList.replaceChildren();
     $favoriteList.appendChild(noFavorites);
   }
-
-  var goBackLinkContainer = document.createElement('div');
-  goBackLinkContainer.setAttribute('class', 'row column-full');
-  var goBack = document.createElement('a');
-  goBack.textContent = 'Go Back To Main Page';
-  goBack.setAttribute('class', ' box-shadow5 go-back-button');
-  goBackLinkContainer.appendChild(goBack);
-  $goToMainPageFromFavorites.appendChild(goBackLinkContainer);
 
   for (var i = 0; i < data.entries.length; i++) {
     var resultObject = {
@@ -596,20 +617,39 @@ window.addEventListener('DOMContentLoaded', event => {
       zinc: data.entries[i].zinc,
       ingredients: data.entries[i].ingredients
     };
-
-    var result = renderRecipeDetailes(resultObject);
+    result = renderRecipeDetailes(resultObject);
     $favoriteList.appendChild(result);
   }
 
+  var $deleteIcon = document.querySelector('#favorite-list');
+  $deleteIcon.addEventListener('click', function (event) {
+    if (event.target.tagName === 'DIV') {
+      var dataIdAttribute = event.target.closest('li').getAttribute('data-recipeid');
+      var objectToRemove = data.entries.findIndex(recipe => recipe['data-recipeid'] === dataIdAttribute);
+      data.entries.splice(objectToRemove, 1);
+      var renderedObjects = document.querySelectorAll('li');
+      for (var j = 0; j < renderedObjects.length; j++) {
+        if (renderedObjects[j].dataset.recipeid === dataIdAttribute) {
+          renderedObjects[j].remove();
+        }
+      }
+      renderedObjects[objectToRemove].remove();
+    }
+  });
+
   goBack.addEventListener('click', function () {
-    switchingViews('basic-search-view');
-    $form.setAttribute('class', 'view');
+    window.location.hash = 'homepage';
   });
 });
 
 $favoriteIcon.addEventListener('click', function () {
-  event.preventDefault();
-  switchingViews('favorites');
+  window.location.hash = 'favorites';
+
+});
+
+$mainHeader.addEventListener('click', function () {
+  window.location.hash = 'homepage';
+
 });
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
