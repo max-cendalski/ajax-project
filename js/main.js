@@ -18,7 +18,6 @@ var carbsCount = 0;
 var selectNutritionName = '';
 var favoriteIcon = null;
 var deleteIcon = null;
-var basicSearchArray = [];
 
 switchingViews(window.location.hash);
 window.addEventListener('hashchange', function (event) {
@@ -349,7 +348,7 @@ function handleFormSubmit(event) {
   foodXhr.open('GET', 'https://api.edamam.com/api/recipes/v2?type=public&q=' + searchRecipe + `&app_id=e39dceb5&app_key=2ec338c917039673fcf16a477b215f32&diet=balanced&cuisineType=American&calories=${minCalories}-${maxCalories}&nutrients%5BSUGAR%5D=${minSugar}-${maxSugar}&nutrients%5BPROCNT%5D=${minProtein}-${maxProtein}&nutrients%5BCHOCDF%5D=${minCarbs}-${maxCarbs}`);
   foodXhr.responseType = 'json';
   foodXhr.addEventListener('load', function () {
-    basicSearchArray = [];
+    data.basicSearchArray = [];
     $list.replaceChildren();
     for (var i = 0; i < foodXhr.response.hits.length; i++) {
       var recipeIdString = foodXhr.response.hits[i].recipe.uri;
@@ -372,11 +371,10 @@ function handleFormSubmit(event) {
         carbs,
         resultObject
       };
-      basicSearchArray.push(resultObject);
+      data.basicSearchArray.push(resultObject);
       var result = renderBasicRecipeInfo(resultObject);
       $list.appendChild(result);
     }
-    data.basicSearchArray = basicSearchArray;
     if (!foodXhr.response.hits[0]) {
       $list.replaceChildren();
       var noResults = document.createElement('h1');
