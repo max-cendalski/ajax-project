@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "A dynamic HTML, CSS, and JavaScript solo project.",
-  "main": "index.js",
+  "main": "main.js",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
