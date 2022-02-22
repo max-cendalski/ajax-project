@@ -1,8 +1,9 @@
 /* exported data */
 
 var data = {
-  view: 'search-form',
-  entries: []
+  entries: [],
+  basicSearchArray: [],
+  detailRecipeObject: {}
 };
 
 var previousDataJson = localStorage.getItem('favorite-recipes');

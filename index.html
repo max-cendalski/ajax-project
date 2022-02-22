@@ -13,22 +13,16 @@
 <body>
   <header>
     <div class="container">
-      <div class="row">
-        <div class="column-full header">
-          <div class="row">
-            <h1 class="column-width80">Recipe Planner</h1>
-            <i class="icon fas fa-star fa-lg" id="favorite-icon"></i>
-          <div>
-          </div>
+      <div class="header">
+        <h1 id ="main-header">Recipe Planner</h1>
+        <i class="icon fas fa-star fa-lg" id="favorite-icon"></i>
         </div>
       </div>
-    </div>
-    </div>
   </header>
   <main>
     <div class="container">
       <div class="row">
-        <form id="form" class="view" data-view="search-form">
+        <form id="form">
             <div class=" row column-width90 margin-top20">
               <input id="search-box" class="column-width90" type="search" name="search" placeholder="search for a recipe" required autofocus>
               <button class="submit-button">&#128270</button>
@@ -51,11 +45,10 @@
               </div>
             </div>
           </div>
-
         </form>
       </div>
 
-      <div class="view" data-view="basic-search-view">
+      <div class="view hidden" data-view="basic-search-view">
         <div class="list-container row column-full">
           <ul class="column-full row flex-wrap" id="list">
 
@@ -73,6 +66,7 @@
         <div class="favorite-recipes-header column-width60">
           <h2>Favorite Recipes</h2>
         </div>
+
           <ul class="row flex-wrap" id="favorite-list">
 
           </ul>
