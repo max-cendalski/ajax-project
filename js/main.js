@@ -566,17 +566,18 @@ window.addEventListener('DOMContentLoaded', event => {
   $goToMainPageFromFavorites.appendChild(goBackFromFavoritesLinkContainer);
 
   // BASIC SEARCH VIEW
-
   if (data.basicSearchArray.length > 0) {
     data.basicSearchArray.forEach(element => renderBasicRecipeInfo(element));
   }
 
   // DETAILED SEARCH VIEW
-  var detailedRecipeObject = data.detailRecipeObject;
-  var result = renderRecipeDetailes(detailedRecipeObject);
-  $detailedRecipeContainer.appendChild(result);
-  deleteIcon.setAttribute('class', 'hidden');
-  favoriteIcon.classList.remove('hidden');
+  if (data.detailRecipeObject === true) {
+    var detailedRecipeObject = data.detailRecipeObject;
+    var result = renderRecipeDetailes(detailedRecipeObject);
+    $detailedRecipeContainer.appendChild(result);
+    deleteIcon.setAttribute('class', 'hidden');
+    favoriteIcon.classList.remove('hidden');
+  }
 
   var goBackFromDetailsContainer = document.createElement('div');
   goBackFromDetailsContainer.setAttribute('class', 'row column-full');
