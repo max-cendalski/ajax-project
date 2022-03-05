@@ -149,7 +149,7 @@ function renderRecipeDetailes(recipe) {
   recipeHeader.appendChild(recipeHeaderName);
 
   favoriteIcon = document.createElement('div');
-  favoriteIcon.setAttribute('class', 'inline-element add-to-favorites-icon fas fa-star fa-sm column-width5 hidden');
+  favoriteIcon.setAttribute('class', 'inline-element favorite-icon fas fa-star fa-sm column-width5 hidden');
   recipeHeader.appendChild(favoriteIcon);
 
   deleteIcon = document.createElement('div');
@@ -503,7 +503,7 @@ function handleImageClick(event) {
       data.detailRecipeObject = detailedRecipeObject;
       var result = renderRecipeDetailes(detailedRecipeObject);
       $detailedRecipeContainer.appendChild(result);
-      var $addToFavorites = document.querySelector('.add-to-favorites-icon');
+      var $addToFavorites = document.querySelector('.favorite-icon');
       $addToFavorites.addEventListener('click', handleFavorites);
       deleteIcon.setAttribute('class', 'hidden');
       favoriteIcon.classList.remove('hidden');
@@ -515,7 +515,6 @@ function handleImageClick(event) {
           var result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.replaceChildren();
           $favoriteList.appendChild(result);
-          window.location.hash = 'basic-search-view';
         }
         if (data.entries.some(recipe => recipe['data-recipeid'] === dataIdAttribute)) {
           $detailedRecipeContainer.replaceChildren();
@@ -530,7 +529,6 @@ function handleImageClick(event) {
           data.entries.push(detailedRecipeObject);
           result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.appendChild(result);
-          window.location.hash = 'basic-search-view';
         }
       }
     }
