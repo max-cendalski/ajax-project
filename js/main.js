@@ -567,7 +567,9 @@ window.addEventListener('DOMContentLoaded', event => {
 
   // BASIC SEARCH VIEW
 
-  data.basicSearchArray.forEach(element => renderBasicRecipeInfo(element));
+  if (data.basicSearchArray.length > 0) {
+    data.basicSearchArray.forEach(element => renderBasicRecipeInfo(element));
+  }
 
   // DETAILED SEARCH VIEW
   var detailedRecipeObject = data.detailRecipeObject;
