@@ -595,30 +595,33 @@ window.addEventListener('DOMContentLoaded', event => {
     $favoriteList.appendChild(noFavorites);
   }
 
-  for (var i = 0; i < data.entries.length; i++) {
-    var resultObject = {
-      recipeImage: data.entries[i].recipeImage,
-      'data-recipeid': data.entries[i]['data-recipeid'],
-      recipeName: data.entries[i].recipeName,
-      calories: data.entries[i].calories,
-      sugar: data.entries[i].sugar,
-      carbs: data.entries[i].carbs,
-      cholesterol: data.entries[i].cholesterol,
-      iron: data.entries[i].iron,
-      magnesium: data.entries[i].magnesium,
-      potassium: data.entries[i].potassium,
-      calcium: data.entries[i].calcium,
-      protein: data.entries[i].protein,
-      sodium: data.entries[i].sodium,
-      url: data.entries[i].url,
-      vitaminB6: data.entries[i].vitaminB6,
-      vitaminD: data.entries[i].vitaminD,
-      vitaminE: data.entries[i].vitaminE,
-      zinc: data.entries[i].zinc,
-      ingredients: data.entries[i].ingredients
-    };
-    result = renderRecipeDetailes(resultObject);
-    $favoriteList.appendChild(result);
+  if (data.entries.length > 0) {
+
+    for (var i = 0; i < data.entries.length; i++) {
+      var resultObject = {
+        recipeImage: data.entries[i].recipeImage,
+        'data-recipeid': data.entries[i]['data-recipeid'],
+        recipeName: data.entries[i].recipeName,
+        calories: data.entries[i].calories,
+        sugar: data.entries[i].sugar,
+        carbs: data.entries[i].carbs,
+        cholesterol: data.entries[i].cholesterol,
+        iron: data.entries[i].iron,
+        magnesium: data.entries[i].magnesium,
+        potassium: data.entries[i].potassium,
+        calcium: data.entries[i].calcium,
+        protein: data.entries[i].protein,
+        sodium: data.entries[i].sodium,
+        url: data.entries[i].url,
+        vitaminB6: data.entries[i].vitaminB6,
+        vitaminD: data.entries[i].vitaminD,
+        vitaminE: data.entries[i].vitaminE,
+        zinc: data.entries[i].zinc,
+        ingredients: data.entries[i].ingredients
+      };
+      result = renderRecipeDetailes(resultObject);
+      $favoriteList.appendChild(result);
+    }
   }
 
   var $deleteIcon = document.querySelector('#favorite-list');
