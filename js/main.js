@@ -276,12 +276,15 @@ function renderRecipeDetailes(recipe) {
   ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
   detailedNutritionContainer.appendChild(ingredientsListContainer);
 
-  recipe.ingredients.forEach((item, index) => {
-    var text = document.createElement('p');
-    text.setAttribute('class', 'ingredients padding-top5 padding-left10');
-    text.textContent = `${index + 1}) ${item}`;
-    ingredientsListContainer.appendChild(text);
-  });
+  if (recipe.ingredients) {
+    recipe.ingredients.forEach((item, index) => {
+      var text = document.createElement('p');
+      text.setAttribute('class', 'ingredients padding-top5 padding-left10');
+      text.textContent = `${index + 1}) ${item}`;
+      ingredientsListContainer.appendChild(text);
+    });
+  }
+
   return detailedLiElement;
 }
 
@@ -575,7 +578,7 @@ window.addEventListener('DOMContentLoaded', event => {
   }
 
   // DETAILED SEARCH VIEW
-  if (typeof data.detailRecipeObject !== 'undefined') {
+  if (data.detailRecipeObject) {
     var detailedRecipeObject = data.detailRecipeObject;
     var result = renderRecipeDetailes(detailedRecipeObject);
     $detailedRecipeContainer.appendChild(result);
