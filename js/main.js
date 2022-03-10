@@ -510,11 +510,13 @@ function handleImageClick(event) {
 
       function handleFavorites(event) {
         event.preventDefault();
+        // debugger;
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
           var result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.replaceChildren();
           $favoriteList.appendChild(result);
+          return;
         }
         if (data.entries.some(recipe => recipe['data-recipeid'] === dataIdAttribute)) {
           $detailedRecipeContainer.replaceChildren();
@@ -571,7 +573,7 @@ window.addEventListener('DOMContentLoaded', event => {
   }
 
   // DETAILED SEARCH VIEW
-  if (data.detailRecipeObject === true) {
+  if (typeof data.detailRecipeObject !== 'undefined') {
     var detailedRecipeObject = data.detailRecipeObject;
     var result = renderRecipeDetailes(detailedRecipeObject);
     $detailedRecipeContainer.appendChild(result);
@@ -592,8 +594,8 @@ window.addEventListener('DOMContentLoaded', event => {
   });
 
   if (data.entries.length === 0) {
-    var noFavorites = document.createElement('h1');
-    noFavorites.textContent = 'No Favorite Recipes';
+    var noFavorites = document.createElement('h2');
+    noFavorites.textContent = 'You don\'t  have any favorite recipes';
     $favoriteList.replaceChildren();
     $favoriteList.appendChild(noFavorites);
   }
