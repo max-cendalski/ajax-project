@@ -510,7 +510,6 @@ function handleImageClick(event) {
 
       function handleFavorites(event) {
         event.preventDefault();
-        // debugger;
         if (data.entries.length === 0) {
           data.entries.push(detailedRecipeObject);
           var result = renderRecipeDetailes(detailedRecipeObject);
@@ -533,7 +532,6 @@ function handleImageClick(event) {
           result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.appendChild(result);
           window.location.hash = 'basic-search-view';
-
         }
       }
     }
@@ -561,6 +559,7 @@ function switchingViews(newHash) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+
   // FAVORITES
   var goBackFromFavoritesLinkContainer = document.createElement('div');
   goBackFromFavoritesLinkContainer.setAttribute('class', 'row column-full');
@@ -604,7 +603,6 @@ window.addEventListener('DOMContentLoaded', event => {
   }
 
   if (data.entries.length > 0) {
-
     for (var i = 0; i < data.entries.length; i++) {
       var resultObject = {
         recipeImage: data.entries[i].recipeImage,
@@ -655,12 +653,10 @@ window.addEventListener('DOMContentLoaded', event => {
 
 $favoriteIcon.addEventListener('click', function () {
   window.location.hash = 'favorites';
-
 });
 
 $mainHeader.addEventListener('click', function () {
   window.location.hash = 'homepage';
-
 });
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
