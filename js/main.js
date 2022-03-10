@@ -276,12 +276,15 @@ function renderRecipeDetailes(recipe) {
   ingredientsListContainer.setAttribute('class', 'border-top-grey column-full');
   detailedNutritionContainer.appendChild(ingredientsListContainer);
 
-  recipe.ingredients.forEach((item, index) => {
-    var text = document.createElement('p');
-    text.setAttribute('class', 'ingredients padding-top5 padding-left10');
-    text.textContent = `${index + 1}) ${item}`;
-    ingredientsListContainer.appendChild(text);
-  });
+  if (recipe.ingredients) {
+    recipe.ingredients.forEach((item, index) => {
+      var text = document.createElement('p');
+      text.setAttribute('class', 'ingredients padding-top5 padding-left10');
+      text.textContent = `${index + 1}) ${item}`;
+      ingredientsListContainer.appendChild(text);
+    });
+  }
+
   return detailedLiElement;
 }
 
@@ -515,6 +518,8 @@ function handleImageClick(event) {
           var result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.replaceChildren();
           $favoriteList.appendChild(result);
+          window.location.hash = 'basic-search-view';
+          return;
         }
         if (data.entries.some(recipe => recipe['data-recipeid'] === dataIdAttribute)) {
           $detailedRecipeContainer.replaceChildren();
@@ -529,6 +534,7 @@ function handleImageClick(event) {
           data.entries.push(detailedRecipeObject);
           result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.appendChild(result);
+          window.location.hash = 'basic-search-view';
         }
       }
     }
@@ -556,6 +562,7 @@ function switchingViews(newHash) {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
+
   // FAVORITES
   var goBackFromFavoritesLinkContainer = document.createElement('div');
   goBackFromFavoritesLinkContainer.setAttribute('class', 'row column-full');
@@ -566,15 +573,18 @@ window.addEventListener('DOMContentLoaded', event => {
   $goToMainPageFromFavorites.appendChild(goBackFromFavoritesLinkContainer);
 
   // BASIC SEARCH VIEW
-
-  data.basicSearchArray.forEach(element => renderBasicRecipeInfo(element));
+  if (data.basicSearchArray.length > 0) {
+    data.basicSearchArray.forEach(element => renderBasicRecipeInfo(element));
+  }
 
   // DETAILED SEARCH VIEW
-  var detailedRecipeObject = data.detailRecipeObject;
-  var result = renderRecipeDetailes(detailedRecipeObject);
-  $detailedRecipeContainer.appendChild(result);
-  deleteIcon.setAttribute('class', 'hidden');
-  favoriteIcon.classList.remove('hidden');
+  if (data.detailRecipeObject) {
+    var detailedRecipeObject = data.detailRecipeObject;
+    var result = renderRecipeDetailes(detailedRecipeObject);
+    $detailedRecipeContainer.appendChild(result);
+    deleteIcon.setAttribute('class', 'hidden');
+    favoriteIcon.classList.remove('hidden');
+  }
 
   var goBackFromDetailsContainer = document.createElement('div');
   goBackFromDetailsContainer.setAttribute('class', 'row column-full');
@@ -589,36 +599,38 @@ window.addEventListener('DOMContentLoaded', event => {
   });
 
   if (data.entries.length === 0) {
-    var noFavorites = document.createElement('h1');
-    noFavorites.textContent = 'No Favorite Recipes';
+    var noFavorites = document.createElement('h2');
+    noFavorites.textContent = 'You don\'t  have any favorite recipes';
     $favoriteList.replaceChildren();
     $favoriteList.appendChild(noFavorites);
   }
 
-  for (var i = 0; i < data.entries.length; i++) {
-    var resultObject = {
-      recipeImage: data.entries[i].recipeImage,
-      'data-recipeid': data.entries[i]['data-recipeid'],
-      recipeName: data.entries[i].recipeName,
-      calories: data.entries[i].calories,
-      sugar: data.entries[i].sugar,
-      carbs: data.entries[i].carbs,
-      cholesterol: data.entries[i].cholesterol,
-      iron: data.entries[i].iron,
-      magnesium: data.entries[i].magnesium,
-      potassium: data.entries[i].potassium,
-      calcium: data.entries[i].calcium,
-      protein: data.entries[i].protein,
-      sodium: data.entries[i].sodium,
-      url: data.entries[i].url,
-      vitaminB6: data.entries[i].vitaminB6,
-      vitaminD: data.entries[i].vitaminD,
-      vitaminE: data.entries[i].vitaminE,
-      zinc: data.entries[i].zinc,
-      ingredients: data.entries[i].ingredients
-    };
-    result = renderRecipeDetailes(resultObject);
-    $favoriteList.appendChild(result);
+  if (data.entries.length > 0) {
+    for (var i = 0; i < data.entries.length; i++) {
+      var resultObject = {
+        recipeImage: data.entries[i].recipeImage,
+        'data-recipeid': data.entries[i]['data-recipeid'],
+        recipeName: data.entries[i].recipeName,
+        calories: data.entries[i].calories,
+        sugar: data.entries[i].sugar,
+        carbs: data.entries[i].carbs,
+        cholesterol: data.entries[i].cholesterol,
+        iron: data.entries[i].iron,
+        magnesium: data.entries[i].magnesium,
+        potassium: data.entries[i].potassium,
+        calcium: data.entries[i].calcium,
+        protein: data.entries[i].protein,
+        sodium: data.entries[i].sodium,
+        url: data.entries[i].url,
+        vitaminB6: data.entries[i].vitaminB6,
+        vitaminD: data.entries[i].vitaminD,
+        vitaminE: data.entries[i].vitaminE,
+        zinc: data.entries[i].zinc,
+        ingredients: data.entries[i].ingredients
+      };
+      result = renderRecipeDetailes(resultObject);
+      $favoriteList.appendChild(result);
+    }
   }
 
   var $deleteIcon = document.querySelector('#favorite-list');
@@ -644,12 +656,10 @@ window.addEventListener('DOMContentLoaded', event => {
 
 $favoriteIcon.addEventListener('click', function () {
   window.location.hash = 'favorites';
-
 });
 
 $mainHeader.addEventListener('click', function () {
   window.location.hash = 'homepage';
-
 });
 
 $nutritionChoice.addEventListener('click', handleNutritionChoice);
