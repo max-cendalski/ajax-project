@@ -516,6 +516,7 @@ function handleImageClick(event) {
           var result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.replaceChildren();
           $favoriteList.appendChild(result);
+          window.location.hash = 'basic-search-view';
           return;
         }
         if (data.entries.some(recipe => recipe['data-recipeid'] === dataIdAttribute)) {
@@ -531,6 +532,8 @@ function handleImageClick(event) {
           data.entries.push(detailedRecipeObject);
           result = renderRecipeDetailes(detailedRecipeObject);
           $favoriteList.appendChild(result);
+          window.location.hash = 'basic-search-view';
+
         }
       }
     }
